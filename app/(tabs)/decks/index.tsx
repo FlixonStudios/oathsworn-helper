@@ -1,15 +1,19 @@
 import { useGame } from "@/context-providers/game/game-hook";
 import { Card } from "@/models/Card";
-import { View, Button } from "react-native";
-import styled from "styled-components";
+import {
+  StyledView,
+  Container,
+  StyledButton,
+  StyledCard,
+} from "./decks.styles";
 
-export default function Index() {
+export default function DecksPage() {
   const { addCard, gameState } = useGame();
 
   function onPress() {
     return addCard(new Card(1));
   }
-
+  
   return (
     <StyledView>
       <Container>
@@ -21,23 +25,3 @@ export default function Index() {
     </StyledView>
   );
 }
-
-const StyledButton = styled(Button)`
-  type: button;
-  height: 2rem;
-`;
-
-const Container = styled.div`
-  display: flex;
-`;
-
-const StyledView = styled(View)`
-  flex: 1;
-  justifycontent: "center";
-  alignitems: "center";
-`;
-
-const StyledCard = styled.div`
-  height: 3rem;
-  width: 3rem;
-`;
