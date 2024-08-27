@@ -1,9 +1,13 @@
+import { GameProvider } from "@/context-providers/game/game-provider";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" />
-    </Stack>
+    // Provider has to wrap the stack
+    <GameProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+    </GameProvider>
   );
 }
