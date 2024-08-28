@@ -18,6 +18,13 @@ export class Deck {
     }
   }
   public draw() {
+    if (this.template.length === 0) {
+      return;
+    }
+    if (this.remainingCards.length === 0) {
+      this.shuffle();
+    }
+
     const card = this.remainingCards.splice(0, 1)[0];
     this.drawnCards.push(card);
     return card;

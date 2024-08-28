@@ -64,5 +64,25 @@ describe("Deck", () => {
 
       expect(result).toStrictEqual(new Card(4));
     });
+    it("should trigger shuffle if draw is called while remaining is empty", () => {
+      const mockCards = [new Card(4)];
+      const deck = new Deck(mockCards);
+      const shuffleSpy = jest.spyOn(deck, "shuffle");
+
+      deck.draw();
+      const result = deck.draw();
+
+      expect(shuffleSpy).toHaveBeenCalledTimes(1);
+      expect(result).toStrictEqual(new Card(4));
+    });
+    it("should return undefined if trying to draw from an empty deck", () => {
+      const deck = new Deck();
+      const shuffleSpy = jest.spyOn(deck, "shuffle");
+
+      const result = deck.draw();
+
+      expect(shuffleSpy).not.toHaveBeenCalled();
+      expect(result).toBeUndefined();
+    });
   });
 });
