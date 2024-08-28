@@ -8,6 +8,7 @@ export const StyledButton = styled(Button)`
 
 export const Container = styled(View)`
   display: flex;
+  padding: 1rem;
 `;
 
 export const StyledView = styled(View)`
@@ -15,7 +16,15 @@ export const StyledView = styled(View)`
   justifycontent: "center";
   alignitems: "center";
 `;
+export const StyledDeck = styled(View)`
+  height: 6rem;
+  width: 4rem;
+  border-color: #000000;
+`;
 
+export const DeckSection = styled(View)`
+  margin-top: 1rem;
+`;
 export const StyledCard = styled(View)`
   height: 3rem;
   width: 3rem;

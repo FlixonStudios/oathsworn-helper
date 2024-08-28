@@ -1,7 +1,8 @@
 import { Card } from "@/models/Card";
+import { Deck } from "@/models/Deck";
 
 export interface GameState {
-  deck: Card[];
+  decks: Deck[];
 }
 
 export type ActionTypes = "add-card";

@@ -4,23 +4,29 @@ import {
   StyledView,
   Container,
   StyledButton,
-  StyledCard,
+  StyledDeck,
+  DeckSection,
 } from "./decks.styles";
 
 export default function DecksPage() {
   const { addCard, gameState } = useGame();
 
+  const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];
+
   function onPress() {
     return addCard(new Card(1));
   }
-  
   return (
     <StyledView>
       <Container>
         <StyledButton title="Add Card" onPress={onPress} />
-        {gameState.deck.map((card, i) => (
-          <StyledCard key={i}>{card.value}</StyledCard>
-        ))}
+        {gameState.decks.map((deck, i) => {
+          return (
+            <DeckSection key={i}>
+              <StyledDeck style={{ backgroundColor: colorMap[i] }} />
+            </DeckSection>
+          );
+        })}
       </Container>
     </StyledView>
   );

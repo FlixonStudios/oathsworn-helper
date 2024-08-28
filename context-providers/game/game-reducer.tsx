@@ -5,7 +5,7 @@ export function gameReducer(state: GameState, action: TGameAction) {
   switch (type) {
     case "add-card": {
       if (!payload) return state;
-      return { ...state, deck: [...state.deck, payload] };
+      return { ...state, deck: [...state.decks, payload] };
     }
     default:
       return state;
