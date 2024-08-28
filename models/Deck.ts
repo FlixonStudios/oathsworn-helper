@@ -29,6 +29,15 @@ export class Deck {
     this.drawnCards.push(card);
     return card;
   }
+  public getUniqueCardList() {
+    const uniqueCardList: string[] = [];
+    this.template.forEach((card) => {
+      if (!uniqueCardList.includes(card.name)) {
+        uniqueCardList.push(card.name);
+      }
+    });
+    return uniqueCardList;
+  }
   private getRandomCardIndex(cards: Card[]) {
     const index = Math.floor(Math.random() * cards.length);
     return index === cards.length ? index - 1 : index;

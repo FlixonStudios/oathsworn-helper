@@ -85,4 +85,27 @@ describe("Deck", () => {
       expect(result).toBeUndefined();
     });
   });
+  describe("getUniqueCardList", () => {
+    it("should return empty array if empty deck", () => {
+      const deck = new Deck();
+      expect(deck.getUniqueCardList()).toEqual([]);
+    });
+    it("should return an array of unique card names", () => {
+      const mockCards = [
+        new Card(4, true),
+        new Card(4),
+        new Card(),
+        new Card(),
+        new Card(1, true),
+        new Card(4),
+      ];
+      const deck = new Deck(mockCards);
+      const result = deck.getUniqueCardList();
+      expect(result).toContain("4*");
+      expect(result).toContain("0");
+      expect(result).toContain("1*");
+      expect(result).toContain("4");
+      expect(result.length).toEqual(4);
+    });
+  });
 });
