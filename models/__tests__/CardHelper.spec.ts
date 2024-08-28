@@ -26,5 +26,10 @@ describe("CardHelper", () => {
         new Card(1),
       ]);
     });
+    it("should reset the template property", () => {
+      const cardHelper = new CardHelper();
+      cardHelper.addSet(new Card(1), 3).createDeckTemplate();
+      expect(cardHelper.template).toStrictEqual([]);
+    });
   });
 });

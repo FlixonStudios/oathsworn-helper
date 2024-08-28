@@ -9,6 +9,12 @@ export class CardHelper {
     return this;
   }
   public createDeckTemplate() {
-    return [...this.template];
+    const template = [...this.template];
+    this.template = [];
+    return template;
+  }
+  public reset() {
+    this.template = [];
+    return this;
   }
 }
