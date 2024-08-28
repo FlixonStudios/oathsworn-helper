@@ -38,6 +38,16 @@ export class Deck {
     });
     return uniqueCardList;
   }
+  public seek(name: string) {
+    const index = this.getCardIndexFromName(name);
+    if (index < 0) return;
+    const card = this.remainingCards.splice(index, 1)[0];
+    this.drawnCards.push(card);
+    return card;
+  }
+  private getCardIndexFromName(name: string) {
+    return this.remainingCards.findIndex((card) => card.name === name);
+  }
   private getRandomCardIndex(cards: Card[]) {
     const index = Math.floor(Math.random() * cards.length);
     return index === cards.length ? index - 1 : index;

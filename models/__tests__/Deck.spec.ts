@@ -108,4 +108,43 @@ describe("Deck", () => {
       expect(result.length).toEqual(4);
     });
   });
+  describe("seek", () => {
+    it("should return undefined if no such card exists", () => {
+      const mockCards = [new Card(), new Card()];
+      const deck = new Deck(mockCards);
+      expect(deck.seek("4*")).toBeUndefined();
+      expect(deck.remainingCards.length).toEqual(2);
+      expect(deck.drawnCards.length).toEqual(0);
+    })
+    it("should remove the card matching the name and return it", () => {
+      const mockCards = [
+        new Card(3),
+        new Card(1, true),
+        new Card(),
+        new Card(4, true),
+        new Card(1, true),
+        new Card(),
+        new Card(4),
+      ];
+      const deck = new Deck(mockCards);
+      expect(deck.seek("4*")).toStrictEqual(new Card(4, true));
+      expect(deck.remainingCards.length).toEqual(6);
+
+      expect(deck.seek("0")).toStrictEqual(new Card(0));
+      expect(deck.remainingCards.length).toEqual(5);
+      expect(deck.seek("0")).toStrictEqual(new Card(0));
+      expect(deck.remainingCards.length).toEqual(4);
+    });
+    it("should move the seeked card to drawn", () => {
+      const mockCards = [new Card(), new Card()];
+      const deck = new Deck(mockCards);
+
+      expect(deck.seek("0")).toStrictEqual(new Card(0));
+      expect(deck.remainingCards.length).toEqual(1);
+      expect(deck.drawnCards.length).toEqual(1);
+      expect(deck.seek("0")).toStrictEqual(new Card(0));
+      expect(deck.remainingCards.length).toEqual(0);
+      expect(deck.drawnCards.length).toEqual(2);
+    });
+  });
 });
