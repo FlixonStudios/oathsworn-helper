@@ -1,5 +1,13 @@
 import { Card } from "./Card";
 
+interface CardCount {
+  [key: string]: number;
+}
+export interface DeckCardCount {
+  remaining: CardCount;
+  drawn: CardCount;
+}
+
 export class Deck {
   constructor(
     public template: Card[] = [],
@@ -44,6 +52,24 @@ export class Deck {
     const card = this.remainingCards.splice(index, 1)[0];
     this.drawnCards.push(card);
     return card;
+  }
+  public getDeckCardCount(): DeckCardCount {
+    return {
+      remaining: this.getCountOfCards(this.remainingCards),
+      drawn: this.getCountOfCards(this.drawnCards),
+    };
+  }
+  public getCountOfCards(cards: Card[]) {
+    const count: CardCount = {};
+    for (let i = 0; i < cards.length; i++) {
+      const cardName = cards[i].name;
+      if (!count[cardName]) {
+        count[cardName] = 1;
+      } else {
+        count[cardName]++;
+      }
+    }
+    return count;
   }
   private getCardIndexFromName(name: string) {
     return this.remainingCards.findIndex((card) => card.name === name);

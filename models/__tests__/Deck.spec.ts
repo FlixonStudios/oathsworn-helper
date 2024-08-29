@@ -1,5 +1,5 @@
 import { Card } from "../Card";
-import { Deck } from "../Deck";
+import { Deck, DeckCardCount } from "../Deck";
 
 describe("Deck", () => {
   it("should be able to be instantiated with a template of Cards", () => {
@@ -115,7 +115,7 @@ describe("Deck", () => {
       expect(deck.seek("4*")).toBeUndefined();
       expect(deck.remainingCards.length).toEqual(2);
       expect(deck.drawnCards.length).toEqual(0);
-    })
+    });
     it("should remove the card matching the name and return it", () => {
       const mockCards = [
         new Card(3),
@@ -145,6 +145,33 @@ describe("Deck", () => {
       expect(deck.seek("0")).toStrictEqual(new Card(0));
       expect(deck.remainingCards.length).toEqual(0);
       expect(deck.drawnCards.length).toEqual(2);
+    });
+  });
+  describe("getCountOfCard", () => {
+    it("should return the count of cards", () => {
+      const deck = new Deck();
+      deck.remainingCards = [new Card(2), new Card(2, true)];
+      deck.drawnCards = [new Card(), new Card(1), new Card(), new Card(1)];
+
+      const expected: DeckCardCount = {
+        remaining: {
+          "2": 1,
+          "2*": 1,
+        },
+        drawn: {
+          "0": 2,
+          "1": 2,
+        },
+      };
+      expect(deck.getDeckCardCount()).toEqual(expected);
+    });
+    it("should return empty object for both remaining and drawn if there are no cards", () => {
+      const deck = new Deck();
+      const expected: DeckCardCount = {
+        remaining: {},
+        drawn: {},
+      };
+      expect(deck.getDeckCardCount()).toEqual(expected);
     });
   });
 });
