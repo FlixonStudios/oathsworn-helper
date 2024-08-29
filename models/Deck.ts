@@ -1,6 +1,6 @@
 import { Card } from "./Card";
 
-interface CardCount {
+export interface CardCount {
   [key: string]: number;
 }
 export interface DeckCardCount {
@@ -59,7 +59,7 @@ export class Deck {
       drawn: this.getCountOfCards(this.drawnCards),
     };
   }
-  public getCountOfCards(cards: Card[]) {
+  private getCountOfCards(cards: Card[]) {
     const count: CardCount = {};
     for (let i = 0; i < cards.length; i++) {
       const cardName = cards[i].name;

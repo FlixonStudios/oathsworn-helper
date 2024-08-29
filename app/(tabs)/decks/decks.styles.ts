@@ -1,31 +1,26 @@
-import { Button, View } from "react-native";
+import { View } from "react-native";
 import styled from "styled-components/native";
 
-export const StyledButton = styled(Button)`
-  type: button;
-  height: 2rem;
-`;
-
-export const Container = styled(View)`
+export const DecksContainer = styled(View)`
   display: flex;
   padding: 1rem;
 `;
 
-export const StyledView = styled(View)`
-  flex: 1;
-  justifycontent: "center";
-  alignitems: "center";
-`;
-export const StyledDeck = styled(View)`
-  height: 6rem;
-  width: 4rem;
-  border-color: #000000;
-`;
-
-export const DeckSection = styled(View)`
+export const DeckPairSection = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-top: 1rem;
 `;
-export const StyledCard = styled(View)`
-  height: 3rem;
-  width: 3rem;
+
+export const StyledDeck = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  border-color: #000000;
+  border-width: 0.0625rem;
+  border-radius: 0.25rem;
+  height: 8rem;
+  margin-right: 0.125rem;
+  margin-left: 0.125rem;
 `;
