@@ -1,15 +1,19 @@
 import { useGame } from "@/context-providers/game/game-hook";
-import { Card } from "@/models/Card";
 import { DecksContainer, StyledDeck, DeckPairSection } from "./decks.styles";
 import { CardsAndCountArea } from "./components/card-and-count-section";
+import { Deck } from "@/models/Deck";
 
 export default function DecksPage() {
-  const { addCard, gameState } = useGame();
+  const { seekCard, revertCard, gameState } = useGame();
 
   const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];
 
-  function onPress() {
-    return addCard(new Card(1));
+  function onPressSeekCard(name: string, deck: Deck) {
+    seekCard(name, deck);
+  }
+
+  function onPressRevertCard(name: string, deck: Deck) {
+    revertCard(name, deck);
   }
 
   return (
@@ -19,10 +23,18 @@ export default function DecksPage() {
         return (
           <DeckPairSection key={i}>
             <StyledDeck style={{ backgroundColor: colorMap[i] }}>
-              <CardsAndCountArea deck={deck} count={count.remaining} />
+              <CardsAndCountArea
+                onPress={(name: string) => onPressSeekCard(name, deck)}
+                deck={deck}
+                count={count.remaining}
+              />
             </StyledDeck>
             <StyledDeck style={{ backgroundColor: colorMap[i] }}>
-              <CardsAndCountArea deck={deck} count={count.drawn} />
+              <CardsAndCountArea
+                onPress={(name: string) => onPressRevertCard(name, deck)}
+                deck={deck}
+                count={count.drawn}
+              />
             </StyledDeck>
           </DeckPairSection>
         );

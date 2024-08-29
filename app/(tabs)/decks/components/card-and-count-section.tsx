@@ -6,14 +6,16 @@ import {
   CountText,
   SeekButton,
 } from "./card-and-count-section.styles";
+import { useGame } from "@/context-providers/game/game-hook";
 
 interface Props {
   deck: Deck;
   count: CardCount;
+  onPress: (name: string) => void
 }
 
 export function CardsAndCountArea(props: Props) {
-  const { deck, count } = props;
+  const { deck, count, onPress } = props;
 
   const uniqueCards = deck.getUniqueCardList();
 
@@ -23,7 +25,7 @@ export function CardsAndCountArea(props: Props) {
         .filter((cardName) => !!count[cardName])
         .map((cardName, i) => {
           return (
-            <SeekButton key={i}>
+            <SeekButton key={i} onPress={() => onPress(cardName)}>
               <CountText>{count[cardName]}</CountText>
               <CardName>
                 <Text>{cardName}</Text>

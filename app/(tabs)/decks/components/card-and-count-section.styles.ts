@@ -36,5 +36,5 @@ export const CardName = styled(View)`
 `;
 
 export const CountText = styled(Text)`
-  font-color: "#ffffff";
+  color: #ffffff;
 `;
