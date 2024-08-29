@@ -17,11 +17,10 @@ describe("Deck", () => {
   describe("shuffle", () => {
     it("should empty drawnCards", () => {
       const mockCards = [new Card(1), new Card(2)];
-      const deck = new Deck(mockCards);
+      const deck = new Deck();
       deck.drawnCards = [...mockCards];
 
       deck.shuffle();
-
       expect(deck.drawnCards.length).toEqual(0);
     });
     it("should reset the remainingCards to match template", () => {
@@ -147,6 +146,48 @@ describe("Deck", () => {
       expect(deck.drawnCards.length).toEqual(2);
     });
   });
+  describe("revert", () => {
+    it("should return undefined if no such card exists", () => {
+      const mockCards = [new Card(), new Card()];
+      const deck = new Deck();
+      deck.drawnCards = mockCards
+      expect(deck.revert("4*")).toBeUndefined();
+      expect(deck.drawnCards.length).toEqual(2);
+      expect(deck.remainingCards.length).toEqual(0);
+    });
+    it("should remove the card matching the name and return it", () => {
+      const mockCards = [
+        new Card(3),
+        new Card(1, true),
+        new Card(),
+        new Card(4, true),
+        new Card(1, true),
+        new Card(),
+        new Card(4),
+      ];
+      const deck = new Deck();
+      deck.drawnCards = mockCards
+      expect(deck.revert("4*")).toStrictEqual(new Card(4, true));
+      expect(deck.drawnCards.length).toEqual(6);
+
+      expect(deck.revert("0")).toStrictEqual(new Card(0));
+      expect(deck.drawnCards.length).toEqual(5);
+      expect(deck.revert("0")).toStrictEqual(new Card(0));
+      expect(deck.drawnCards.length).toEqual(4);
+    });
+    it("should move the reverted card to drawn", () => {
+      const mockCards = [new Card(), new Card()];
+      const deck = new Deck();
+      deck.drawnCards = mockCards
+
+      expect(deck.revert("0")).toStrictEqual(new Card(0));
+      expect(deck.drawnCards.length).toEqual(1);
+      expect(deck.remainingCards.length).toEqual(1);
+      expect(deck.revert("0")).toStrictEqual(new Card(0));
+      expect(deck.drawnCards.length).toEqual(0);
+      expect(deck.remainingCards.length).toEqual(2);
+    });
+  })
   describe("getCountOfCard", () => {
     it("should return the count of cards", () => {
       const deck = new Deck();

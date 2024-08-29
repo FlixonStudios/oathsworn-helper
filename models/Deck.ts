@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { Card } from "./Card";
 
 export interface CardCount {
@@ -12,7 +13,8 @@ export class Deck {
   constructor(
     public template: Card[] = [],
     public remainingCards: Card[] = [],
-    public drawnCards: Card[] = []
+    public drawnCards: Card[] = [],
+    public id: string = nanoid(10)
   ) {
     this.remainingCards = [...this.template];
   }
@@ -47,10 +49,16 @@ export class Deck {
     return uniqueCardList;
   }
   public seek(name: string) {
-    const index = this.getCardIndexFromName(name);
+    return this.transfer(name, this.remainingCards, this.drawnCards);
+  }
+  public revert(name: string) {
+    return this.transfer(name, this.drawnCards, this.remainingCards);
+  }
+  private transfer(name: string, startPile: Card[], endPile: Card[]) {
+    const index = this.getCardIndexFromName(name, startPile);
     if (index < 0) return;
-    const card = this.remainingCards.splice(index, 1)[0];
-    this.drawnCards.push(card);
+    const card = startPile.splice(index, 1)[0];
+    endPile.push(card);
     return card;
   }
   public getDeckCardCount(): DeckCardCount {
@@ -71,8 +79,11 @@ export class Deck {
     }
     return count;
   }
-  private getCardIndexFromName(name: string) {
-    return this.remainingCards.findIndex((card) => card.name === name);
+  private getCardIndexFromName(
+    name: string,
+    pile: Card[] = this.remainingCards
+  ) {
+    return pile.findIndex((card) => card.name === name);
   }
   private getRandomCardIndex(cards: Card[]) {
     const index = Math.floor(Math.random() * cards.length);
