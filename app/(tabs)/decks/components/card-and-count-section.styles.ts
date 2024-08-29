@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import styled from "styled-components/native";
 
 export const CardsAndCountSection = styled(View)`
@@ -11,7 +11,7 @@ export const CardsAndCountSection = styled(View)`
   padding: 0.125rem;
 `;
 
-export const SeekButton = styled(TouchableOpacity)`
+export const SeekButton = styled(Pressable)`
   align-items: center;
   justify-content: center;
   background-color: #5e5251;
