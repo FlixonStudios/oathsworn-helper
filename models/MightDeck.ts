@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { Card } from "./Card";
 import { Deck } from "./Deck";
 
@@ -19,11 +20,12 @@ export class MightDeck extends Deck {
   public drawCount: number = 0;
   public drawSession: DrawSession = {
     isMiss: false,
-    cardsDrawn: this.drawCount,
+    cardsDrawn: 0,
     totalDamage: 0,
     isInfinite: false,
     critCount: 0,
   };
+
   public draw(): Card | undefined {
     if (this.drawCount >= LIMIT_PER_DRAW) {
       return;
@@ -75,6 +77,18 @@ export class MightDeck extends Deck {
     }
 
     return isMiss;
+  }
+  public clone(): MightDeck {
+    const clone = new MightDeck(
+      [...this.template],
+      [...this.remainingCards],
+      [...this.drawnCards]
+    );
+    clone.damageValues = [...this.damageValues];
+    clone.critCount = this.critCount;
+    clone.drawCount = this.drawCount;
+    clone.drawSession = { ...this.drawSession };
+    return clone;
   }
   private calculateDamage(isMiss: boolean) {
     return isMiss ? 0 : this.damageValues.reduce((prev, val) => (val += prev));
