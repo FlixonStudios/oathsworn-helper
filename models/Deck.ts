@@ -21,11 +21,12 @@ export class Deck {
   public shuffle() {
     this.drawnCards = [];
     const toBeShuffled = [...this.template];
-
+    this.remainingCards = [];
     for (let i = toBeShuffled.length; i > 0; i--) {
       const index = this.getRandomCardIndex(toBeShuffled);
       this.remainingCards.push(...toBeShuffled.splice(index, 1));
     }
+    return this;
   }
   public draw() {
     if (this.template.length === 0) {
