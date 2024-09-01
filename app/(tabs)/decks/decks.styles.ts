@@ -1,7 +1,7 @@
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import styled from "styled-components/native";
 
-export const DecksContainer = styled(View)`
+export const DecksContainer = styled(ScrollView)`
   display: flex;
   padding: 1rem;
 `;

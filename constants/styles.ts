@@ -1,0 +1,1 @@
+export const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];

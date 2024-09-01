@@ -6,7 +6,6 @@ import {
   CountText,
   SeekButton,
 } from "./card-and-count-section.styles";
-import { useGame } from "@/context-providers/game/game-hook";
 
 interface Props {
   deck: Deck;
