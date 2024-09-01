@@ -1,10 +1,6 @@
+import { NUM_OF_CARDS } from "@/constants/model";
 import { MightDeck } from "./MightDeck";
-
-const NUM_OF_CARDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-interface Recommendations {
-  [key: string]: { p_target: number };
-}
+import { Recommendations } from "./types";
 
 export class Probability {
   public skillCheck(_deck: MightDeck, target: number, includeMiss = true) {
@@ -20,6 +16,7 @@ export class Probability {
     }
     return recommendations;
   }
+  
   public drawTill(
     _deck: MightDeck,
     target: number,

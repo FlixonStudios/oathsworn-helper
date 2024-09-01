@@ -1,5 +1,6 @@
+import { LIMIT_PER_DRAW } from "@/constants/model";
 import { Card } from "../Card";
-import { LIMIT_PER_DRAW, MightDeck } from "../MightDeck";
+import { MightDeck } from "../MightDeck";
 
 describe("MightDeck", () => {
   afterEach(() => {

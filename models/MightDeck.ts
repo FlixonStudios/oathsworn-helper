@@ -1,19 +1,8 @@
-import { nanoid } from "nanoid";
+import { LIMIT_PER_DRAW, MISS_CONDITION } from "@/constants/model";
 import { Card } from "./Card";
 import { Deck } from "./Deck";
+import { DrawSession } from "./types";
 
-interface DrawSession {
-  totalDamage: number;
-  cardsDrawn: number;
-  isMiss: boolean;
-  isInfinite: boolean;
-  critCount: number;
-}
-const MISS_CONDITION = {
-  valueCausingMiss: 0,
-  timesValueAppeared: 2,
-};
-export const LIMIT_PER_DRAW = 100;
 export class MightDeck extends Deck {
   public damageValues: number[] = [];
   public critCount: number = 0;
@@ -24,6 +13,7 @@ export class MightDeck extends Deck {
     totalDamage: 0,
     isInfinite: false,
     critCount: 0,
+    damageValues: [],
   };
 
   public draw(): Card | undefined {
@@ -101,6 +91,7 @@ export class MightDeck extends Deck {
       totalDamage: this.calculateDamage(isMiss),
       isInfinite: this.drawCount >= LIMIT_PER_DRAW,
       critCount: this.critCount,
+      damageValues: this.damageValues,
     };
   }
   private getEligibleForMissDamage() {
