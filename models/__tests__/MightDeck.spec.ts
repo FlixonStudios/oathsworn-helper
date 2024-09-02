@@ -1,5 +1,6 @@
 import { LIMIT_PER_DRAW } from "@/constants/model";
 import { Card } from "../Card";
+import { Damage } from "../Damage";
 import { MightDeck } from "../MightDeck";
 
 describe("MightDeck", () => {
@@ -13,7 +14,7 @@ describe("MightDeck", () => {
 
       expect(deck.draw()).toStrictEqual(new Card(2, true));
       expect(deck.remainingCards.length).toEqual(1);
-      expect(deck.critCount).toEqual(1);
+      expect(deck.drawSession.critCount).toEqual(1);
     });
     it.each([
       [2, 2, [new Card(2, true), new Card(1)]],
@@ -24,7 +25,7 @@ describe("MightDeck", () => {
       for (let i = 0; i < noOfDraws; i++) {
         deck.draw();
       }
-      expect(deck.drawCount).toEqual(expected);
+      expect(deck.drawSession.cardsDrawn).toEqual(expected);
     });
     it("should perform a shuffle if no more cards in remaining", () => {
       const mockCards = [new Card(2, true), new Card(1)];
@@ -56,7 +57,12 @@ describe("MightDeck", () => {
         deck.draw();
       }
 
-      expect(deck.damageValues).toEqual([0, 2, 0, 1]);
+      expect(deck.drawSession.damageValues).toEqual([
+        new Damage(0),
+        new Damage(2),
+        new Damage(0),
+        new Damage(1),
+      ]);
     });
   });
   describe("startDraw", () => {
@@ -101,11 +107,11 @@ describe("MightDeck", () => {
   });
   describe("hasMissed", () => {
     it.each([
-      [[2, 2, 2], false],
-      [[0], false],
+      [[new Damage(2), new Damage(2), new Damage(2)], false],
+      [[new Damage(),], false],
       [[], false],
-      [[0, 0], true],
-      [[1, 0, 2, 1, 0], true],
+      [[new Damage(), new Damage()], true],
+      [[new Damage(1), new Damage(), new Damage(2), new Damage(1), new Damage()], true],
     ])("it should correctly check %s for misses", (mockDmgs, expected) => {
       const deck = new MightDeck();
       expect(deck.hasMissed(mockDmgs)).toEqual(expected);

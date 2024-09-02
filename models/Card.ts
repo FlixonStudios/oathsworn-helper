@@ -1,6 +1,10 @@
+import { Damage } from "./Damage";
+
 export class Card {
   public name = "";
-  constructor(public value = 0, public isCrit = false) {
-    this.name = this.value.toString() + (this.isCrit ? "*" : "");
+  public damage: Damage;
+  constructor(value = 0, public isCrit = false) {
+    this.damage = new Damage(value);
+    this.name = this.damage.value.toString() + (this.isCrit ? "*" : "");
   }
 }

@@ -32,10 +32,10 @@ describe("Deck", () => {
 
       expect(deck.remainingCards.length).toEqual(2);
       expect(
-        deck.remainingCards.filter((card) => card.value === 1).length
+        deck.remainingCards.filter((card) => card.damage.value === 1).length
       ).toEqual(1);
       expect(
-        deck.remainingCards.filter((card) => card.value === 2).length
+        deck.remainingCards.filter((card) => card.damage.value === 2).length
       ).toEqual(1);
     });
     it("should randomise the remainingCards", () => {

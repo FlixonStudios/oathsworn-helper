@@ -1,12 +1,13 @@
-import { LIMIT_PER_DRAW, MISS_CONDITION } from "@/constants/model";
+import {
+  LIMIT_PER_DRAW,
+  MISS_CONDITION,
+} from "@/constants/model";
 import { Card } from "./Card";
+import { Damage } from "./Damage";
 import { Deck } from "./Deck";
 import { DrawSession } from "./types";
 
 export class MightDeck extends Deck {
-  public damageValues: number[] = [];
-  public critCount: number = 0;
-  public drawCount: number = 0;
   public drawSession: DrawSession = {
     isMiss: false,
     cardsDrawn: 0,
@@ -15,45 +16,46 @@ export class MightDeck extends Deck {
     critCount: 0,
     damageValues: [],
   };
-
-  public draw(): Card | undefined {
-    if (this.drawCount >= LIMIT_PER_DRAW) {
+  // does not apply crit
+  public draw(isMissable = true): Card | undefined {
+    if (this.drawSession.cardsDrawn >= LIMIT_PER_DRAW) {
       return;
     }
 
     const drawn = super.draw();
 
     if (!drawn) return; // no cards in deck
-    this.drawCount++;
+    this.drawSession.cardsDrawn++;
 
-    this.damageValues.push(drawn?.value);
+    const damage = new Damage(drawn?.damage.value, isMissable);
+    this.drawSession.damageValues.push(damage);
 
     if (drawn?.isCrit) {
-      this.critCount++;
+      this.drawSession.critCount++;
     }
     return drawn;
   }
 
   public startDraw(noOfCards: number) {
+    this.resetDrawSession();
     for (let i = 0; i < noOfCards; i++) {
       this.draw();
     }
-    for (let i = 0; i < this.critCount; i++) {
-      this.draw();
+    for (let i = 0; i < this.drawSession.critCount; i++) {
+      this.draw(false);
     }
     this.saveDrawSession();
-    this.resetDrawCount();
-    this.resetCritCount();
+
     return this.drawSession;
   }
-  public hasMissed(values: number[], missCondition = MISS_CONDITION) {
+  public hasMissed(damages: Damage[], missCondition = MISS_CONDITION) {
     let isMiss = false;
     let isMissCount = 0;
-    const _damageValues = [...values];
+    const _damageValues = [...damages];
 
-    for (let i = 0; i < values.length; i++) {
+    for (let i = 0; i < damages.length; i++) {
       const index = _damageValues.findIndex(
-        (dmg) => dmg === missCondition.valueCausingMiss
+        (dmg) => dmg.canMiss && dmg.value === missCondition.valueCausingMiss
       );
       if (index < 0) {
         break;
@@ -74,37 +76,37 @@ export class MightDeck extends Deck {
       [...this.remainingCards],
       [...this.drawnCards]
     );
-    clone.damageValues = [...this.damageValues];
-    clone.critCount = this.critCount;
-    clone.drawCount = this.drawCount;
     clone.drawSession = { ...this.drawSession };
     return clone;
   }
   private calculateDamage(isMiss: boolean) {
-    return isMiss ? 0 : this.damageValues.reduce((prev, val) => (val += prev));
+    return isMiss
+      ? 0
+      : this.drawSession.damageValues.reduce(
+          (prev, curr) => (prev += curr.value),
+          0
+        );
   }
+  //FIXME: do we need this?
   private saveDrawSession() {
-    const isMiss = this.hasMissed(this.getEligibleForMissDamage());
+    const isMiss = this.hasMissed(this.drawSession.damageValues);
     this.drawSession = {
-      cardsDrawn: this.drawCount,
+      cardsDrawn: this.drawSession.cardsDrawn,
       isMiss,
       totalDamage: this.calculateDamage(isMiss),
-      isInfinite: this.drawCount >= LIMIT_PER_DRAW,
-      critCount: this.critCount,
-      damageValues: this.damageValues,
+      isInfinite: this.drawSession.cardsDrawn >= LIMIT_PER_DRAW,
+      critCount: this.drawSession.critCount,
+      damageValues: this.drawSession.damageValues,
     };
   }
-  private getEligibleForMissDamage() {
-    const numArr = this.damageValues.slice(
-      0,
-      this.critCount > 0 ? -this.critCount : this.damageValues.length
-    );
-    return numArr;
-  }
-  private resetDrawCount() {
-    this.drawCount = 0;
-  }
-  private resetCritCount() {
-    this.critCount = 0;
+  private resetDrawSession() {
+    this.drawSession = {
+      isMiss: false,
+      cardsDrawn: 0,
+      totalDamage: 0,
+      isInfinite: false,
+      critCount: 0,
+      damageValues: [],
+    };
   }
 }
