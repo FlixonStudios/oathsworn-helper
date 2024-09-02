@@ -18,6 +18,8 @@ export class DeckManager {
     let noOfCards = _noOfCards;
     let results = [];
 
+    this.resetDrawSession();
+
     for (let i = 3; i >= 1; i--) {
       const index = i.toString() as keyof Decks<MightDeck | number>;
       if (!empower || !this.decks[index] || !empower[index]) {
@@ -32,6 +34,23 @@ export class DeckManager {
     results.push(this.decks[0].startDraw(noOfCards));
 
     return this.mergeDrawSessions(results);
+  }
+
+  public clone() {
+    const clonedDecks: MightDecks = {
+      "0": this.decks["0"].clone(),
+      "1": this.decks?.["1"] ? this.decks?.["1"].clone() : undefined,
+      "2": this.decks?.["2"] ? this.decks?.["2"].clone() : undefined,
+      "3": this.decks?.["3"] ? this.decks?.["3"].clone() : undefined,
+    };
+    return new DeckManager(clonedDecks);
+  }
+
+  public shuffleDecks() {
+    Object.keys(this.decks).forEach((index) =>
+      this.decks[index as keyof Decks<MightDeck | number>]?.shuffle()
+    );
+    return this;
   }
 
   private mergeDrawSessions(drawSessions: DrawSession[]) {

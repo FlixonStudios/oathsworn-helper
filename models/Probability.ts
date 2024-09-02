@@ -1,27 +1,38 @@
 import { NUM_OF_CARDS } from "@/constants/model";
-import { MightDeck } from "./MightDeck";
-import { Recommendations } from "./types";
+import { DeckManager } from "./DecksManager";
+import { Empower, Recommendations } from "./types";
 
 export class Probability {
-  public skillCheck(_deck: MightDeck, target: number, includeMiss = true) {
+  // given a target number to hit the returns probability to succeed per number
+  public skillCheck(
+    _deckManager: DeckManager,
+    target: number,
+    empower: Empower = {},
+    includeMiss = true
+  ) {
     const ITERATIONS = 50000;
     const recommendations: Recommendations = {};
+    const deckManager = _deckManager.clone();
+
     for (let i = 0; i < NUM_OF_CARDS.length; i++) {
       recommendations[NUM_OF_CARDS[i].toString()] = this.drawTill(
-        _deck,
+        deckManager,
         target,
         NUM_OF_CARDS[i],
-        ITERATIONS
+        ITERATIONS,
+        empower
       );
     }
+
     return recommendations;
   }
-  
+
   public drawTill(
-    _deck: MightDeck,
+    _deckManager: DeckManager,
     target: number,
     cardsToDraw: number,
     iterations: number,
+    empower: Empower,
     includeMiss = true
   ) {
     let calculation = {
@@ -31,9 +42,10 @@ export class Probability {
     let summary = {
       p_target: 0,
     };
+
     for (let i = 0; i < iterations; i++) {
-      const deck = _deck.clone().shuffle();
-      const results = deck.startDraw(cardsToDraw);
+      const deckManager = _deckManager.clone().shuffleDecks();
+      const results = deckManager.startDraw(cardsToDraw, empower);
       if (results.totalDamage >= target) {
         calculation.success++;
       }
@@ -41,7 +53,7 @@ export class Probability {
         calculation.miss++;
       }
     }
-    
+
     summary.p_target =
       Math.round((calculation.success / iterations) * 10000) / 10000;
 
