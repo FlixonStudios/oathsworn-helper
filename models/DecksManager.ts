@@ -3,7 +3,7 @@ import { Damage } from "./Damage";
 import { MightDeck } from "./MightDeck";
 import { Decks, DrawSession, Empower, MightDecks } from "./types";
 
-export class DecksManager {
+export class DeckManager {
   public drawSession: DrawSession = {
     isMiss: false,
     cardsDrawn: 0,
@@ -15,7 +15,6 @@ export class DecksManager {
   constructor(public decks: MightDecks) {}
 
   public startDraw(_noOfCards: number, empower?: Empower) {
-    this.resetDrawSession();
     let noOfCards = _noOfCards;
     let results = [];
 
@@ -49,7 +48,7 @@ export class DecksManager {
         critCount: currentSession.critCount + session.critCount,
         damageValues,
         isMiss,
-        isInfinite: false,
+        isInfinite: false, // FIXME: is this required?
       };
     });
     this.drawSession = combinedSession;
@@ -71,6 +70,7 @@ export class DecksManager {
       }
       _damageValues.splice(index, 1);
       isMissCount++;
+
       if (isMissCount >= missCondition.timesValueAppeared) {
         isMiss = true;
         break;

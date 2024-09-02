@@ -1,6 +1,6 @@
 import { Card } from "../Card";
 import { Damage } from "../Damage";
-import { DecksManager } from "../DecksManager";
+import { DeckManager } from "../DecksManager";
 import { MightDeck } from "../MightDeck";
 
 describe("DeckManager", () => {
@@ -8,7 +8,7 @@ describe("DeckManager", () => {
     it("should return a valid DrawSession ", () => {
       const whiteDeck = new MightDeck([new Card(1), new Card(1)]);
       const blackDeck = new MightDeck([new Card(3), new Card(3)]);
-      const decksManager = new DecksManager({
+      const decksManager = new DeckManager({
         "0": whiteDeck,
         "3": blackDeck,
       });
@@ -28,7 +28,7 @@ describe("DeckManager", () => {
     it("should draw all from deck '0' if no empower is provided", () => {
       const whiteDeck = new MightDeck([new Card(1), new Card(1)]);
       const blackDeck = new MightDeck([new Card(3), new Card(3)]);
-      const decksManager = new DecksManager({
+      const decksManager = new DeckManager({
         "0": whiteDeck,
         "3": blackDeck,
       });
@@ -53,7 +53,7 @@ describe("DeckManager", () => {
     it("should correctly determine if a miss was triggered", () => {
       const whiteDeck = new MightDeck([new Card(1), new Card(0)]);
       const blackDeck = new MightDeck([new Card(3), new Card(0)]);
-      const decksManager = new DecksManager({
+      const decksManager = new DeckManager({
         "0": whiteDeck,
         "3": blackDeck,
       });
@@ -82,7 +82,7 @@ describe("DeckManager", () => {
         new Card(3, true),
         new Card(0),
       ]);
-      const decksManager = new DecksManager({
+      const decksManager = new DeckManager({
         "0": whiteDeck,
         "3": blackDeck,
       });
