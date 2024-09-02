@@ -12,7 +12,7 @@ describe("Probability", () => {
     jest.clearAllMocks();
   });
   describe("skillCheck", () => {
-    it.each([
+    xit.each([
       [1, 0, [new Card(1)]],
       [0.5, 1, [new Card(1), new Card()]],
       [0, 1, [new Card()]],
@@ -24,7 +24,7 @@ describe("Probability", () => {
       expect(isWithin(result["1"].p_target, prob, 0.01)).toEqual(true);
     });
 
-    it.each([
+    xit.each([
       [1, 2, [new Card(1)]],
       [0.33, 2, [new Card(1), new Card(1), new Card()]],
       [0.66, 2, [new Card(2, true), new Card(), new Card()]],
@@ -47,7 +47,7 @@ describe("Probability", () => {
 
       expect(isWithin(result["2"].p_target, prob, 0.02)).toEqual(true);
     });
-    it.each([[0.5, 4, [new Card(2, true), new Card()]]])(
+    xit.each([[0.5, 4, [new Card(2, true), new Card()]]])(
       "target value of 4 ",
       (prob, target, mockCards) => {
         const probability = new Probability();

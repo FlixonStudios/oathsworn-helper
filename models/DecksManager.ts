@@ -55,8 +55,8 @@ export class DeckManager {
 
   private mergeDrawSessions(drawSessions: DrawSession[]) {
     const combinedSession = drawSessions.reduce((session, currentSession) => {
-      const damageValues = currentSession.damageValues.concat(
-        ...session.damageValues
+      const damageValues = session.damageValues.concat(
+        ...currentSession.damageValues
       );
       const isMiss = currentSession.isMiss
         ? true
@@ -81,13 +81,12 @@ export class DeckManager {
     const _damageValues = [...values];
 
     for (let i = 0; i < values.length; i++) {
-      const index = _damageValues.findIndex(
-        (dmg) => dmg.canMiss && dmg.value === missCondition.valueCausingMiss
-      );
-      if (index < 0) {
+      const found = this.findMissedDamage(_damageValues, missCondition);
+      if (found < 0) {
         break;
       }
-      _damageValues.splice(index, 1);
+
+      _damageValues.splice(found, 1);
       isMissCount++;
 
       if (isMissCount >= missCondition.timesValueAppeared) {
@@ -97,6 +96,15 @@ export class DeckManager {
     }
 
     return isMiss;
+  }
+
+  private findMissedDamage(
+    _damageValues: Damage[],
+    missCondition = MISS_CONDITION
+  ) {
+    return _damageValues.findIndex(
+      (dmg) => dmg.canMiss && dmg.value === missCondition.valueCausingMiss
+    );
   }
 
   private resetDrawSession() {
