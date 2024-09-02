@@ -1,4 +1,5 @@
 import { Card } from "../Card";
+import { Damage } from "../Damage";
 import { DecksManager } from "../DecksManager";
 import { MightDeck } from "../MightDeck";
 
@@ -20,7 +21,7 @@ describe("DeckManager", () => {
         totalDamage: 7,
         isInfinite: false,
         critCount: 0,
-        damageValues: [1, 3, 3],
+        damageValues: [new Damage(1), new Damage(3), new Damage(3)],
       };
       expect(results).toEqual(expected);
     });
@@ -40,7 +41,12 @@ describe("DeckManager", () => {
         totalDamage: 4,
         isInfinite: false,
         critCount: 0,
-        damageValues: [1, 1, 1, 1],
+        damageValues: [
+          new Damage(1),
+          new Damage(1),
+          new Damage(1),
+          new Damage(1),
+        ],
       };
       expect(results).toEqual(expected);
     });
@@ -60,7 +66,12 @@ describe("DeckManager", () => {
         totalDamage: 4,
         isInfinite: false,
         critCount: 0,
-        damageValues: [1, 0, 3, 0],
+        damageValues: [
+          new Damage(1),
+          new Damage(),
+          new Damage(3),
+          new Damage(),
+        ],
       };
       expect(results).toEqual(expected);
     });
@@ -84,7 +95,13 @@ describe("DeckManager", () => {
         totalDamage: 9,
         isInfinite: false,
         critCount: 2,
-        damageValues: [1, 0, 5, 3, 0],
+        damageValues: [
+          new Damage(1),
+          new Damage(),
+          new Damage(5),
+          new Damage(3, false),
+          new Damage(0, false),
+        ],
       };
       expect(results).toEqual(expected);
     });

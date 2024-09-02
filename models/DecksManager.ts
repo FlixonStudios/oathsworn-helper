@@ -1,9 +1,17 @@
-import { DEFAULT_DRAW_SESSION, MISS_CONDITION } from "@/constants/model";
+import { MISS_CONDITION } from "@/constants/model";
+import { Damage } from "./Damage";
 import { MightDeck } from "./MightDeck";
 import { Decks, DrawSession, Empower, MightDecks } from "./types";
 
 export class DecksManager {
-  public drawSession: DrawSession = DEFAULT_DRAW_SESSION;
+  public drawSession: DrawSession = {
+    isMiss: false,
+    cardsDrawn: 0,
+    totalDamage: 0,
+    isInfinite: false,
+    critCount: 0,
+    damageValues: [],
+  };
   constructor(public decks: MightDecks) {}
 
   public startDraw(_noOfCards: number, empower?: Empower) {
@@ -45,18 +53,18 @@ export class DecksManager {
       };
     });
     this.drawSession = combinedSession;
-    this.drawSession.isMiss = this.hasMissed(this.getEligibleForMissDamage());
+    this.drawSession.isMiss = this.hasMissed(this.drawSession.damageValues);
     return combinedSession;
   }
 
-  private hasMissed(values: number[], missCondition = MISS_CONDITION) {
+  private hasMissed(values: Damage[], missCondition = MISS_CONDITION) {
     let isMiss = false;
     let isMissCount = 0;
     const _damageValues = [...values];
 
     for (let i = 0; i < values.length; i++) {
       const index = _damageValues.findIndex(
-        (dmg) => dmg === missCondition.valueCausingMiss
+        (dmg) => dmg.canMiss && dmg.value === missCondition.valueCausingMiss
       );
       if (index < 0) {
         break;
@@ -71,17 +79,15 @@ export class DecksManager {
 
     return isMiss;
   }
-  // FIXME: BROKEN
-  private getEligibleForMissDamage() {
-    const numArr = this.drawSession.damageValues.slice(
-      0,
-      this.drawSession.critCount > 0
-        ? -this.drawSession.critCount
-        : this.drawSession.damageValues.length
-    );
-    return numArr;
-  }
+
   private resetDrawSession() {
-    this.drawSession = DEFAULT_DRAW_SESSION;
+    this.drawSession = {
+      isMiss: false,
+      cardsDrawn: 0,
+      totalDamage: 0,
+      isInfinite: false,
+      critCount: 0,
+      damageValues: [],
+    };
   }
 }
