@@ -67,8 +67,9 @@ export const CurrentTargetView = styled(BorderedCentered)`
 export const ResultCard = styled(BorderedCentered)`
   width: 3rem;
   flex-wrap: wrap;
+  margin: 0.125rem;
 `;
-export const ResultValue = styled(BorderedCentered)`
+export const ResultValue = styled(CenteredView)`
   width: 3rem;
 `;
 
