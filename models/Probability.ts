@@ -10,7 +10,7 @@ export class Probability {
     empower: Empower = {},
     includeMiss = true
   ) {
-    const ITERATIONS = 50000;
+    const ITERATIONS = 30000;
     const recommendations: Recommendations = {};
     const deckManager = _deckManager.clone();
 
