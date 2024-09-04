@@ -76,7 +76,9 @@ export default function MainPage() {
               <ChangeTargetButton onPress={() => onPress(-1)}>
                 <Text>{"<"}</Text>
               </ChangeTargetButton>
-              <CurrentTarget>{skillCheckTarget}</CurrentTarget>
+              <CurrentTarget>
+                <Text>{skillCheckTarget}</Text>
+              </CurrentTarget>
               <ChangeTargetButton onPress={() => onPress(1)}>
                 <Text>{">"}</Text>
               </ChangeTargetButton>
