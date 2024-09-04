@@ -1,7 +1,6 @@
-import { View, Text, Pressable } from "react-native";
 import styled from "styled-components/native";
 
-export const CardsAndCountSection = styled(View)`
+export const CardsAndCountSection = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -11,7 +10,7 @@ export const CardsAndCountSection = styled(View)`
   padding: 2px;
 `;
 
-export const SeekButton = styled(Pressable)`
+export const SeekButton = styled.Pressable`
   align-items: center;
   justify-content: center;
   background-color: #5e5251;
@@ -24,7 +23,7 @@ export const SeekButton = styled(Pressable)`
   margin: 2px;
 `;
 
-export const CardName = styled(View)`
+export const CardName = styled.View`
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
@@ -35,6 +34,6 @@ export const CardName = styled(View)`
   width: 32px;
 `;
 
-export const CountText = styled(Text)`
+export const CountText = styled.Text`
   color: #ffffff;
 `;

@@ -1,19 +1,18 @@
-import { ScrollView, View } from "react-native";
 import styled from "styled-components/native";
 
-export const DecksContainer = styled(ScrollView)`
+export const DecksContainer = styled.ScrollView`
   display: flex;
   padding: 16px;
 `;
 
-export const DeckPairSection = styled(View)`
+export const DeckPairSection = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 16px;
 `;
 
-export const StyledDeck = styled(View)`
+export const StyledDeck = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;

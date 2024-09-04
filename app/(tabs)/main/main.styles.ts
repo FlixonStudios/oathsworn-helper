@@ -1,34 +1,33 @@
-import { ScrollView, Pressable, View } from "react-native";
 import styled from "styled-components/native";
 
 //==============================================================
 // View
 //==============================================================
 
-export const CenteredView = styled(View)`
+export const CenteredView = styled.View`
   justify-content: center;
   align-items: center;
 `;
 
-export const MainPageContainer = styled(ScrollView)`
+export const MainPageContainer = styled.ScrollView`
   display: flex;
   padding: 16px;
 `;
 
 export const Container = styled(CenteredView)``;
 
-export const SkillCheckSection = styled(View)`
+export const SkillCheckSection = styled.View`
   margin-top: 32px;
   margin-bottom: 32px;
 `;
 
-export const ColumnSection = styled(View)`
+export const ColumnSection = styled.View`
   flex-direction: column;
 `;
 
 export const SkillCheckContent = styled(ColumnSection)``;
 
-export const RowSection = styled(View)`
+export const RowSection = styled.View`
   flex-direction: row;
 `;
 
@@ -77,7 +76,7 @@ export const ResultValue = styled(CenteredView)`
 // Pressable
 //==============================================================
 
-export const CenteredPressable = styled(Pressable)`
+export const CenteredPressable = styled.Pressable`
   justify-content: center;
   align-items: center;
 `;
