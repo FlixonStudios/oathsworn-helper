@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 import { Card } from "./Card";
 
 export interface CardCount {
@@ -14,7 +14,7 @@ export class Deck {
     public template: Card[] = [],
     public remainingCards: Card[] = [],
     public drawnCards: Card[] = [],
-    public id: string = nanoid(10)
+    // public id: string = nanoid(10)
   ) {
     this.remainingCards = [...this.template];
   }
