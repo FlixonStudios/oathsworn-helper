@@ -7,32 +7,32 @@ export const CardsAndCountSection = styled(View)`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  max-width: 12rem;
-  padding: 0.125rem;
+  max-width: 192px;
+  padding: 2px;
 `;
 
 export const SeekButton = styled(Pressable)`
   align-items: center;
   justify-content: center;
   background-color: #5e5251;
-  border-radius: 0.125rem;
+  border-radius: 2px;
   border-color: #000000;
-  border-width: 0.0625rem;
+  border-width: 1px;
   padding: 0;
-  height: 3rem;
-  width: 2rem;
-  margin: 0.125rem;
+  height: 48px;
+  width: 16px;
+  margin: 2px;
 `;
 
 export const CardName = styled(View)`
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  border-radius: 0.125rem;
+  border-radius: 2px;
   border-color: #000000;
-  border-width: 0.0625rem;
-  height: 2rem;
-  width: 2rem;
+  border-width: 1px;
+  height: 32px;
+  width: 32px;
 `;
 
 export const CountText = styled(Text)`

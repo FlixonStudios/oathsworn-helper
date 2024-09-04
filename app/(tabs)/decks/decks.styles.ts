@@ -3,14 +3,14 @@ import styled from "styled-components/native";
 
 export const DecksContainer = styled(ScrollView)`
   display: flex;
-  padding: 1rem;
+  padding: 16px;
 `;
 
 export const DeckPairSection = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 16px;
 `;
 
 export const StyledDeck = styled(View)`
@@ -18,9 +18,9 @@ export const StyledDeck = styled(View)`
   justify-content: center;
   align-items: center;
   border-color: #000000;
-  border-width: 0.0625rem;
-  border-radius: 0.25rem;
-  height: 8rem;
-  margin-right: 0.125rem;
-  margin-left: 0.125rem;
+  border-width: 1px;
+  border-radius: 4px;
+  height: 96px;
+  margin-right: 2px;
+  margin-left: 2px;
 `;
