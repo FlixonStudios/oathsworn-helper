@@ -4,14 +4,14 @@ import { ResultCard, ResultValue, Section } from "./results-section.styles";
 
 interface Props {
   skillCheckResults?: Recommendations;
-  start:number;
-  end:number;
+  start: number;
+  end: number;
 }
 
 export function ResultsSection({ skillCheckResults, start, end }: Props) {
   return (
     <Section>
-      {skillCheckResults &&
+      {skillCheckResults ? (
         Object.keys(skillCheckResults)
           .slice(start, end)
           .map((result, i) => (
@@ -21,7 +21,10 @@ export function ResultsSection({ skillCheckResults, start, end }: Props) {
                 <Text>{skillCheckResults[result].p_target}</Text>
               </ResultValue>
             </ResultCard>
-          ))}
+          ))
+      ) : (
+        <></>
+      )}
     </Section>
   );
 }
