@@ -10,9 +10,6 @@ import {
   ChangeTargetButton,
   CurrentTarget,
   CalculateButton,
-  ResultsSection,
-  ResultCard,
-  ResultValue,
 } from "./main.styles";
 import { useState } from "react";
 import { useGame } from "@/context-providers/game/game-hook";
@@ -21,6 +18,7 @@ import { Probability } from "@/models/Probability";
 import { MightDeck } from "@/models/MightDeck";
 import { Empower, Recommendations } from "@/models/types";
 import { DeckManager } from "@/models/DecksManager";
+import { ResultsSection } from "./components/results-section";
 
 export default function MainPage() {
   const { gameState } = useGame();
@@ -100,32 +98,16 @@ export default function MainPage() {
             <CalculateButton onPress={() => calculate()}>
               <Text>Calculate</Text>
             </CalculateButton>
-            <ResultsSection>
-              {skillCheckResults &&
-                Object.keys(skillCheckResults)
-                  .slice(0, 5)
-                  .map((result, i) => (
-                    <ResultCard key={i}>
-                      <Text>{result}</Text>
-                      <ResultValue>
-                        <Text>{skillCheckResults[result].p_target}</Text>
-                      </ResultValue>
-                    </ResultCard>
-                  ))}
-            </ResultsSection>
-            <ResultsSection>
-              {skillCheckResults &&
-                Object.keys(skillCheckResults)
-                  .slice(5, 10)
-                  .map((result, i) => (
-                    <ResultCard key={i}>
-                      <Text>{result}</Text>
-                      <ResultValue>
-                        <Text>{skillCheckResults[result].p_target}</Text>
-                      </ResultValue>
-                    </ResultCard>
-                  ))}
-            </ResultsSection>
+            <ResultsSection
+              skillCheckResults={skillCheckResults}
+              start={0}
+              end={5}
+            />
+            <ResultsSection
+              skillCheckResults={skillCheckResults}
+              start={5}
+              end={10}
+            />
           </SkillCheckContent>
         </SkillCheckSection>
       </Container>

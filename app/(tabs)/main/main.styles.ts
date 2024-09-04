@@ -1,13 +1,9 @@
+import { CenteredView, RowSection, BorderedCentered } from "@/constants/styles";
 import styled from "styled-components/native";
 
 //==============================================================
 // View
 //==============================================================
-
-export const CenteredView = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
 
 export const MainPageContainer = styled.ScrollView`
   display: flex;
@@ -27,10 +23,6 @@ export const ColumnSection = styled.View`
 
 export const SkillCheckContent = styled(ColumnSection)``;
 
-export const RowSection = styled.View`
-  flex-direction: row;
-`;
-
 export const SpacedRowSection = styled(RowSection)`
   margin-top: 16px;
   margin-bottom: 16px;
@@ -49,27 +41,10 @@ export const TargetSection = styled(RowSection)`
   justify-content: space-around;
 `;
 
-export const ResultsSection = styled(RowSection)``;
-
-export const BorderedCentered = styled(CenteredView)`
-  border-radius: 2px;
-  border-color: #000000;
-  border-width: 1px;
-`;
-
 export const CurrentTargetView = styled(BorderedCentered)`
   height: 32px;
   width: 32px;
   background-color: #ffffff;
-`;
-
-export const ResultCard = styled(BorderedCentered)`
-  width: 48px;
-  flex-wrap: wrap;
-  margin: 2px;
-`;
-export const ResultValue = styled(CenteredView)`
-  width: 48px;
 `;
 
 //==============================================================
