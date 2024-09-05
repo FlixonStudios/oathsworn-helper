@@ -75,7 +75,7 @@ describe("NumberHelper", () => {
       "should return a set all possible combinations",
       (empowerVal, expected) => {
         const numberHelper = new NumberHelper();
-        const result = numberHelper.getValues(empowerVal);
+        const result = numberHelper.__testExports__.getValues(empowerVal);
         expect(result).toEqual(expected);
       }
     );

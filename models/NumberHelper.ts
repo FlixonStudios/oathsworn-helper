@@ -1,4 +1,20 @@
+import { Empower } from "./types";
+
 export class NumberHelper {
+  public convertToEmpower(empower: Empower, combinations: number[][]) {
+    return combinations.map((combi): Empower => {
+      const emp = [
+        empower[1] ? empower[1] : 0,
+        empower[2] ? empower[2] : 0,
+        empower[3] ? empower[3] : 0,
+      ];
+      return {
+        "1": combi[0] + emp[0],
+        "2": combi[1]+ emp[1],
+        "3": combi[2]+ emp[2],
+      };
+    });
+  }
   /* 
         if x = 1
         [1,0,0]
@@ -22,7 +38,7 @@ export class NumberHelper {
     return filtered;
   }
 
-  public getValues(num: number) {
+  private getValues(num: number) {
     const val = [1, 2, 3];
     const max = val.map((val) => Math.floor(num / val));
     const allPossible: number[][] = [];
@@ -38,9 +54,12 @@ export class NumberHelper {
     return allPossible;
   }
 
-  public sumOfVal(countArr: number[], valArr: number[]) {
+  private sumOfVal(countArr: number[], valArr: number[]) {
     return countArr
       .map((val, i) => valArr[i] * val)
       .reduce((pV, cV) => (pV += cV));
+  }
+  public __testExports__ = {
+    getValues: this.getValues
   }
 }
