@@ -5,6 +5,7 @@ import { NumberHelper } from "./NumberHelper";
 
 export class Probability {
   constructor(
+    public deckManager: DeckManager,
     public numberHelper = new NumberHelper()
   ) {}
     _deckManager: DeckManager,
@@ -14,7 +15,7 @@ export class Probability {
   ) {
     const ITERATIONS = 30000;
     const recommendations: Recommendations = {};
-    const deckManager = _deckManager.clone();
+    const deckManager = this.deckManager.clone();
 
     for (let i = 0; i < NUM_OF_CARDS.length; i++) {
       recommendations[NUM_OF_CARDS[i].toString()] = this.drawTill(
