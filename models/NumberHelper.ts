@@ -1,6 +1,11 @@
 import { Empower } from "./types";
 
 export class NumberHelper {
+  public getEmpowerCombinations(_empower: Empower = {}, extraEmpower: number) {
+    const empower = { ..._empower };
+    return this.convertToEmpower(empower, this.getCountOfValue(extraEmpower));
+  }
+
   public convertToEmpower(empower: Empower, combinations: number[][]) {
     return combinations.map((combi): Empower => {
       const emp = [
@@ -10,8 +15,8 @@ export class NumberHelper {
       ];
       return {
         "1": combi[0] + emp[0],
-        "2": combi[1]+ emp[1],
-        "3": combi[2]+ emp[2],
+        "2": combi[1] + emp[1],
+        "3": combi[2] + emp[2],
       };
     });
   }
@@ -60,6 +65,6 @@ export class NumberHelper {
       .reduce((pV, cV) => (pV += cV));
   }
   public __testExports__ = {
-    getValues: this.getValues
-  }
+    getValues: this.getValues,
+  };
 }

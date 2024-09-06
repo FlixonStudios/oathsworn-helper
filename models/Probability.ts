@@ -1,10 +1,12 @@
 import { NUM_OF_CARDS } from "@/constants/model";
 import { DeckManager } from "./DecksManager";
 import { Empower, Recommendations } from "./types";
+import { NumberHelper } from "./NumberHelper";
 
 export class Probability {
-  // given a target number to hit the returns probability to succeed per number
-  public skillCheck(
+  constructor(
+    public numberHelper = new NumberHelper()
+  ) {}
     _deckManager: DeckManager,
     target: number,
     empower: Empower = {},

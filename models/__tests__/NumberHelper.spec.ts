@@ -80,4 +80,14 @@ describe("NumberHelper", () => {
       }
     );
   });
+  describe("getEmpowerCombination", () => {
+    it("should return an array of Empowers", () => {
+      const numberHelper = new NumberHelper();
+
+      const result = numberHelper.getEmpowerCombinations({}, 1);
+
+      const expected = [{ "1": 1, "2": 0, "3": 0 }];
+      expect(result).toEqual(expected);
+    });
+  });
 });
