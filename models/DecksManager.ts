@@ -12,14 +12,14 @@ export class DeckManager {
     critCount: 0,
     damageValues: [],
   };
-  constructor(public decks: MightDecks) {}
+  constructor(public decks: MightDecks, public empower?: Empower) {}
 
-  public startDraw(_noOfCards: number, empower?: Empower) {
+  public startDraw(_noOfCards: number, _empower?: Empower) {
     let noOfCards = _noOfCards;
     let results = [];
 
     this.resetDrawSession();
-
+    const empower = _empower ?? this.empower;
     for (let i = 3; i >= 1; i--) {
       const index = i.toString() as keyof Decks<MightDeck | number>;
       if (!empower || !this.decks[index] || !empower[index]) {
