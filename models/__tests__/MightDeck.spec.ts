@@ -76,45 +76,22 @@ describe("MightDeck", () => {
       expect(deck.remainingCards.length).toEqual(0);
       expect(result.cardsDrawn).toEqual(LIMIT_PER_DRAW);
     });
-    it("should return if miss condition is met", () => {
-      const mockCards = [
-        new Card(),
-        new Card(2, true),
-        new Card(),
-        new Card(1),
-      ];
-      const deck = new MightDeck(mockCards);
-      const result = deck.startDraw(4);
-      expect(result.isMiss).toEqual(true);
-    });
     it.each([
       [3, 3, [new Card(1), new Card(1), new Card(1)]],
-      [0, 4, [new Card(), new Card(1)]],
+      [2, 4, [new Card(), new Card(1)]],
       [6, 4, [new Card(), new Card(2, true), new Card(1)]],
       [3, 4, [new Card(), new Card(1), new Card(1)]],
       [16, 4, [new Card(), new Card(2, true), new Card(2, true)]],
-      [0, 4, [new Card(), new Card(), new Card(2, true)]],
+      [4, 4, [new Card(), new Card(), new Card(2, true)]],
     ])(
       "should return total damage of %s",
       (expectedDamage, noCardsToDraw, mockCards) => {
-        // always first in first out for pile
+        // always first in last out for pile
         jest.spyOn(global.Math, "random").mockReturnValue(1);
         const deck = new MightDeck(mockCards);
         const result = deck.startDraw(noCardsToDraw);
         expect(result.totalDamage).toEqual(expectedDamage);
       }
     );
-  });
-  describe("hasMissed", () => {
-    it.each([
-      [[new Damage(2), new Damage(2), new Damage(2)], false],
-      [[new Damage(),], false],
-      [[], false],
-      [[new Damage(), new Damage()], true],
-      [[new Damage(1), new Damage(), new Damage(2), new Damage(1), new Damage()], true],
-    ])("it should correctly check %s for misses", (mockDmgs, expected) => {
-      const deck = new MightDeck();
-      expect(deck.hasMissed(mockDmgs)).toEqual(expected);
-    });
   });
 });

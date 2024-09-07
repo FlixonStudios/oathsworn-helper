@@ -5,7 +5,7 @@ import { MightDeck } from "./MightDeck";
 export interface DrawSession {
   totalDamage: number;
   cardsDrawn: number;
-  isMiss: boolean;
+  isMiss?: boolean;
   isInfinite: boolean;
   critCount: number;
   damageValues: Damage[];
