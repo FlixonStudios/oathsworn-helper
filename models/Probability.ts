@@ -13,31 +13,30 @@ interface DamageAdviceOptions {
 
 interface SkillCheckOptions {
   target: number;
-  empower: Empower; 
+  empower: Empower;
   iterations: number;
+  targetedScenarios: number[];
 }
 
 const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
   numOfExtraEmpower: 0,
   baseMight: {},
   iterations: 100,
-  cardsToDraw: 4
+  cardsToDraw: 4,
 };
 
 const DEFAULT_SKILL_CHECK_OPTIONS: SkillCheckOptions = {
   target: 0,
   empower: {},
   iterations: 100,
-}
+  targetedScenarios: NUM_OF_CARDS,
+};
 
 export class Probability {
   constructor(
     public deckManager: DeckManager,
     public numberHelper = new NumberHelper()
   ) {}
-  // given an empower value and current deck state
-  // what is the recommended card combination
-  // and number of cards to draw for max avg damage
   public damageAdvice(
     _options: Partial<DamageAdviceOptions> = DEFAULT_DAMAGE_ADVICE_OPTIONS
   ) {
@@ -94,15 +93,15 @@ export class Probability {
 
   // given a target number to hit the returns probability to succeed per number
   public skillCheck(_options: Partial<SkillCheckOptions>) {
-    const options = { ...DEFAULT_SKILL_CHECK_OPTIONS, ..._options }
-    const { target, empower, iterations } = options
+    const options = { ...DEFAULT_SKILL_CHECK_OPTIONS, ..._options };
+    const { target, empower, iterations, targetedScenarios } = options;
 
     const recommendations: Recommendations = {};
 
-    for (let i = 0; i < NUM_OF_CARDS.length; i++) {
-      recommendations[NUM_OF_CARDS[i].toString()] = this.drawTill(
+    for (let i = 0; i < targetedScenarios.length; i++) {
+      recommendations[targetedScenarios[i].toString()] = this.drawTill(
         target,
-        NUM_OF_CARDS[i],
+        targetedScenarios[i],
         iterations,
         empower
       );

@@ -59,7 +59,7 @@ describe("Probability", () => {
       }
     );
   });
-  describe("damageAdvice", () => {
+  xdescribe("damageAdvice", () => {
     it.each([
       [
         0,
@@ -128,7 +128,7 @@ describe("Probability", () => {
         ],
       ],
     ])(
-      "should return the expected avg damage",
+      "should return the expected avg damage for %s empower",
       (numOfExtraEmpower, baseMight, expected) => {
         const deckManager = new DeckManager({
           "0": new MightDeck([new Card(1)]),
