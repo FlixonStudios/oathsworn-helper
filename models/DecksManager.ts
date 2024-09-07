@@ -43,7 +43,7 @@ export class DeckManager {
       "2": this.decks?.["2"] ? this.decks?.["2"].clone() : undefined,
       "3": this.decks?.["3"] ? this.decks?.["3"].clone() : undefined,
     };
-    return new DeckManager(clonedDecks);
+    return new DeckManager(clonedDecks, this.empower);
   }
 
   public shuffleDecks() {

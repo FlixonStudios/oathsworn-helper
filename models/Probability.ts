@@ -1,41 +1,109 @@
 import { NUM_OF_CARDS } from "@/constants/model";
 import { DeckManager } from "./DecksManager";
-import { Empower, Recommendations } from "./types";
+import { DrawSession, Empower, Recommendations } from "./types";
 import { NumberHelper } from "./NumberHelper";
 import { Iterator } from "./Iterator";
+
+interface DamageAdviceOptions {
+  numOfExtraEmpower: number;
+  baseMight: Empower;
+  iterations: number;
+}
+
+interface SkillCheckOptions {
+  target: number;
+  empower: Empower; 
+  iterations: number;
+}
+
+const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
+  numOfExtraEmpower: 0,
+  baseMight: {},
+  iterations: 100,
+};
+
+const DEFAULT_SKILL_CHECK_OPTIONS: SkillCheckOptions = {
+  target: 0,
+  empower: {},
+  iterations: 100,
+}
 
 export class Probability {
   constructor(
     public deckManager: DeckManager,
     public numberHelper = new NumberHelper()
   ) {}
+  // given an empower value and current deck state
+  // what is the recommended card combination
+  // and number of cards to draw for max avg damage
   public damageAdvice(
-    _deckManager: DeckManager,
-    empower: Empower = {},
-    numOfExtraEmpower: number
+    _options: Partial<DamageAdviceOptions> = DEFAULT_DAMAGE_ADVICE_OPTIONS
   ) {
-    const deckManager = _deckManager.clone();
+    const options: DamageAdviceOptions = {
+      ...DEFAULT_DAMAGE_ADVICE_OPTIONS,
+      ..._options,
+    };
+    const { baseMight, numOfExtraEmpower, iterations } = options;
     const empowerCombinations = this.numberHelper.getEmpowerCombinations(
-      empower,
+      baseMight,
       numOfExtraEmpower
     );
+    let calculation = {
+      totalDamage: 0,
+      missed: 0,
+    };
 
+    const calculate = (results: DrawSession) => {
+      calculation.totalDamage += results.totalDamage;
+      if (results.isMiss) calculation.missed++;
+    };
+    // FIXME: make dynamic
     const cardsToDraw = 4;
-    const empCombi = empowerCombinations[0];
+
+    return empowerCombinations.map((empCombi) => {
+      calculation.totalDamage = 0;
+      calculation.missed = 0;
+      this.justDraw(cardsToDraw, empCombi, calculate, iterations);
+      return {
+        cardsDrawnPerIteration: cardsToDraw,
+        combination: empCombi,
+        missChance: calculation.missed / iterations,
+        averageDamage: calculation.totalDamage / iterations,
+      };
+    });
+  }
+
+  public justDraw(
+    cardsToDraw: number,
+    empower: Empower,
+    calculate: (results: DrawSession) => void,
+    iterations: number
+  ) {
+    const deckManager = this.deckManager.clone();
     deckManager.shuffleDecks();
     deckManager.startDraw(cardsToDraw);
+    const iterator = new Iterator(deckManager, empower);
+    iterator.iterateFor(
+      {
+        calculate,
+        toDraw: cardsToDraw,
+      },
+      iterations
+    );
   }
 
   // given a target number to hit the returns probability to succeed per number
-  public skillCheck(target: number, empower: Empower = {}, includeMiss = true) {
-    const ITERATIONS = 20000;
+  public skillCheck(_options: Partial<SkillCheckOptions>) {
+    const options = { ...DEFAULT_SKILL_CHECK_OPTIONS, ..._options }
+    const { target, empower, iterations } = options
+
     const recommendations: Recommendations = {};
 
     for (let i = 0; i < NUM_OF_CARDS.length; i++) {
       recommendations[NUM_OF_CARDS[i].toString()] = this.drawTill(
         target,
         NUM_OF_CARDS[i],
-        ITERATIONS,
+        iterations,
         empower
       );
     }

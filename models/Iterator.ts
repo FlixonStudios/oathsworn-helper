@@ -9,7 +9,7 @@ interface IterateForOptions {
 export class Iterator {
   public deckManager: DeckManager;
   constructor(deckManager: DeckManager, empower?: Empower) {
-    this.deckManager = deckManager.clone()
+    this.deckManager = deckManager.clone();
     this.deckManager.empower = empower;
   }
 
