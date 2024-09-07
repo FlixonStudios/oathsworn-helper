@@ -8,6 +8,7 @@ interface DamageAdviceOptions {
   numOfExtraEmpower: number;
   baseMight: Empower;
   iterations: number;
+  cardsToDraw: number;
 }
 
 interface SkillCheckOptions {
@@ -20,6 +21,7 @@ const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
   numOfExtraEmpower: 0,
   baseMight: {},
   iterations: 100,
+  cardsToDraw: 4
 };
 
 const DEFAULT_SKILL_CHECK_OPTIONS: SkillCheckOptions = {
@@ -43,7 +45,7 @@ export class Probability {
       ...DEFAULT_DAMAGE_ADVICE_OPTIONS,
       ..._options,
     };
-    const { baseMight, numOfExtraEmpower, iterations } = options;
+    const { baseMight, numOfExtraEmpower, iterations, cardsToDraw } = options;
     const empowerCombinations = this.numberHelper.getEmpowerCombinations(
       baseMight,
       numOfExtraEmpower
@@ -57,8 +59,6 @@ export class Probability {
       calculation.totalDamage += results.totalDamage;
       if (results.isMiss) calculation.missed++;
     };
-    // FIXME: make dynamic
-    const cardsToDraw = 4;
 
     return empowerCombinations.map((empCombi) => {
       calculation.totalDamage = 0;
