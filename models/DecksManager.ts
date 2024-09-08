@@ -26,7 +26,7 @@ export class DeckManager {
         continue;
       }
       let amtToDraw = noOfCards >= empower[index] ? empower[index] : noOfCards;
-      // each deck has 1 result
+      // each deck has 1 result/draw session
       results.push(this.decks[index].startDraw(empower[index]));
       noOfCards -= amtToDraw;
     }
@@ -52,26 +52,28 @@ export class DeckManager {
     );
     return this;
   }
-
-  private mergeDrawSessions(drawSessions: DrawSession[]) {
+  // only one instance of drawing
+  private mergeDrawSessions(drawSessions: DrawSession[], missNoDamage = true) {
     const combinedSession = drawSessions.reduce((session, currentSession) => {
       const damageValues = session.damageValues.concat(
         ...currentSession.damageValues
       );
-      const isMiss = currentSession.isMiss
-        ? true
-        : this.hasMissed(damageValues);
+
       return {
         cardsDrawn: currentSession.cardsDrawn + session.cardsDrawn,
         totalDamage: currentSession.totalDamage + session.totalDamage,
         critCount: currentSession.critCount + session.critCount,
         damageValues,
-        isMiss,
+        // isMiss, // we only calculate isMiss at the end
         isInfinite: false, // FIXME: is this required?
       };
     });
     this.drawSession = combinedSession;
     this.drawSession.isMiss = this.hasMissed(this.drawSession.damageValues);
+    this.drawSession.totalDamage =
+      missNoDamage && this.drawSession.isMiss
+        ? 0
+        : this.drawSession.totalDamage;
     return combinedSession;
   }
 

@@ -27,9 +27,12 @@ describe("Optimizer", () => {
     it("should return top x values", () => {
       const optimizer = new Optimizer();
       const results = optimizer.optimizeResults(
-        4,
-        "p_val",
-        "cardsToDraw",
+        {
+          top: 4,
+          keyForValue: "p_val",
+          keyForScenario: "cardsToDraw",
+          initialTargetedScenarios: [8, 1, 6, 4, 0, 9, 5, 7, 3, 2],
+        },
         mockIterFunc
       );
       const expected = [9, 8, 7, 6];

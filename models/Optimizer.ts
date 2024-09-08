@@ -1,29 +1,28 @@
-interface Args {
+export interface Optimizable {
   iterations: number;
-  targetedScenarios?: number[];
+  targetedScenarios: number[];
   [key: string]: any;
 }
 
-export type IterFunc = (args: Args) => any[];
+export type IterFunc = (args: Optimizable) => any[];
 
 export interface OptimizerOptions {
   top: number;
   keyForValue: string;
   keyForScenario: string;
+  initialTargetedScenarios: number[];
 }
 
 export class Optimizer {
-  public optimizeResults(
-    top: number,
-    keyForValue: string,
-    keyForScenario: string,
-    iterFunc: IterFunc
-  ) {
+  public optimizeResults(_options: OptimizerOptions, iterFunc: IterFunc) {
+    const { top, keyForValue, keyForScenario, initialTargetedScenarios } =
+      _options;
+
     const iterationArr = [100, 500, 2500];
     const splicer = [9, 7, top];
 
     let significantResults = [];
-    let targetedScenarios;
+    let targetedScenarios = initialTargetedScenarios;
     for (let i = 0; i < iterationArr.length; i++) {
       const results = iterFunc({
         iterations: iterationArr[i],

@@ -42,7 +42,7 @@ describe("DeckManager", () => {
       const expected = {
         isMiss: true,
         cardsDrawn: 6,
-        totalDamage: 8,
+        totalDamage: 0,
         isInfinite: false,
         critCount: 1,
         damageValues: [
@@ -94,7 +94,7 @@ describe("DeckManager", () => {
       const expected = {
         isMiss: true,
         cardsDrawn: 4,
-        totalDamage: 4,
+        totalDamage: 0,
         isInfinite: false,
         critCount: 0,
         damageValues: [

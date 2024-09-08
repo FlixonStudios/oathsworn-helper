@@ -3,6 +3,7 @@ import { DeckManager } from "./DecksManager";
 import { DrawSession, Empower, Recommendations } from "./types";
 import { NumberHelper } from "./NumberHelper";
 import { Iterator } from "./Iterator";
+import { Optimizable } from "./Optimizer";
 
 interface DamageAdviceOptions {
   numOfExtraEmpower: number;
@@ -11,11 +12,13 @@ interface DamageAdviceOptions {
   cardsToDraw: number;
 }
 
-interface SkillCheckOptions {
+interface SkillCheckOptions extends Optimizable {
   target: number;
-  empower: Empower;
-  iterations: number;
-  targetedScenarios: number[];
+  baseMight: Empower;
+}
+
+interface DamageAdvicePerEmpowerCombi extends Optimizable {
+  empCombi: Empower;
 }
 
 const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
@@ -27,9 +30,15 @@ const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
 
 const DEFAULT_SKILL_CHECK_OPTIONS: SkillCheckOptions = {
   target: 0,
-  empower: {},
+  baseMight: {},
   iterations: 100,
   targetedScenarios: NUM_OF_CARDS,
+};
+
+const DEFAULT_DAMAGE_ADVICE_PER_EMPOWER_COMBI: DamageAdvicePerEmpowerCombi = {
+  empCombi: {},
+  targetedScenarios: NUM_OF_CARDS,
+  iterations: 100,
 };
 
 export class Probability {
@@ -72,6 +81,32 @@ export class Probability {
     });
   }
 
+  public damageAdviceForEmpowerCombi(_options: Partial<DamageAdvicePerEmpowerCombi>) {
+    const options = { ...DEFAULT_DAMAGE_ADVICE_PER_EMPOWER_COMBI, ..._options };
+    const { empCombi, iterations, targetedScenarios } = options;
+
+    let calculation = {
+      totalDamage: 0,
+      missed: 0,
+    };
+    const calculate = (results: DrawSession) => {
+      calculation.totalDamage += results.totalDamage;
+      if (results.isMiss) calculation.missed++;
+    };
+
+    return targetedScenarios.map((cardsToDraw) => {
+      calculation.totalDamage = 0;
+      calculation.missed = 0;
+      this.justDraw(cardsToDraw, empCombi, calculate, iterations);
+      return {
+        cardsDrawnPerIteration: cardsToDraw,
+        combination: empCombi,
+        missChance: calculation.missed / iterations,
+        averageDamage: calculation.totalDamage / iterations,
+      };
+    });
+  }
+
   public justDraw(
     cardsToDraw: number,
     empower: Empower,
@@ -94,7 +129,7 @@ export class Probability {
   // given a target number to hit the returns probability to succeed per number
   public skillCheck(_options: Partial<SkillCheckOptions>) {
     const options = { ...DEFAULT_SKILL_CHECK_OPTIONS, ..._options };
-    const { target, empower, iterations, targetedScenarios } = options;
+    const { target, baseMight, iterations, targetedScenarios } = options;
 
     const recommendations: Recommendations = {};
 
@@ -103,7 +138,7 @@ export class Probability {
         target,
         targetedScenarios[i],
         iterations,
-        empower
+        baseMight
       );
     }
 
@@ -121,6 +156,7 @@ export class Probability {
       success: 0,
     };
     let summary = {
+      cardsToDraw,
       p_target: 0,
     };
     const iterator = new Iterator(this.deckManager, empower);
