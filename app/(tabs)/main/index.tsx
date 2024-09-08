@@ -44,14 +44,18 @@ export default function MainPage() {
   }
 
   function calculate() {
-    const p = new Probability();
     const deckManager = new DeckManager({
       "0": new MightDeck(decks[0].remainingCards),
       "1": new MightDeck(decks[1].remainingCards),
       "2": new MightDeck(decks[2].remainingCards),
       "3": new MightDeck(decks[3].remainingCards),
     });
-    const results = p.skillCheck(deckManager, skillCheckTarget, might);
+    const p = new Probability(deckManager);
+    const results = p.skillCheck({
+      target: skillCheckTarget,
+      baseMight: might,
+      iterations: 5000,
+    });
     setSkillCheckResults({ ...results });
   }
 

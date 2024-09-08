@@ -31,8 +31,13 @@ export interface Decks<T> {
   "3"?: T;
 }
 
+export interface SkillCheckResult {
+  p_target: number;
+  cardsToDraw: number;
+}
+
 export interface Recommendations {
-  [key: string]: { p_target: number };
+  [key: string]: SkillCheckResult;
 }
 
 export interface DeckAndToDraw {
