@@ -69,6 +69,27 @@ export default function MainPage() {
     setMight(newMight);
   }
 
+  function renderResultsSections() {
+    if (!skillCheckResults) return <></>;
+    const resultsPerSection = 5;
+    const arr = [...Object.values(skillCheckResults)];
+    const noOfFullSections = Math.floor(arr.length / resultsPerSection);
+    const lastSection = arr.length % resultsPerSection;
+    let sections = [];
+    for (let i = 0; i < noOfFullSections; i++) {
+      sections.push(i * resultsPerSection);
+    }
+    sections.push(noOfFullSections * resultsPerSection + lastSection);
+    let start = 0;
+    return sections.map((val) => {
+      const render = (
+        <ResultsSection skillCheckResults={arr.slice(start, val)} />
+      );
+      start = val;
+      return render;
+    });
+  }
+
   return (
     <MainPageContainer>
       <Container>
@@ -104,16 +125,7 @@ export default function MainPage() {
             <CalculateButton onPress={() => calculate()}>
               <Text>Calculate</Text>
             </CalculateButton>
-            <ResultsSection
-              skillCheckResults={skillCheckResults}
-              start={0}
-              end={5}
-            />
-            <ResultsSection
-              skillCheckResults={skillCheckResults}
-              start={5}
-              end={10}
-            />
+            {renderResultsSections()}
           </SkillCheckContent>
         </SkillCheckSection>
       </Container>
