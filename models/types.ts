@@ -1,6 +1,7 @@
 import { Damage } from "./Damage";
 import { Deck } from "./Deck";
 import { MightDeck } from "./MightDeck";
+import { Optimizable } from "./Optimizer";
 
 export interface DrawSession {
   totalDamage: number;
@@ -34,6 +35,17 @@ export interface Decks<T> {
 export interface SkillCheckResult {
   p_target: number;
   cardsToDraw: number;
+}
+
+export interface DamageAdvicePerEmpowerCombi extends Optimizable {
+  empCombi: Empower;
+}
+
+export interface DamageAdvicePerEmpowerCombiResults {
+  cardsToDraw: number;
+  combination: Empower;
+  missChance: number;
+  averageDamage: number;
 }
 
 export interface Recommendations {

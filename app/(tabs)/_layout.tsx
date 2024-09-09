@@ -19,6 +19,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="damage-advice"
+        options={{
+          title: "Damage",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="bar-chart" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="decks"
         options={{
           title: "Decks",

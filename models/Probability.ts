@@ -1,6 +1,6 @@
 import { NUM_OF_CARDS } from "@/constants/model";
 import { DeckManager } from "./DecksManager";
-import { DrawSession, Empower, Recommendations } from "./types";
+import { DamageAdvicePerEmpowerCombi, DrawSession, Empower } from "./types";
 import { NumberHelper } from "./NumberHelper";
 import { Iterator } from "./Iterator";
 import { Optimizable } from "./Optimizer";
@@ -15,10 +15,6 @@ interface DamageAdviceOptions {
 interface SkillCheckOptions extends Optimizable {
   target: number;
   baseMight: Empower;
-}
-
-interface DamageAdvicePerEmpowerCombi extends Optimizable {
-  empCombi: Empower;
 }
 
 const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
@@ -73,7 +69,7 @@ export class Probability {
       calculation.missed = 0;
       this.justDraw(cardsToDraw, empCombi, calculate, iterations);
       return {
-        cardsDrawnPerIteration: cardsToDraw,
+        cardsToDraw: cardsToDraw,
         combination: empCombi,
         missChance: calculation.missed / iterations,
         averageDamage: calculation.totalDamage / iterations,
@@ -101,7 +97,7 @@ export class Probability {
       calculation.missed = 0;
       this.justDraw(cardsToDraw, empCombi, calculate, iterations);
       return {
-        cardsDrawnPerIteration: cardsToDraw,
+        cardsToDraw: cardsToDraw,
         combination: empCombi,
         missChance: calculation.missed / iterations,
         averageDamage: calculation.totalDamage / iterations,
