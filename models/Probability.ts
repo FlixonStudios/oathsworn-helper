@@ -68,6 +68,7 @@ export class Probability {
       calculation.totalDamage = 0;
       calculation.missed = 0;
       this.justDraw(cardsToDraw, empCombi, calculate, iterations);
+      
       return {
         cardsToDraw: cardsToDraw,
         combination: empCombi,

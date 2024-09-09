@@ -7,19 +7,36 @@ export interface Optimizable {
 export type IterFunc = (args: Optimizable) => any[];
 
 export interface OptimizerOptions {
-  top: number;
+  initialTargetedScenarios: number[];
   keyForValue: string;
   keyForScenario: string;
-  initialTargetedScenarios: number[];
+  top?: number;
+  finalIteration?: number;
+  iterationArr?: number[];
+  filterArr?: number[];
 }
+
+const DEFAULT_OPTIMIZER_OPTIONS = {
+  top: 4,
+  finalIteration: 3000,
+  iterationArr: [100, 500, 2500],
+  filterArr: [9, 7],
+};
 
 export class Optimizer {
   public optimizeResults(_options: OptimizerOptions, iterFunc: IterFunc) {
-    const { top, keyForValue, keyForScenario, initialTargetedScenarios } =
-      _options;
+    const options = { ...DEFAULT_OPTIMIZER_OPTIONS, ..._options };
+    const {
+      top,
+      keyForValue,
+      keyForScenario,
+      initialTargetedScenarios,
+      filterArr,
+      finalIteration,
+      iterationArr,
+    } = options;
 
-    const iterationArr = [100, 500, 2500];
-    const splicer = [9, 7, top];
+    const splicer = [...filterArr, top];
 
     let significantResults = [];
     let targetedScenarios = initialTargetedScenarios;
@@ -35,6 +52,13 @@ export class Optimizer {
       targetedScenarios = significantResults.map((val) => val[keyForScenario]);
     }
 
-    return significantResults.map((val) => val[keyForScenario]);
+    const shortlistedScenarios = significantResults.map(
+      (val) => val[keyForScenario]
+    );
+
+    return iterFunc({
+      iterations: finalIteration,
+      targetedScenarios: shortlistedScenarios,
+    });
   }
 }

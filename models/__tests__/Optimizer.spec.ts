@@ -35,7 +35,10 @@ describe("Optimizer", () => {
         },
         mockIterFunc
       );
-      const expected = [9, 8, 7, 6];
+      const expected = [9, 8, 7, 6].map((val) => ({
+        p_val: val,
+        cardsToDraw: val,
+      }));
       expect(results).toEqual(expected);
     });
   });

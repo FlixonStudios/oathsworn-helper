@@ -56,12 +56,13 @@ export default function MainPage() {
     });
     const p = new Probability(deckManager);
     const optimizer = new Optimizer();
-    const scenariosToGenerate = optimizer.optimizeResults(
+    const results = optimizer.optimizeResults(
       {
         top: 4,
         keyForValue: "averageDamage",
         keyForScenario: "cardsToDraw",
         initialTargetedScenarios: NUM_OF_CARDS,
+        finalIteration: 4000,
       },
       ({ iterations, targetedScenarios }) =>
         p.damageAdviceForEmpowerCombi({
@@ -70,11 +71,6 @@ export default function MainPage() {
           targetedScenarios,
         })
     );
-    const results = p.damageAdviceForEmpowerCombi({
-      empCombi: might,
-      iterations: 4000,
-      targetedScenarios: scenariosToGenerate,
-    });
     setDamageAdviceResults([[...results]]);
   }
 

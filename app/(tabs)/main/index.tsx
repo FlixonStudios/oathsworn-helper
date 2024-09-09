@@ -55,12 +55,13 @@ export default function MainPage() {
     });
     const p = new Probability(deckManager);
     const optimizer = new Optimizer();
-    const scenariosToGenerate = optimizer.optimizeResults(
+    const results = optimizer.optimizeResults(
       {
         top: 4,
         keyForValue: "p_target",
         keyForScenario: "cardsToDraw",
         initialTargetedScenarios: NUM_OF_CARDS,
+        finalIteration: 5000,
       },
       ({ iterations, targetedScenarios }) =>
         p.skillCheck({
@@ -70,12 +71,6 @@ export default function MainPage() {
           targetedScenarios,
         })
     );
-    const results = p.skillCheck({
-      target: skillCheckTarget,
-      baseMight: might,
-      iterations: 5000,
-      targetedScenarios: scenariosToGenerate,
-    });
     setSkillCheckResults([...results]);
   }
 
