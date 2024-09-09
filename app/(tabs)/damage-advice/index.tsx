@@ -60,7 +60,7 @@ export default function MainPage() {
       numOfExtraEmpower: empowerBonus,
       baseMight: might,
       initialTargetedScenarios: NUM_OF_CARDS,
-      finalIteration: 4000,
+      iterations: 4000,
     });
 
     setDamageAdviceResults([...results]);
