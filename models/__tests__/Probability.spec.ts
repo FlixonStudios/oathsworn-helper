@@ -191,7 +191,6 @@ describe("Probability", () => {
           baseMight: baseMight,
           numOfExtraEmpower,
         });
-        console.log(">>>>", results[0])
         expect(
           isWithin(results[0].missChance, expected[0].missChance, 0.02)
         ).toEqual(true);
