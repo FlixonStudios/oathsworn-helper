@@ -5,37 +5,38 @@ import { DeckManager } from "@/models/DecksManager";
 import { MightDeck } from "@/models/MightDeck";
 import { Optimizer } from "@/models/Optimizer";
 import { Probability } from "@/models/Probability";
-import {
-  DamageAdvicePerEmpowerCombiResults,
-  Empower
-} from "@/models/types";
+import { DamageAdvicePerEmpowerCombiResults, Empower } from "@/models/types";
 import { useState } from "react";
 import { Text } from "react-native";
 import { DamageResultRow } from "./components/damage-results-row";
 import {
   CalculateButton,
+  ChangeTargetButton,
   Container,
+  CurrentTarget,
   MainPageContainer,
   MightSection,
   SeekButton,
   SkillCheckContent,
-  SkillCheckSection
+  SkillCheckSection,
+  TargetSection,
 } from "./damage-advice.styles";
+import { ColoredText } from "@/components/text/text";
 
 export default function MainPage() {
   const { gameState } = useGame();
 
-  const [skillCheckTarget, setSkillCheckTarget] = useState(0);
+  const [empowerBonus, setEmpowerBonus] = useState(0);
   const [might, setMight] = useState<Empower>({});
   const [damageAdviceResults, setDamageAdviceResults] =
-    useState<DamageAdvicePerEmpowerCombiResults[]>();
+    useState<DamageAdvicePerEmpowerCombiResults[][]>();
 
   const { decks } = gameState;
   const decksToUse: Array<"1" | "2" | "3"> = ["1", "2", "3"];
 
   function onPress(val: number) {
-    if (val < 0 && skillCheckTarget === 0) return;
-    setSkillCheckTarget(skillCheckTarget + val);
+    if (val < 0 && empowerBonus === 0) return;
+    setEmpowerBonus(empowerBonus + val);
   }
 
   function resetSkill(index: "1" | "2" | "3") {
@@ -74,7 +75,7 @@ export default function MainPage() {
       iterations: 4000,
       targetedScenarios: scenariosToGenerate,
     });
-    setDamageAdviceResults([...results]);
+    setDamageAdviceResults([[...results]]);
   }
 
   function addMight(index: "1" | "2" | "3") {
@@ -103,15 +104,30 @@ export default function MainPage() {
                     onPress={() => addMight(i)}
                     onLongPress={() => resetSkill(i)}
                   >
-                    <Text>{might[i]}</Text>
+                    <ColoredText text={might[i]} bgColor={colorMap[i]} />
                   </SeekButton>
                 );
               })}
             </MightSection>
+            <TargetSection>
+              <ChangeTargetButton onPress={() => onPress(-1)}>
+                <Text>{"<"}</Text>
+              </ChangeTargetButton>
+              <CurrentTarget>
+                <Text>{empowerBonus}</Text>
+              </CurrentTarget>
+              <ChangeTargetButton onPress={() => onPress(1)}>
+                <Text>{">"}</Text>
+              </ChangeTargetButton>
+            </TargetSection>
             <CalculateButton onPress={() => calculate()}>
               <Text>Calculate</Text>
             </CalculateButton>
-            <DamageResultRow results={damageAdviceResults} empowerCombi={{}} />
+            {damageAdviceResults?.map((results, i) => {
+              return (
+                <DamageResultRow results={results} empowerCombi={results[i].combination} />
+              );
+            })}
           </SkillCheckContent>
         </SkillCheckSection>
       </Container>
