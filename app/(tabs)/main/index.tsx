@@ -16,16 +16,19 @@ import { useGame } from "@/context-providers/game/game-hook";
 import { colorMap } from "@/constants/styles";
 import { Probability } from "@/models/Probability";
 import { MightDeck } from "@/models/MightDeck";
-import { Empower, Recommendations } from "@/models/types";
+import { Empower, SkillCheckResult } from "@/models/types";
 import { DeckManager } from "@/models/DecksManager";
 import { ResultsSection } from "./components/results-section";
+import { Optimizer } from "@/models/Optimizer";
+import { NUM_OF_CARDS } from "@/constants/model";
 
 export default function MainPage() {
   const { gameState } = useGame();
 
   const [skillCheckTarget, setSkillCheckTarget] = useState(0);
   const [might, setMight] = useState<Empower>({});
-  const [skillCheckResults, setSkillCheckResults] = useState<Recommendations>();
+  const [skillCheckResults, setSkillCheckResults] =
+    useState<SkillCheckResult[]>();
 
   const { decks } = gameState;
   const decksToUse: Array<"1" | "2" | "3"> = ["1", "2", "3"];
@@ -51,12 +54,29 @@ export default function MainPage() {
       "3": new MightDeck(decks[3].remainingCards),
     });
     const p = new Probability(deckManager);
+    const optimizer = new Optimizer();
+    const scenariosToGenerate = optimizer.optimizeResults(
+      {
+        top: 4,
+        keyForValue: "p_target",
+        keyForScenario: "cardsToDraw",
+        initialTargetedScenarios: NUM_OF_CARDS,
+      },
+      ({ iterations, targetedScenarios }) =>
+        p.skillCheck({
+          target: skillCheckTarget,
+          baseMight: might,
+          iterations,
+          targetedScenarios,
+        })
+    );
     const results = p.skillCheck({
       target: skillCheckTarget,
       baseMight: might,
       iterations: 5000,
+      targetedScenarios: scenariosToGenerate,
     });
-    setSkillCheckResults({ ...results });
+    setSkillCheckResults([...results]);
   }
 
   function addMight(index: "1" | "2" | "3") {
@@ -72,7 +92,7 @@ export default function MainPage() {
   function renderResultsSections() {
     if (!skillCheckResults) return <></>;
     const resultsPerSection = 5;
-    const arr = [...Object.values(skillCheckResults)];
+    const arr = [...skillCheckResults];
     const noOfFullSections = Math.floor(arr.length / resultsPerSection);
     const lastSection = arr.length % resultsPerSection;
     let sections = [];
@@ -83,7 +103,7 @@ export default function MainPage() {
     let start = 0;
     return sections.map((val) => {
       const render = (
-        <ResultsSection skillCheckResults={arr.slice(start, val)} />
+        <ResultsSection key={val} skillCheckResults={arr.slice(start, val)} />
       );
       start = val;
       return render;

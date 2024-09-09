@@ -81,7 +81,9 @@ export class Probability {
     });
   }
 
-  public damageAdviceForEmpowerCombi(_options: Partial<DamageAdvicePerEmpowerCombi>) {
+  public damageAdviceForEmpowerCombi(
+    _options: Partial<DamageAdvicePerEmpowerCombi>
+  ) {
     const options = { ...DEFAULT_DAMAGE_ADVICE_PER_EMPOWER_COMBI, ..._options };
     const { empCombi, iterations, targetedScenarios } = options;
 
@@ -125,24 +127,12 @@ export class Probability {
       iterations
     );
   }
-
-  // given a target number to hit the returns probability to succeed per number
   public skillCheck(_options: Partial<SkillCheckOptions>) {
     const options = { ...DEFAULT_SKILL_CHECK_OPTIONS, ..._options };
     const { target, baseMight, iterations, targetedScenarios } = options;
-
-    const recommendations: Recommendations = {};
-
-    for (let i = 0; i < targetedScenarios.length; i++) {
-      recommendations[targetedScenarios[i].toString()] = this.drawTill(
-        target,
-        targetedScenarios[i],
-        iterations,
-        baseMight
-      );
-    }
-
-    return recommendations;
+    return targetedScenarios.map((cardsToDraw) =>
+      this.drawTill(target, cardsToDraw, iterations, baseMight)
+    );
   }
 
   public drawTill(

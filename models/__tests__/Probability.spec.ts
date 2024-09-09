@@ -22,7 +22,7 @@ describe("Probability", () => {
       const deck = new MightDeck(mockCards);
       const probability = new Probability(new DeckManager({ "0": deck }));
       const result = probability.skillCheck({ target, iterations: 6000 });
-      expect(isWithin(result["1"].p_target, prob, 0.02)).toEqual(true);
+      expect(isWithin(result[0].p_target, prob, 0.02)).toEqual(true);
     });
 
     it.each([
@@ -46,7 +46,7 @@ describe("Probability", () => {
       const probability = new Probability(new DeckManager({ "0": deck }));
       const result = probability.skillCheck({ target, iterations: 6000 });
 
-      expect(isWithin(result["2"].p_target, prob, 0.02)).toEqual(true);
+      expect(isWithin(result[1].p_target, prob, 0.02)).toEqual(true);
     });
     it.each([[0.5, 4, [new Card(2, true), new Card()]]])(
       "target value of 4 ",
@@ -55,7 +55,7 @@ describe("Probability", () => {
         const probability = new Probability(new DeckManager({ "0": deck }));
         const result = probability.skillCheck({ target, iterations: 6000 });
 
-        expect(isWithin(result["3"].p_target, prob, 0.02)).toEqual(true);
+        expect(isWithin(result[2].p_target, prob, 0.02)).toEqual(true);
       }
     );
   });
