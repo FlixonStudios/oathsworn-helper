@@ -19,7 +19,9 @@ export class DeckManager {
     let results = [];
 
     this.resetDrawSession();
+
     const empower = _empower ?? this.empower;
+
     for (let i = 3; i >= 1; i--) {
       const index = i.toString() as keyof Decks<MightDeck | number>;
       if (!empower || !this.decks[index] || !empower[index]) {
@@ -27,10 +29,11 @@ export class DeckManager {
       }
       let amtToDraw = noOfCards >= empower[index] ? empower[index] : noOfCards;
       // each deck has 1 result/draw session
-      results.push(this.decks[index].startDraw(empower[index]));
+      results.push(this.decks[index].startDraw(amtToDraw));
       noOfCards -= amtToDraw;
     }
 
+    // we draw leftover cards from the first deck
     results.push(this.decks[0].startDraw(noOfCards));
 
     return this.mergeDrawSessions(results);

@@ -111,10 +111,7 @@ export class Probability {
     calculate: (results: DrawSession) => void,
     iterations: number
   ) {
-    const deckManager = this.deckManager.clone();
-    deckManager.shuffleDecks();
-    deckManager.startDraw(cardsToDraw);
-    const iterator = new Iterator(deckManager, empower);
+    const iterator = new Iterator(this.deckManager, empower);
     iterator.iterateFor(
       {
         calculate,
