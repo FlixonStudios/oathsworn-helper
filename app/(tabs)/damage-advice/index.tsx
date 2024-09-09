@@ -55,23 +55,15 @@ export default function MainPage() {
       "3": new MightDeck(decks[3].remainingCards),
     });
     const p = new Probability(deckManager);
-    const optimizer = new Optimizer();
-    const results = optimizer.optimizeResults(
-      {
-        top: 4,
-        keyForValue: "averageDamage",
-        keyForScenario: "cardsToDraw",
-        initialTargetedScenarios: NUM_OF_CARDS,
-        finalIteration: 4000,
-      },
-      ({ iterations, targetedScenarios }) =>
-        p.damageAdviceForEmpowerCombi({
-          empCombi: might,
-          iterations,
-          targetedScenarios,
-        })
-    );
-    setDamageAdviceResults([[...results]]);
+
+    const results = p.damageAdvice({
+      numOfExtraEmpower: empowerBonus,
+      baseMight: might,
+      initialTargetedScenarios: NUM_OF_CARDS,
+      finalIteration: 4000,
+    });
+
+    setDamageAdviceResults([...results]);
   }
 
   function addMight(index: "1" | "2" | "3") {
@@ -88,9 +80,13 @@ export default function MainPage() {
     <MainPageContainer>
       <Container>
         <SkillCheckSection>
-          <Text>Damage Advice</Text>
+          <Container>
+            <Text>Damage Advice</Text>
+          </Container>
           <SkillCheckContent>
-            <Text>Set Base Might</Text>
+            <Container>
+              <Text>Set Base Might</Text>
+            </Container>
             <MightSection>
               {decksToUse.map((i) => {
                 return (
@@ -105,6 +101,9 @@ export default function MainPage() {
                 );
               })}
             </MightSection>
+            <Container>
+              <Text>Set Empower Bonus</Text>
+            </Container>
             <TargetSection>
               <ChangeTargetButton onPress={() => onPress(-1)}>
                 <Text>{"<"}</Text>
@@ -121,7 +120,10 @@ export default function MainPage() {
             </CalculateButton>
             {damageAdviceResults?.map((results, i) => {
               return (
-                <DamageResultRow results={results} empowerCombi={results[i].combination} />
+                <DamageResultRow
+                  results={results}
+                  empowerCombi={results[0].combination}
+                />
               );
             })}
           </SkillCheckContent>

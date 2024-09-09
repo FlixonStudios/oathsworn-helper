@@ -4,7 +4,7 @@ export interface Optimizable {
   [key: string]: any;
 }
 
-export type IterFunc = (args: Optimizable) => any[];
+export type IterFunc<T> = (args: Optimizable) => T[];
 
 export interface OptimizerOptions {
   initialTargetedScenarios: number[];
@@ -24,7 +24,7 @@ const DEFAULT_OPTIMIZER_OPTIONS = {
 };
 
 export class Optimizer {
-  public optimizeResults(_options: OptimizerOptions, iterFunc: IterFunc) {
+  public optimizeResults<T>(_options: OptimizerOptions, iterFunc: IterFunc<T>) {
     const options = { ...DEFAULT_OPTIMIZER_OPTIONS, ..._options };
     const {
       top,
@@ -38,7 +38,7 @@ export class Optimizer {
 
     const splicer = [...filterArr, top];
 
-    let significantResults = [];
+    let significantResults = [] as any[];
     let targetedScenarios = initialTargetedScenarios;
     for (let i = 0; i < iterationArr.length; i++) {
       const results = iterFunc({
@@ -46,7 +46,7 @@ export class Optimizer {
         targetedScenarios,
       });
       significantResults = results.sort(
-        (valA, valB) => valB[keyForValue] - valA[keyForValue]
+        (valA: any, valB: any) => valB[keyForValue] - valA[keyForValue]
       );
       significantResults = significantResults.slice(0, splicer[i]);
       targetedScenarios = significantResults.map((val) => val[keyForScenario]);
@@ -59,6 +59,6 @@ export class Optimizer {
     return iterFunc({
       iterations: finalIteration,
       targetedScenarios: shortlistedScenarios,
-    });
+    }).sort((valA: any, valB: any) => valB[keyForValue] - valA[keyForValue]);
   }
 }

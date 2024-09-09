@@ -10,7 +10,7 @@ export const EmpowerValueContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-width: 64px;
+  width: 64px;
   margin: 2px;
 `;
 

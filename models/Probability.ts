@@ -1,6 +1,11 @@
 import { NUM_OF_CARDS } from "@/constants/model";
 import { DeckManager } from "./DecksManager";
-import { DamageAdvicePerEmpowerCombi, DrawSession, Empower } from "./types";
+import {
+  DamageAdvicePerEmpowerCombi,
+  DamageAdvicePerEmpowerCombiResults,
+  DrawSession,
+  Empower,
+} from "./types";
 import { NumberHelper } from "./NumberHelper";
 import { Iterator } from "./Iterator";
 import { Optimizable, Optimizer } from "./Optimizer";
@@ -47,8 +52,9 @@ export class Probability {
       ...DEFAULT_DAMAGE_ADVICE_OPTIONS,
       ..._options,
     };
-    const { baseMight, numOfExtraEmpower, iterations, targetedScenarios } = options;
-    
+    const { baseMight, numOfExtraEmpower, iterations, targetedScenarios } =
+      options;
+
     const empowerCombinations = this.numberHelper.getEmpowerCombinations(
       baseMight,
       numOfExtraEmpower
@@ -59,6 +65,7 @@ export class Probability {
     return empowerCombinations.map((empCombi) => {
       return optimizer.optimizeResults(
         {
+          top: 4,
           initialTargetedScenarios: targetedScenarios,
           keyForValue: "averageDamage",
           keyForScenario: "cardsToDraw",
@@ -76,7 +83,7 @@ export class Probability {
 
   public damageAdviceForEmpowerCombi(
     _options: Partial<DamageAdvicePerEmpowerCombi>
-  ) {
+  ): DamageAdvicePerEmpowerCombiResults[] {
     const options = { ...DEFAULT_DAMAGE_ADVICE_PER_EMPOWER_COMBI, ..._options };
     const { empCombi, iterations, targetedScenarios } = options;
 
