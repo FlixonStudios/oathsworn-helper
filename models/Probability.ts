@@ -3,13 +3,11 @@ import { DeckManager } from "./DecksManager";
 import { DamageAdvicePerEmpowerCombi, DrawSession, Empower } from "./types";
 import { NumberHelper } from "./NumberHelper";
 import { Iterator } from "./Iterator";
-import { Optimizable } from "./Optimizer";
+import { Optimizable, Optimizer } from "./Optimizer";
 
-interface DamageAdviceOptions {
+interface DamageAdviceOptions extends Optimizable {
   numOfExtraEmpower: number;
   baseMight: Empower;
-  iterations: number;
-  cardsToDraw: number;
 }
 
 interface SkillCheckOptions extends Optimizable {
@@ -21,7 +19,7 @@ const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
   numOfExtraEmpower: 0,
   baseMight: {},
   iterations: 100,
-  cardsToDraw: 4,
+  targetedScenarios: NUM_OF_CARDS,
 };
 
 const DEFAULT_SKILL_CHECK_OPTIONS: SkillCheckOptions = {
@@ -49,32 +47,30 @@ export class Probability {
       ...DEFAULT_DAMAGE_ADVICE_OPTIONS,
       ..._options,
     };
-    const { baseMight, numOfExtraEmpower, iterations, cardsToDraw } = options;
+    const { baseMight, numOfExtraEmpower, iterations, targetedScenarios } = options;
+    
     const empowerCombinations = this.numberHelper.getEmpowerCombinations(
       baseMight,
       numOfExtraEmpower
     );
-    let calculation = {
-      totalDamage: 0,
-      missed: 0,
-    };
 
-    const calculate = (results: DrawSession) => {
-      calculation.totalDamage += results.totalDamage;
-      if (results.isMiss) calculation.missed++;
-    };
+    const optimizer = new Optimizer();
 
     return empowerCombinations.map((empCombi) => {
-      calculation.totalDamage = 0;
-      calculation.missed = 0;
-      this.justDraw(cardsToDraw, empCombi, calculate, iterations);
-      
-      return {
-        cardsToDraw: cardsToDraw,
-        combination: empCombi,
-        missChance: calculation.missed / iterations,
-        averageDamage: calculation.totalDamage / iterations,
-      };
+      return optimizer.optimizeResults(
+        {
+          initialTargetedScenarios: targetedScenarios,
+          keyForValue: "averageDamage",
+          keyForScenario: "cardsToDraw",
+          finalIteration: iterations,
+        },
+        ({ iterations, targetedScenarios }) =>
+          this.damageAdviceForEmpowerCombi({
+            iterations,
+            targetedScenarios,
+            empCombi,
+          })
+      );
     });
   }
 
