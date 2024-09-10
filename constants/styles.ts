@@ -16,3 +16,12 @@ export const BorderedCentered = styled(CenteredView)`
   border-color: #000000;
   border-width: 1px;
 `;
+
+export const ResultContainer = styled(BorderedCentered)`
+  width: 48px;
+  flex-wrap: wrap;
+  margin: 2px;
+`;
+export const ResultValue = styled(CenteredView)`
+  width: 48px;
+`;

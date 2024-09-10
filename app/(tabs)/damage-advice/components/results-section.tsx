@@ -1,33 +1,23 @@
-import {
-  DamageAdvicePerEmpowerCombiResults,
-  Empower,
-} from "@/models/types";
-import { Text } from "react-native";
-import { ResultCard, ResultValue, Section } from "./results-section.styles";
+import { DamageAdvicePerEmpowerCombiResults, Empower } from "@/models/types";
+import { Section } from "./results-section.styles";
+import { ResultCard } from "@/components/view";
 
 interface Props {
-  results?: DamageAdvicePerEmpowerCombiResults[];
+  results: DamageAdvicePerEmpowerCombiResults[];
   empowerCombi: Empower;
 }
 
 export function ResultsSectionRow({ results }: Props) {
   return (
     <Section>
-      {results ? (
-        results.map((result, i) => (
-          <ResultCard key={i}>
-            <Text>{result.cardsToDraw}</Text>
-            <ResultValue>
-              <Text>{result.averageDamage}</Text>
-            </ResultValue>
-            <ResultValue>
-              <Text>{result.missChance}</Text>
-            </ResultValue>
-          </ResultCard>
-        ))
-      ) : (
-        <></>
-      )}
+      {results.map((result, i) => (
+        <ResultCard
+          key={i}
+          title={result.cardsToDraw.toFixed(0)}
+          description={result.averageDamage}
+          subtext={result.missChance}
+        />
+      ))}
     </Section>
   );
 }
