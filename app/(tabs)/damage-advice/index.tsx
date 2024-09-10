@@ -1,9 +1,10 @@
+import { AnimatedPressable } from "@/components/pressable";
+import { ColoredText } from "@/components/text/text";
 import { NUM_OF_CARDS } from "@/constants/model";
 import { colorMap } from "@/constants/styles";
 import { useGame } from "@/context-providers/game/game-hook";
 import { DeckManager } from "@/models/DecksManager";
 import { MightDeck } from "@/models/MightDeck";
-import { Optimizer } from "@/models/Optimizer";
 import { Probability } from "@/models/Probability";
 import { DamageAdvicePerEmpowerCombiResults, Empower } from "@/models/types";
 import { useState } from "react";
@@ -14,14 +15,13 @@ import {
   ChangeTargetButton,
   Container,
   CurrentTarget,
+  DamageAdviceContent,
+  DamageAdviceSection,
   MainPageContainer,
   MightSection,
   SeekButton,
-  SkillCheckContent,
-  SkillCheckSection,
   TargetSection,
 } from "./damage-advice.styles";
-import { ColoredText } from "@/components/text/text";
 
 export default function MainPage() {
   const { gameState } = useGame();
@@ -79,11 +79,11 @@ export default function MainPage() {
   return (
     <MainPageContainer>
       <Container>
-        <SkillCheckSection>
+        <DamageAdviceSection>
           <Container>
             <Text>Damage Advice</Text>
           </Container>
-          <SkillCheckContent>
+          <DamageAdviceContent>
             <Container>
               <Text>Set Base Might</Text>
             </Container>
@@ -115,9 +115,12 @@ export default function MainPage() {
                 <Text>{">"}</Text>
               </ChangeTargetButton>
             </TargetSection>
-            <CalculateButton onPress={() => calculate()}>
+            <AnimatedPressable
+              Component={CalculateButton}
+              onPress={() => calculate()}
+            >
               <Text>Calculate</Text>
-            </CalculateButton>
+            </AnimatedPressable>
             {damageAdviceResults?.map((results, i) => {
               return (
                 <DamageResultRow
@@ -127,8 +130,8 @@ export default function MainPage() {
                 />
               );
             })}
-          </SkillCheckContent>
-        </SkillCheckSection>
+          </DamageAdviceContent>
+        </DamageAdviceSection>
       </Container>
     </MainPageContainer>
   );

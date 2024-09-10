@@ -1,4 +1,10 @@
-import { CenteredView, RowSection, BorderedCentered } from "@/constants/styles";
+import {
+  CenteredView,
+  RowSection,
+  BorderedCentered,
+  BorderedPressable,
+  ColumnSection,
+} from "@/constants/styles";
 import styled from "styled-components/native";
 
 //==============================================================
@@ -12,16 +18,12 @@ export const MainPageContainer = styled.ScrollView`
 
 export const Container = styled(CenteredView)``;
 
-export const SkillCheckSection = styled.View`
+export const DamageAdviceSection = styled.View`
   margin-top: 32px;
   margin-bottom: 32px;
 `;
 
-export const ColumnSection = styled.View`
-  flex-direction: column;
-`;
-
-export const SkillCheckContent = styled(ColumnSection)``;
+export const DamageAdviceContent = styled(ColumnSection)``;
 
 export const SpacedRowSection = styled(RowSection)`
   margin-top: 16px;
@@ -50,18 +52,6 @@ export const CurrentTargetView = styled(BorderedCentered)`
 //==============================================================
 // Pressable
 //==============================================================
-
-export const CenteredPressable = styled.Pressable`
-  justify-content: center;
-  align-items: center;
-`;
-
-export const BorderedPressable = styled(CenteredPressable)`
-  border-radius: 2px;
-  border-color: #000000;
-  border-width: 1px;
-`;
-
 export const ChangeTargetButton = styled(BorderedPressable)`
   height: 32px;
   width: 32px;

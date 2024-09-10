@@ -21,6 +21,7 @@ import { DeckManager } from "@/models/DecksManager";
 import { ResultsSection } from "./components/results-section";
 import { Optimizer } from "@/models/Optimizer";
 import { NUM_OF_CARDS } from "@/constants/model";
+import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
 
 export default function MainPage() {
   const { gameState } = useGame();
@@ -137,9 +138,12 @@ export default function MainPage() {
                 );
               })}
             </MightSection>
-            <CalculateButton onPress={() => calculate()}>
+            <AnimatedPressable
+              Component={CalculateButton}
+              onPress={() => calculate()}
+            >
               <Text>Calculate</Text>
-            </CalculateButton>
+            </AnimatedPressable>
             {renderResultsSections()}
           </SkillCheckContent>
         </SkillCheckSection>
