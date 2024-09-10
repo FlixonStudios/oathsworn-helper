@@ -121,6 +121,7 @@ export default function MainPage() {
             {damageAdviceResults?.map((results, i) => {
               return (
                 <DamageResultRow
+                  key={i}
                   results={results}
                   empowerCombi={results[0].combination}
                 />
