@@ -1,7 +1,8 @@
 import { AnimatedPressable } from "@/components/pressable";
 import { ColoredText } from "@/components/text/text";
+import { ValueWithToggle } from "@/components/view";
 import { NUM_OF_CARDS } from "@/constants/model";
-import { colorMap } from "@/constants/styles";
+import { BasicScrollView, CenteredView, colorMap, ColumnSection, SpacedAroundSection } from "@/constants/styles";
 import { useGame } from "@/context-providers/game/game-hook";
 import { DeckManager } from "@/models/DecksManager";
 import { MightDeck } from "@/models/MightDeck";
@@ -12,14 +13,9 @@ import { Text } from "react-native";
 import { DamageResultRow } from "./components/damage-results-row";
 import {
   CalculateButton,
-  Container,
-  DamageAdviceContent,
   DamageAdviceSection,
-  MainPageContainer,
-  MightSection,
-  SeekButton,
+  SeekButton
 } from "./damage-advice.styles";
-import { ValueWithToggle } from "@/components/view";
 
 export default function MainPage() {
   const { gameState } = useGame();
@@ -75,17 +71,17 @@ export default function MainPage() {
   }
 
   return (
-    <MainPageContainer>
-      <Container>
+    <BasicScrollView>
+      <CenteredView>
         <DamageAdviceSection>
-          <Container>
+          <CenteredView>
             <Text>Damage Advice</Text>
-          </Container>
-          <DamageAdviceContent>
-            <Container>
+          </CenteredView>
+          <ColumnSection>
+            <CenteredView>
               <Text>Set Base Might</Text>
-            </Container>
-            <MightSection>
+            </CenteredView>
+            <SpacedAroundSection>
               {decksToUse.map((i) => {
                 return (
                   <SeekButton
@@ -98,10 +94,10 @@ export default function MainPage() {
                   </SeekButton>
                 );
               })}
-            </MightSection>
-            <Container>
+            </SpacedAroundSection>
+            <CenteredView>
               <Text>Set Empower Bonus</Text>
-            </Container>
+            </CenteredView>
             <ValueWithToggle
               decreaseText="<"
               onDecrease={() => onPress(-1)}
@@ -124,9 +120,9 @@ export default function MainPage() {
                 />
               );
             })}
-          </DamageAdviceContent>
+          </ColumnSection>
         </DamageAdviceSection>
-      </Container>
-    </MainPageContainer>
+      </CenteredView>
+    </BasicScrollView>
   );
 }
