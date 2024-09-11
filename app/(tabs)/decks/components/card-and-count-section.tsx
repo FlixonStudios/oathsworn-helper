@@ -1,16 +1,18 @@
-import { CardCount, Deck } from "@/models/Deck";
+import { Deck, CardCount } from "@/models/Deck";
 import { Text } from "react-native";
 import {
+  CardCountContainer,
   CardName,
   CardsAndCountSection,
   CountText,
   SeekButton,
 } from "./card-and-count-section.styles";
+import { AnimatedPressable } from "@/components/pressable";
 
 interface Props {
   deck: Deck;
   count: CardCount;
-  onPress: (name: string) => void
+  onPress: (name: string) => void;
 }
 
 export function CardsAndCountArea(props: Props) {
@@ -24,12 +26,19 @@ export function CardsAndCountArea(props: Props) {
         .filter((cardName) => !!count[cardName])
         .map((cardName, i) => {
           return (
-            <SeekButton key={i} onPress={() => onPress(cardName)}>
-              <CountText>{count[cardName]}</CountText>
+            <AnimatedPressable
+              key={i}
+              onPress={() => onPress(cardName)}
+              Component={SeekButton}
+              color="#5e5251"
+            >
+              <CardCountContainer>
+                <CountText>{count[cardName]}</CountText>
+              </CardCountContainer>
               <CardName>
                 <Text>{cardName}</Text>
               </CardName>
-            </SeekButton>
+            </AnimatedPressable>
           );
         })}
     </CardsAndCountSection>

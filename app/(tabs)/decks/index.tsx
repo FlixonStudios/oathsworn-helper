@@ -1,8 +1,8 @@
 import { useGame } from "@/context-providers/game/game-hook";
-import { DecksContainer, StyledDeck, DeckPairSection } from "./decks.styles";
+import { StyledDeck, DeckPairSection } from "./decks.styles";
 import { CardsAndCountArea } from "./components/card-and-count-section";
 import { Deck } from "@/models/Deck";
-import { colorMap } from "@/constants/styles";
+import { BasicScrollView, colorMap } from "@/constants/styles";
 
 export default function DecksPage() {
   const { seekCard, revertCard, gameState } = useGame();
@@ -16,7 +16,7 @@ export default function DecksPage() {
   }
 
   return (
-    <DecksContainer>
+    <BasicScrollView>
       {gameState.decks.map((deck, i) => {
         const count = deck.getDeckCardCount();
         return (
@@ -38,6 +38,6 @@ export default function DecksPage() {
           </DeckPairSection>
         );
       })}
-    </DecksContainer>
+    </BasicScrollView>
   );
 }

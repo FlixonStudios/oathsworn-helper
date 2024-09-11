@@ -1,9 +1,5 @@
+import { BorderedCentered } from "@/constants/styles";
 import styled from "styled-components/native";
-
-export const DecksContainer = styled.ScrollView`
-  display: flex;
-  padding: 16px;
-`;
 
 export const DeckPairSection = styled.View`
   display: flex;
@@ -12,14 +8,10 @@ export const DeckPairSection = styled.View`
   margin-top: 16px;
 `;
 
-export const StyledDeck = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  border-color: #000000;
-  border-width: 1px;
+export const StyledDeck = styled(BorderedCentered)`
   border-radius: 4px;
-  height: 96px;
+  flex: 1;
   margin-right: 2px;
   margin-left: 2px;
+  min-height: 112px;
 `;

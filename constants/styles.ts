@@ -6,7 +6,7 @@ export const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];
 // Text
 // ===========================================================
 
-export const GlobalText = styled.Text``
+export const GlobalText = styled.Text``;
 
 // ===========================================================
 // View
@@ -15,7 +15,7 @@ export const GlobalText = styled.Text``
 export const BasicScrollView = styled.ScrollView`
   display: flex;
   padding: 16px;
-`
+`;
 
 export const RowSection = styled.View`
   flex-direction: row;
@@ -28,6 +28,10 @@ export const ColumnSection = styled.View`
 export const CenteredView = styled.View`
   justify-content: center;
   align-items: center;
+`;
+
+export const CenteredRowSection = styled(CenteredView)`
+  flex-direction: row;
 `;
 
 export const BorderedCentered = styled(CenteredView)`
