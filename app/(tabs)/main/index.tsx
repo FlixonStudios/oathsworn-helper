@@ -1,27 +1,28 @@
+import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
+import { StackedRow } from "@/components/view";
+import { NUM_OF_CARDS } from "@/constants/model";
+import { colorMap } from "@/constants/styles";
+import { useGame } from "@/context-providers/game/game-hook";
+import { DeckManager } from "@/models/DecksManager";
+import { MightDeck } from "@/models/MightDeck";
+import { Optimizer } from "@/models/Optimizer";
+import { Probability } from "@/models/Probability";
+import { Empower, SkillCheckResult } from "@/models/types";
+import { useState } from "react";
 import { Text } from "react-native";
+import { ResultsSection } from "./components/results-section";
 import {
+  CalculateButton,
+  ChangeTargetButton,
   Container,
+  CurrentTarget,
+  MainPageContainer,
+  MightSection,
   SeekButton,
   SkillCheckContent,
   SkillCheckSection,
-  MainPageContainer,
   TargetSection,
-  MightSection,
-  ChangeTargetButton,
-  CurrentTarget,
-  CalculateButton,
 } from "./main.styles";
-import { useState } from "react";
-import { useGame } from "@/context-providers/game/game-hook";
-import { colorMap } from "@/constants/styles";
-import { Probability } from "@/models/Probability";
-import { MightDeck } from "@/models/MightDeck";
-import { Empower, SkillCheckResult } from "@/models/types";
-import { DeckManager } from "@/models/DecksManager";
-import { ResultsSection } from "./components/results-section";
-import { Optimizer } from "@/models/Optimizer";
-import { NUM_OF_CARDS } from "@/constants/model";
-import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
 
 export default function MainPage() {
   const { gameState } = useGame();
@@ -85,26 +86,6 @@ export default function MainPage() {
     setMight(newMight);
   }
 
-  function renderResultsSections() {
-    if (!skillCheckResults) return <></>;
-    const resultsPerSection = 5;
-    const arr = [...skillCheckResults];
-    const noOfFullSections = Math.floor(arr.length / resultsPerSection);
-    const lastSection = arr.length % resultsPerSection;
-    let sections = [];
-    for (let i = 0; i < noOfFullSections; i++) {
-      sections.push(i * resultsPerSection);
-    }
-    sections.push(noOfFullSections * resultsPerSection + lastSection);
-    let start = 0;
-    return sections.map((val) => {
-      const render = (
-        <ResultsSection key={val} skillCheckResults={arr.slice(start, val)} />
-      );
-      start = val;
-      return render;
-    });
-  }
 
   return (
     <MainPageContainer>
@@ -144,7 +125,7 @@ export default function MainPage() {
             >
               <Text>Calculate</Text>
             </AnimatedPressable>
-            {renderResultsSections()}
+            {skillCheckResults && <StackedRow values={skillCheckResults} Component={ResultsSection} />}
           </SkillCheckContent>
         </SkillCheckSection>
       </Container>

@@ -1,26 +1,21 @@
+import { ResultCard } from "@/components/view";
 import { SkillCheckResult } from "@/models/types";
-import { Text } from "react-native";
-import { ResultCard, ResultValue, Section } from "./results-section.styles";
+import { Section } from "./results-section.styles";
 
 interface Props {
-  skillCheckResults?: SkillCheckResult[];
+  results: SkillCheckResult[];
 }
 
-export function ResultsSection({ skillCheckResults }: Props) {
+export function ResultsSection({ results }: Props) {
   return (
     <Section>
-      {skillCheckResults ? (
-        skillCheckResults.map((result, i) => (
-          <ResultCard key={i}>
-            <Text>{result.cardsToDraw}</Text>
-            <ResultValue>
-              <Text>{result.p_target}</Text>
-            </ResultValue>
-          </ResultCard>
-        ))
-      ) : (
-        <></>
-      )}
+      {results.map((result, i) => (
+        <ResultCard
+          key={i}
+          title={result.cardsToDraw.toFixed(0)}
+          description={result.p_target}
+        />
+      ))}
     </Section>
   );
 }
