@@ -44,7 +44,7 @@ export class MightDeck extends Deck {
 
     return this.drawSession;
   }
-  
+
   public clone(): MightDeck {
     const clone = new MightDeck(
       [...this.template],
@@ -54,6 +54,14 @@ export class MightDeck extends Deck {
     clone.drawSession = { ...this.drawSession };
     return clone;
   }
+
+  public createFromDeck(deck: Deck) {
+    this.template = [...deck.template];
+    this.remainingCards = [...deck.remainingCards];
+    this.drawnCards = [...deck.drawnCards];
+    return this;
+  }
+
   private calculateDamage() {
     return this.drawSession.damageValues.reduce(
       (prev, curr) => (prev += curr.value),

@@ -1,6 +1,7 @@
 import { LIMIT_PER_DRAW } from "@/constants/model";
 import { Card } from "../Card";
 import { Damage } from "../Damage";
+import { Deck } from "../Deck";
 import { MightDeck } from "../MightDeck";
 
 describe("MightDeck", () => {
@@ -93,5 +94,40 @@ describe("MightDeck", () => {
         expect(result.totalDamage).toEqual(expectedDamage);
       }
     );
+  });
+  describe("createFromDeck", () => {
+    it("should create a MightDeck from a existing mutated Deck", () => {
+      const deck = new Deck([new Card(1), new Card(2), new Card(3)]);
+      deck.remainingCards = [new Card(1)];
+      deck.drawnCards = [new Card(2), new Card(3)];
+      const expected = new MightDeck([new Card(1), new Card(2), new Card(3)]);
+      expected.remainingCards = [new Card(1)];
+      expected.drawnCards = [new Card(2), new Card(3)];
+
+      expect(new MightDeck().createFromDeck(deck)).toEqual(expected);
+    });
+    it("should create an equivalent MightDeck after drawing from Deck", () => {
+      const deck = new Deck([new Card(1), new Card(2), new Card(3)]);
+      deck.draw();
+      deck.draw();
+      const expected = new MightDeck([new Card(1), new Card(2), new Card(3)]);
+      expected.remainingCards = [new Card(3)];
+      expected.drawnCards = [new Card(1), new Card(2)];
+
+      expect(new MightDeck().createFromDeck(deck)).toEqual(expected);
+    });
+    it("should create an equivalent MightDeck after shuffle", () => {
+      jest.spyOn(global.Math, "random").mockReturnValueOnce(1);
+      const deck = new Deck([new Card(1), new Card(2), new Card(3)]);
+      deck.draw();
+      deck.draw();
+      deck.draw();
+      deck.draw();
+      const expected = new MightDeck([new Card(1), new Card(2), new Card(3)]);
+      expected.remainingCards = [new Card(2), new Card(1)];
+      expected.drawnCards = [new Card(3)];
+
+      expect(new MightDeck().createFromDeck(deck)).toEqual(expected);
+    });
   });
 });

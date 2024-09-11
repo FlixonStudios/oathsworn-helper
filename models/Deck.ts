@@ -13,9 +13,9 @@ export class Deck {
   constructor(
     public template: Card[] = [],
     public remainingCards: Card[] = [],
-    public drawnCards: Card[] = [],
-    // public id: string = nanoid(10)
-  ) {
+    public drawnCards: Card[] = []
+  ) // public id: string = nanoid(10)
+  {
     this.remainingCards = [...this.template];
   }
   public shuffle() {
@@ -55,18 +55,18 @@ export class Deck {
   public revert(name: string) {
     return this.transfer(name, this.drawnCards, this.remainingCards);
   }
+  public getDeckCardCount(): DeckCardCount {
+    return {
+      remaining: this.getCountOfCards(this.remainingCards),
+      drawn: this.getCountOfCards(this.drawnCards),
+    };
+  }
   private transfer(name: string, startPile: Card[], endPile: Card[]) {
     const index = this.getCardIndexFromName(name, startPile);
     if (index < 0) return;
     const card = startPile.splice(index, 1)[0];
     endPile.push(card);
     return card;
-  }
-  public getDeckCardCount(): DeckCardCount {
-    return {
-      remaining: this.getCountOfCards(this.remainingCards),
-      drawn: this.getCountOfCards(this.drawnCards),
-    };
   }
   private getCountOfCards(cards: Card[]) {
     const count: CardCount = {};
