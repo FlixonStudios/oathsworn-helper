@@ -10,7 +10,7 @@ interface Props {
 export function ResultCard(props: Props) {
   const { title, description, subtext } = props;
   const valToString = (val?: number | string) => {
-    if (!val) return "";
+    if (!val && val !== 0) return "";
     return typeof val === "number" ? val.toFixed(2).toString() : val;
   };
   const renderIfPresent = (val: string) => {
