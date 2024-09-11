@@ -6,7 +6,10 @@ export default function RootLayout() {
     // Provider has to wrap the stack
     <GameProvider>
       <Stack>
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: true, title: "Oathsworn Helper (Alpha)" }}
+        />
       </Stack>
     </GameProvider>
   );
