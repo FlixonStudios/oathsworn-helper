@@ -17,7 +17,7 @@ import {
   SeekButton,
   SkillCheckContent,
   SkillCheckSection,
-} from "./main.styles";
+} from "./skill-check.styles";
 
 export default function MainPage() {
   const { gameState } = useGame();

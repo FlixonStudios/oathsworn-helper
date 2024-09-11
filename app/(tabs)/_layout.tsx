@@ -10,11 +10,11 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="main"
+        name="skill-check"
         options={{
-          title: "Main",
+          title: "Skill Check",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <FontAwesome size={28} name="check" color={color} />
           ),
         }}
       />

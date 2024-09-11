@@ -13,7 +13,7 @@ export default function LandingPage() {
 
   useLayoutEffect(() => {
     if (isReady) {
-      router.replace("/(tabs)/main");
+      router.replace("/(tabs)/skill-check");
     }
   }, [isReady]); // dependency is required
 
