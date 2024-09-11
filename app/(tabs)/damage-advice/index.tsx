@@ -12,16 +12,14 @@ import { Text } from "react-native";
 import { DamageResultRow } from "./components/damage-results-row";
 import {
   CalculateButton,
-  ChangeTargetButton,
   Container,
-  CurrentTarget,
   DamageAdviceContent,
   DamageAdviceSection,
   MainPageContainer,
   MightSection,
   SeekButton,
-  TargetSection,
 } from "./damage-advice.styles";
+import { ValueWithToggle } from "@/components/view";
 
 export default function MainPage() {
   const { gameState } = useGame();
@@ -104,17 +102,13 @@ export default function MainPage() {
             <Container>
               <Text>Set Empower Bonus</Text>
             </Container>
-            <TargetSection>
-              <ChangeTargetButton onPress={() => onPress(-1)}>
-                <Text>{"<"}</Text>
-              </ChangeTargetButton>
-              <CurrentTarget>
-                <Text>{empowerBonus}</Text>
-              </CurrentTarget>
-              <ChangeTargetButton onPress={() => onPress(1)}>
-                <Text>{">"}</Text>
-              </ChangeTargetButton>
-            </TargetSection>
+            <ValueWithToggle
+              decreaseText="<"
+              onDecrease={() => onPress(-1)}
+              increaseText=">"
+              onIncrease={() => onPress(1)}
+              value={empowerBonus}
+            />
             <AnimatedPressable
               Component={CalculateButton}
               onPress={() => calculate()}

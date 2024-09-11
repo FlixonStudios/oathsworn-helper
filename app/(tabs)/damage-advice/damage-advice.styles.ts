@@ -37,12 +37,6 @@ export const MightSection = styled(RowSection)`
   justify-content: space-around;
 `;
 
-export const TargetSection = styled(RowSection)`
-  margin-top: 16px;
-  margin-bottom: 16px;
-  justify-content: space-around;
-`;
-
 export const CurrentTargetView = styled(BorderedCentered)`
   height: 32px;
   width: 32px;
@@ -52,23 +46,12 @@ export const CurrentTargetView = styled(BorderedCentered)`
 //==============================================================
 // Pressable
 //==============================================================
-export const ChangeTargetButton = styled(BorderedPressable)`
-  height: 32px;
-  width: 32px;
-  background-color: #ffffff;
-`;
 
 export const CalculateButton = styled(BorderedPressable)`
   height: 32px;
   width: 100%;
   background-color: #ffffff;
   margin-bottom: 16px;
-`;
-
-export const CurrentTarget = styled(BorderedCentered)`
-  height: 32px;
-  width: 32px;
-  background-color: #ffffff;
 `;
 
 export const SeekButton = styled(BorderedPressable)`

@@ -1,7 +1,7 @@
 import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
-import { StackedRow } from "@/components/view";
+import { StackedRow, ValueWithToggle } from "@/components/view";
 import { NUM_OF_CARDS } from "@/constants/model";
-import { colorMap } from "@/constants/styles";
+import { BasicScrollView, CenteredView, colorMap } from "@/constants/styles";
 import { useGame } from "@/context-providers/game/game-hook";
 import { DeckManager } from "@/models/DecksManager";
 import { MightDeck } from "@/models/MightDeck";
@@ -13,15 +13,10 @@ import { Text } from "react-native";
 import { ResultsSection } from "./components/results-section";
 import {
   CalculateButton,
-  ChangeTargetButton,
-  Container,
-  CurrentTarget,
-  MainPageContainer,
   MightSection,
   SeekButton,
   SkillCheckContent,
   SkillCheckSection,
-  TargetSection,
 } from "./main.styles";
 
 export default function MainPage() {
@@ -86,25 +81,20 @@ export default function MainPage() {
     setMight(newMight);
   }
 
-
   return (
-    <MainPageContainer>
-      <Container>
+    <BasicScrollView>
+      <CenteredView>
         <Text>Welcome!</Text>
         <SkillCheckSection>
           <Text>Skill Check section</Text>
           <SkillCheckContent>
-            <TargetSection>
-              <ChangeTargetButton onPress={() => onPress(-1)}>
-                <Text>{"<"}</Text>
-              </ChangeTargetButton>
-              <CurrentTarget>
-                <Text>{skillCheckTarget}</Text>
-              </CurrentTarget>
-              <ChangeTargetButton onPress={() => onPress(1)}>
-                <Text>{">"}</Text>
-              </ChangeTargetButton>
-            </TargetSection>
+            <ValueWithToggle
+              decreaseText="<"
+              onDecrease={() => onPress(-1)}
+              increaseText=">"
+              onIncrease={() => onPress(1)}
+              value={skillCheckTarget}
+            />
             <MightSection>
               {decksToUse.map((i) => {
                 return (
@@ -125,10 +115,15 @@ export default function MainPage() {
             >
               <Text>Calculate</Text>
             </AnimatedPressable>
-            {skillCheckResults && <StackedRow values={skillCheckResults} Component={ResultsSection} />}
+            {skillCheckResults && (
+              <StackedRow
+                values={skillCheckResults}
+                Component={ResultsSection}
+              />
+            )}
           </SkillCheckContent>
         </SkillCheckSection>
-      </Container>
-    </MainPageContainer>
+      </CenteredView>
+    </BasicScrollView>
   );
 }

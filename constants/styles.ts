@@ -3,8 +3,19 @@ import styled from "styled-components/native";
 export const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];
 
 // ===========================================================
+// Text
+// ===========================================================
+
+export const GlobalText = styled.Text``
+
+// ===========================================================
 // View
 // ===========================================================
+
+export const BasicScrollView = styled.ScrollView`
+  display: flex;
+  padding: 16px;
+`
 
 export const RowSection = styled.View`
   flex-direction: row;
@@ -34,11 +45,29 @@ export const ResultValue = styled(CenteredView)`
   width: 48px;
 `;
 
+export const SpacedAroundSection = styled(RowSection)`
+  margin-top: 16px;
+  margin-bottom: 16px;
+  justify-content: space-around;
+`;
+
+export const SpacedRowSection = styled(RowSection)`
+  margin-top: 16px;
+  margin-bottom: 16px;
+  justify-content: space-between;
+`;
+
+export const MiniSquareView = styled(BorderedCentered)`
+  height: 32px;
+  width: 32px;
+  background-color: #ffffff;
+`;
+
 // ===========================================================
 // Pressable
 // ===========================================================
 
-export const CenteredPressable =  styled.Pressable`
+export const CenteredPressable = styled.Pressable`
   justify-content: center;
   align-items: center;
 `;
@@ -49,7 +78,7 @@ export const BorderedPressable = styled(CenteredPressable)`
   border-width: 1px;
 `;
 
-export const ChangeTargetButton = styled(BorderedPressable)`
+export const ChangeValueButton = styled(BorderedPressable)`
   height: 32px;
   width: 32px;
   background-color: #ffffff;
