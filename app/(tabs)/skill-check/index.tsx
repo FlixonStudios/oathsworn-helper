@@ -45,10 +45,10 @@ export default function MainPage() {
 
   function calculate() {
     const deckManager = new DeckManager({
-      "0": new MightDeck(decks[0].remainingCards),
-      "1": new MightDeck(decks[1].remainingCards),
-      "2": new MightDeck(decks[2].remainingCards),
-      "3": new MightDeck(decks[3].remainingCards),
+      "0": new MightDeck().createFromDeck(decks[0]),
+      "1": new MightDeck().createFromDeck(decks[1]),
+      "2": new MightDeck().createFromDeck(decks[2]),
+      "3": new MightDeck().createFromDeck(decks[3]),
     });
     const p = new Probability(deckManager);
     const optimizer = new Optimizer();

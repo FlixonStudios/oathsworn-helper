@@ -51,7 +51,7 @@ export class DeckManager {
 
   public shuffleDecks() {
     Object.keys(this.decks).forEach((index) =>
-      this.decks[index as keyof Decks<MightDeck | number>]?.shuffle()
+      this.decks[index as keyof Decks<MightDeck | number>]?.shuffleRemaining()
     );
     return this;
   }
