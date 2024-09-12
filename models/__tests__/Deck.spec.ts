@@ -14,13 +14,13 @@ describe("Deck", () => {
 
     expect(deck.template).toEqual(deck.remainingCards);
   });
-  describe("shuffle", () => {
+  describe("shuffleAllTogether", () => {
     it("should empty drawnCards", () => {
       const mockCards = [new Card(1), new Card(2)];
       const deck = new Deck();
       deck.drawnCards = [...mockCards];
 
-      deck.shuffle();
+      deck.shuffleAllTogether();
       expect(deck.drawnCards.length).toEqual(0);
     });
     it("should reset the remainingCards to match template", () => {
@@ -28,7 +28,7 @@ describe("Deck", () => {
       const deck = new Deck(mockCards);
       deck.remainingCards = [];
 
-      deck.shuffle();
+      deck.shuffleAllTogether();
 
       expect(deck.remainingCards.length).toEqual(2);
       expect(
@@ -49,9 +49,21 @@ describe("Deck", () => {
       const deck = new Deck(mockCards);
       deck.remainingCards = [];
 
-      deck.shuffle();
+      deck.shuffleAllTogether();
 
       const expected = [new Card(4), new Card(2), new Card(3), new Card(1)];
+      expect(deck.remainingCards).toStrictEqual(expected);
+    });
+  });
+  describe("shuffleRemaining", () => {
+    it("should only shuffle the remaining cards pile", () => {
+      jest.spyOn(global.Math, "random").mockReturnValueOnce(1);
+      const mockCards = [new Card(1), new Card(2), new Card(3), new Card(4)];
+      const deck = new Deck(mockCards);
+      deck.remainingCards = [new Card(3), new Card(4)];
+      deck.drawnCards = [new Card(1), new Card(2)];
+      deck.shuffleRemaining();
+      const expected = [new Card(4), new Card(3), ];
       expect(deck.remainingCards).toStrictEqual(expected);
     });
   });
@@ -66,7 +78,7 @@ describe("Deck", () => {
     it("should trigger shuffle if draw is called while remaining is empty", () => {
       const mockCards = [new Card(4)];
       const deck = new Deck(mockCards);
-      const shuffleSpy = jest.spyOn(deck, "shuffle");
+      const shuffleSpy = jest.spyOn(deck, "shuffleAllTogether");
 
       deck.draw();
       const result = deck.draw();
@@ -76,7 +88,7 @@ describe("Deck", () => {
     });
     it("should return undefined if trying to draw from an empty deck", () => {
       const deck = new Deck();
-      const shuffleSpy = jest.spyOn(deck, "shuffle");
+      const shuffleSpy = jest.spyOn(deck, "shuffleAllTogether");
 
       const result = deck.draw();
 
@@ -150,7 +162,7 @@ describe("Deck", () => {
     it("should return undefined if no such card exists", () => {
       const mockCards = [new Card(), new Card()];
       const deck = new Deck();
-      deck.drawnCards = mockCards
+      deck.drawnCards = mockCards;
       expect(deck.revert("4*")).toBeUndefined();
       expect(deck.drawnCards.length).toEqual(2);
       expect(deck.remainingCards.length).toEqual(0);
@@ -166,7 +178,7 @@ describe("Deck", () => {
         new Card(4),
       ];
       const deck = new Deck();
-      deck.drawnCards = mockCards
+      deck.drawnCards = mockCards;
       expect(deck.revert("4*")).toStrictEqual(new Card(4, true));
       expect(deck.drawnCards.length).toEqual(6);
 
@@ -178,7 +190,7 @@ describe("Deck", () => {
     it("should move the reverted card to drawn", () => {
       const mockCards = [new Card(), new Card()];
       const deck = new Deck();
-      deck.drawnCards = mockCards
+      deck.drawnCards = mockCards;
 
       expect(deck.revert("0")).toStrictEqual(new Card(0));
       expect(deck.drawnCards.length).toEqual(1);
@@ -187,7 +199,7 @@ describe("Deck", () => {
       expect(deck.drawnCards.length).toEqual(0);
       expect(deck.remainingCards.length).toEqual(2);
     });
-  })
+  });
   describe("getCountOfCard", () => {
     it("should return the count of cards", () => {
       const deck = new Deck();

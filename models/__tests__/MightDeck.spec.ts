@@ -31,7 +31,7 @@ describe("MightDeck", () => {
     it("should perform a shuffle if no more cards in remaining", () => {
       const mockCards = [new Card(2, true), new Card(1)];
       const deck = new MightDeck();
-      const shuffleSpy = jest.spyOn(deck, "shuffle");
+      const shuffleSpy = jest.spyOn(deck, "shuffleAllTogether");
       deck.template = mockCards;
       deck.drawnCards = mockCards;
       deck.draw();

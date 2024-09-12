@@ -18,22 +18,41 @@ export class Deck {
   {
     this.remainingCards = [...this.template];
   }
-  public shuffle() {
+  public shuffleAllTogether() {
     this.drawnCards = [];
     const toBeShuffled = [...this.template];
-    this.remainingCards = [];
-    for (let i = toBeShuffled.length; i > 0; i--) {
-      const index = this.getRandomCardIndex(toBeShuffled);
-      this.remainingCards.push(...toBeShuffled.splice(index, 1));
-    }
+    this.shufflePile(toBeShuffled, this.remainingCards);
     return this;
   }
+
+  public shuffleRemaining() {
+    const toBeShuffled = [...this.remainingCards];
+    this.shufflePile(toBeShuffled, this.remainingCards);
+    return this;
+  }
+
+  /**
+   * @param toBeShuffledPile must be a copied array
+   * @param receivingPile will be mutated
+   */
+  private shufflePile(toBeShuffledPile: Card[], receivingPile: Card[]) {
+    //TODO: see how to remove elements without removing array
+    do {
+      receivingPile.pop();
+    } while (receivingPile.length > 0);
+
+    for (let i = toBeShuffledPile.length; i > 0; i--) {
+      const index = this.getRandomCardIndex(toBeShuffledPile);
+      receivingPile.push(...toBeShuffledPile.splice(index, 1));
+    }
+  }
+
   public draw() {
     if (this.template.length === 0) {
       return;
     }
     if (this.remainingCards.length === 0) {
-      this.shuffle();
+      this.shuffleAllTogether();
     }
 
     const card = this.remainingCards.splice(0, 1)[0];
