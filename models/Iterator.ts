@@ -5,7 +5,7 @@ interface IterateForOptions {
   calculate: (result: DrawSession) => void;
   toDraw: number;
 }
-
+// TODO: decouple deck manager from this class
 export class Iterator {
   public deckManager: DeckManager;
   constructor(deckManager: DeckManager, empower?: Empower) {
@@ -15,7 +15,7 @@ export class Iterator {
 
   public iterate(numToDraw: number) {
     const newDeckManager = this.deckManager.clone().shuffleDecks();
-    return newDeckManager.shuffleDecks().startDraw(numToDraw);
+    return newDeckManager.startDraw(numToDraw);
   }
 
   public iterateFor(options: IterateForOptions, iterations: number) {
