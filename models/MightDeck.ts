@@ -46,11 +46,10 @@ export class MightDeck extends Deck {
   }
 
   public clone(): MightDeck {
-    const clone = new MightDeck(
-      [...this.template],
-      [...this.remainingCards],
-      [...this.drawnCards]
-    );
+    const clone = new MightDeck();
+    clone.template = [...this.template];
+    clone.remainingCards = [...this.remainingCards];
+    clone.drawnCards = [...this.drawnCards];
     clone.drawSession = { ...this.drawSession };
     return clone;
   }

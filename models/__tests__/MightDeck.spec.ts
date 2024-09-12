@@ -130,4 +130,41 @@ describe("MightDeck", () => {
       expect(new MightDeck().createFromDeck(deck)).toEqual(expected);
     });
   });
+  describe("clone", () => {
+    it("should clone the state of an existing MightDeck", () => {
+      const mightDeck = new MightDeck([new Card(1), new Card(2), new Card(3)]);
+      mightDeck.remainingCards = [new Card(1),new Card(2)];
+      mightDeck.drawnCards = [new Card(3, true)];
+      mightDeck.drawSession = {
+        cardsDrawn: 1,
+        totalDamage: 3,
+        isInfinite: false,
+        critCount: 1,
+        damageValues: [new Damage(3)],
+      };
+      const results = mightDeck.clone();
+      expect(results.remainingCards).toEqual([new Card(1),new Card(2)]);
+      expect(results.drawnCards).toEqual([new Card(3, true)]);
+      expect(results.template).toEqual([new Card(1), new Card(2), new Card(3)]);
+      expect(results.drawSession).toEqual({
+        cardsDrawn: 1,
+        totalDamage: 3,
+        isInfinite: false,
+        critCount: 1,
+        damageValues: [new Damage(3)],
+      });
+    });
+
+    it("should have different references to the existing MightDeck", () => {
+      const mightDeck = new MightDeck([new Card(1), new Card(2), new Card(3)]);
+      mightDeck.remainingCards = [new Card(1),new Card(2)];
+      mightDeck.drawnCards = [new Card(3)];
+      const results = mightDeck.clone();
+      results.draw();
+      expect(results.remainingCards).toEqual([new Card(2)]);
+      expect(results.drawnCards).toEqual([ new Card(3),new Card(1)]);
+      expect(mightDeck.remainingCards).toEqual([new Card(1),new Card(2)]);
+      expect(mightDeck.drawnCards).toEqual([new Card(3)]);
+    });
+  });
 });
