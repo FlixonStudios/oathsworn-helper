@@ -1,4 +1,5 @@
 import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
+import { ColoredText } from "@/components/text/text";
 import { StackedRow, ValueWithToggle } from "@/components/view";
 import { NUM_OF_CARDS } from "@/constants/model";
 import { BasicScrollView, CenteredView, colorMap } from "@/constants/styles";
@@ -98,14 +99,15 @@ export default function MainPage() {
             <MightSection>
               {decksToUse.map((i) => {
                 return (
-                  <SeekButton
-                    key={i}
-                    style={{ backgroundColor: colorMap[i] }}
+                  <AnimatedPressable
+                  key={i}
+                    Component={SeekButton}
+                    color={colorMap[i]}
                     onPress={() => addMight(i)}
                     onLongPress={() => resetSkill(i)}
                   >
-                    <Text>{might[i]}</Text>
-                  </SeekButton>
+                    <ColoredText bgColor={colorMap[i]} text={might[i]} />
+                  </AnimatedPressable>
                 );
               })}
             </MightSection>
