@@ -24,9 +24,9 @@ export const redCardsTemplate = cardHelper
   .createDeckTemplate();
 export const blackCardsTemplate = cardHelper
   .addSet(new Card(), 6)
-  .addSet(new Card(2), 3)
   .addSet(new Card(3), 6)
-  .addSet(new Card(4, true), 3)
+  .addSet(new Card(4), 3)
+  .addSet(new Card(5, true), 3)
   .createDeckTemplate();
 
 export const whiteDeck = new Deck(whiteCardsTemplate);
