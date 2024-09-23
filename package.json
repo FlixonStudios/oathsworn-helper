@@ -14,6 +14,7 @@
     "clean": "cd android && ./gradlew clean && cd ..",
     "prebuild": "rm -rf android && npx expo prebuild --platform android",
     "init-android": "npm run prebuild && cp -r fastlane android",
+    "set-local-signing": "sh ./scripts/ready-build-gradle.sh",
     "prep-to-deploy": "npm run init-android && npm run set-local-signing && npm run bundle",
     "bundle-apk": "cd android && ./gradlew assembleRelease && cd ..",
     "bundle-aab": "cd android && ./gradlew bundleRelease && cd ..",
