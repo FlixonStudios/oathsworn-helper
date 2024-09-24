@@ -11,21 +11,25 @@ env:
   STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
 jobs:
-  my_first_job:
-    runs-on: $UBUNTU
+  checkout_job:
+    runs-on: ubuntu-22.04
     steps:
       # This step checks out a copy of your repository.
       - name: check out repository
         uses: actions/checkout@v4
+  test_secret_job:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo ${{ secrets.TEST_SECRET }}
 
   setup-pkg-job:
-    runs-on: $UBUNTU
+    runs-on: ubuntu-22.04
     steps:
       - run: npm install -g expo-cli@$EXPO_CLI_VERSION
       - run: npm ci
       # should not modify package-lock
       - run: npx expo install
   prepare-scripts-job:
-    runs-on: $UBUNTU
+    runs-on: ubuntu-22.04
     steps:
       - run: apt-get install jq
