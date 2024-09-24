@@ -1,0 +1,31 @@
+run-name: build android and web
+on:
+  push:
+    branches:
+      - main
+env:
+  # Define your Expo CLI version
+  EXPO_CLI_VERSION: "0.18.29"
+  UBUNTU: ubuntu-22.04
+  KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+  STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+
+jobs:
+  my_first_job:
+    runs-on: $UBUNTU
+    steps:
+      # This step checks out a copy of your repository.
+      - name: check out repository
+        uses: actions/checkout@v4
+
+  setup-pkg-job:
+    runs-on: $UBUNTU
+    steps:
+      - run: npm install -g expo-cli@$EXPO_CLI_VERSION
+      - run: npm ci
+      # should not modify package-lock
+      - run: npx expo install
+  prepare-scripts-job:
+    runs-on: $UBUNTU
+    steps:
+      - run: apt-get install jq
