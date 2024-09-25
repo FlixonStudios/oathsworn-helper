@@ -12,20 +12,14 @@ env:
 
 jobs:
   checkout_job:
+    # cannot be set as an env variable
     runs-on: ubuntu-22.04
+    environment: prd
     steps:
       # This step checks out a copy of your repository.
       - name: check out repository
         uses: actions/checkout@v4
-  test_secret_job:
-    runs-on: ubuntu-22.04
-    steps:
       - run: echo ${{ secrets.TEST_SECRET }}
-
-  setup-pkg-job:
-    runs-on: ubuntu-22.04
-    steps:
-      - run: npm install -g expo-cli@$EXPO_CLI_VERSION
       - run: npm ci
       # should not modify package-lock
       - run: npx expo install
