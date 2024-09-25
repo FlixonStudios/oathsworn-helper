@@ -18,7 +18,15 @@ jobs:
       # This step checks out a copy of your repository.
       - name: check out repository
         uses: actions/checkout@v4
-      - run: echo ${{ secrets.TEST_SECRET }}
+      - run: |
+          if [ "${{ secrets.TEST_SECRET }}" = "test" ]; then
+            echo true;
+          else
+            echo false;
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21.6.2'
       - run: npm ci
       # should not modify package-lock
       - run: npx expo install
