@@ -3,18 +3,13 @@ on:
   push:
     branches:
       - main
-env:
-  # Define your Expo CLI version
-  EXPO_CLI_VERSION: "0.18.29"
-  UBUNTU: ubuntu-22.04
-  KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-  STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
 jobs:
   checkout_job:
     # cannot be set as an env variable
     runs-on: ubuntu-22.04
-    environment: prd
+    environment: 
+      name: prd
     steps:
       # This step checks out a copy of your repository.
       - name: check out repository
@@ -23,7 +18,13 @@ jobs:
       - run: npm ci
       # should not modify package-lock
       - run: npx expo install
-  prepare-scripts-job:
-    runs-on: ubuntu-22.04
-    steps:
-      - run: apt-get install jq
+      - run: npx expo export --platform web
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
