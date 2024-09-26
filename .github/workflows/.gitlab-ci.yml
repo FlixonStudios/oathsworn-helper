@@ -19,7 +19,7 @@ jobs:
       - name: check out repository
         uses: actions/checkout@v4
       - run: |
-          if [ "${{ secrets.TEST_SECRET }}" = "test" ]; then
+          if [ "${{ secrets.TEST_SECRET }}" = "test_val" ]; then
             echo true;
           else
             echo false;
@@ -31,6 +31,7 @@ jobs:
       # should not modify package-lock
       - run: npx expo install
       - run: npx expo export --platform web
+      - run: npm run deploy:web
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
