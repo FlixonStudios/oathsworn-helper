@@ -20,16 +20,31 @@ platform :android do
   lane :deploy do
     gradle(task: 'clean')
     gradle(task: 'bundle', build_type: 'Release')
-    upload_to_play_store(track: 'production')
+    validate_play_store_json_key()
+    upload_to_play_store(track: 'internal')
   end
 
-  desc "Build the APK"
-  lane :build do
-    gradle(task: 'clean')
-    gradle(
-      task: "assemble",
-      build_type: "Release",
+  desc "Deploy a locally built version to the Google Play Store"
+  lane :upload do
+    version_code = get_version_code_from_build_gradle
+    validate_play_store_json_key()
+    upload_to_play_store(
+      track: 'internal', 
+      version_code: version_code,   
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_changelogs: true,
+      aab: "./app/build/outputs/bundle/release/app-release.aab"
     )
-    
   end
+
+end
+
+def get_version_code_from_build_gradle
+  gradle_file_path = "../app/build.gradle" # Adjust the path if necessary
+  version_code_line = File.readlines(gradle_file_path).find { |line| line =~ /versionCode/ }
+  
+  # Extract the versionCode value
+  version_code = version_code_line.split.last.to_i if version_code_line
+  version_code
 end
