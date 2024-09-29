@@ -35,12 +35,25 @@ export class NumberHelper {
         [6,0,0], [4,1,0], [2,2,0], [0,3,0], [3,0,1], [1,1,1], [0,0,2]
     */
   public getCountOfValue(num: number) {
-    const valArr = [1, 2, 3]; //get length from here
     const allPossible: number[][] = this.getValues(num);
-    const filtered = allPossible.filter(
-      (val) => this.sumOfVal(val, valArr) === num
-    );
+    const filtered = this.getEqualToNum(allPossible, num);
     return filtered;
+  }
+
+  private getEqualToNum(
+    allPossible: number[][],
+    num: number,
+    valArr = [1, 2, 3],
+    maxCards = 10
+  ) {
+    return allPossible
+      .filter(this.getCasesWithinMax.bind(this))
+      .filter((val) => this.sumOfVal(val, valArr) === num);
+  }
+
+  private getCasesWithinMax(values: number[], max = 10) {
+    const noOfCards = values.reduce((pV, cV) => (pV += cV), 0);
+    return noOfCards <= max;
   }
 
   private getValues(num: number) {
@@ -65,6 +78,7 @@ export class NumberHelper {
       .reduce((pV, cV) => (pV += cV));
   }
   public __testExports__ = {
-    getValues: this.getValues,
+    getValues: this.getValues.bind(this),
+    getCasesWithinMax: this.getCasesWithinMax.bind(this),
   };
 }

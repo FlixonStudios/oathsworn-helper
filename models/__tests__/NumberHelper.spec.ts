@@ -80,6 +80,26 @@ describe("NumberHelper", () => {
       }
     );
   });
+  describe("getCasesWithinMax", () => {
+    it.each([
+      [[[10, 0, 0]], [[10, 0, 0]]],
+      [[[11, 0, 0]], []],
+      [[[1, 10, 0]], []],
+      [[[0, 1, 10]], []],
+      [[[5, 5, 0]], [[5, 5, 0]]],
+      [[[1, 1, 8, 1]], []],
+      [[[0, 0, 0, 11], [3,3,5], [10]], [[10]]],
+    ])(
+      "when called as a filter ",
+      (valuesArr, expected) => {
+        const numberHelper = new NumberHelper();
+        const result = valuesArr.filter(
+          (values) => numberHelper.__testExports__.getCasesWithinMax(values, 10)
+        );
+        expect(result).toEqual(expected);
+      }
+    );
+  });
   describe("getEmpowerCombination", () => {
     it("should return an array of Empowers", () => {
       const numberHelper = new NumberHelper();
