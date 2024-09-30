@@ -45,6 +45,7 @@ jobs:
   build-android-job:
     runs-on: ubuntu-22.04
     environment:
+      # Use environment to require approval to emulate manual execution
       name: prd-android-deploy
     needs: checkout_job
     steps:
