@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -12,7 +13,7 @@ jobs:
   checkout_job:
     # cannot be set as an env variable
     runs-on: ubuntu-22.04
-    environment: 
+    environment:
       name: prd
     steps:
       # This step checks out a copy of your repository.
@@ -20,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '21.6.2'
+          node-version: "21.6.2"
       - run: npm ci
       # should not modify package-lock
       - run: npx expo install
@@ -31,10 +32,10 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
-  
+
   build-job:
     runs-on: ubuntu-22.04
-    environment: 
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: checkout_job
@@ -42,3 +43,13 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+  
+  build-android-job:
+    runs-on: ubuntu-22.04
+    environment:
+      name: prd
+    needs: checkout_job
+    if: ${{ github.event_name == 'workflow_dispatch' }} 
+    steps:
+      - run: apt-get install jq
+      - run: echo 'success'
