@@ -47,7 +47,7 @@ export class NumberHelper {
     maxCards = 10
   ) {
     return allPossible
-      .filter(this.getCasesWithinMax.bind(this))
+      .filter((val) => this.getCasesWithinMax(val, maxCards))
       .filter((val) => this.sumOfVal(val, valArr) === num);
   }
 
