@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -11,8 +10,7 @@ permissions:
 
 jobs:
   checkout_job:
-    # cannot be set as an env variable
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04 # cannot be set as an env variable
     environment:
       name: prd
     steps:
@@ -43,13 +41,14 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-  
+
   build-android-job:
     runs-on: ubuntu-22.04
     environment:
-      name: prd
+      name: prd-android-deploy
     needs: checkout_job
-    if: ${{ github.event_name == 'workflow_dispatch' }} 
     steps:
-      - run: apt-get install jq
+      - run: sudo apt-get update
+      - name: Install jq
+        run: sudo apt-get install jq
       - run: echo 'success'
