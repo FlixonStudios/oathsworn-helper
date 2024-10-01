@@ -50,6 +50,17 @@ jobs:
     needs: checkout_job
     steps:
       - run: sudo apt-get update
+      
       - name: Install jq
         run: sudo apt-get install jq
-      - run: echo 'success'
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Init android folder
+        run: npm run init-android
