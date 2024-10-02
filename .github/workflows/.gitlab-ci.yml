@@ -49,8 +49,18 @@ jobs:
       name: prd-android-deploy
     needs: checkout_job
     steps:
+      # This step checks out a copy of your repository.
+      - name: check out repository
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "21.6.2"
+      - run: npm ci
+      # should not modify package-lock
+      - run: npx expo install
+
       - run: sudo apt-get update
-      
+
       - name: Install jq
         run: sudo apt-get install jq
       - name: Set Up JDK
