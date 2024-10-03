@@ -66,11 +66,17 @@ jobs:
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu' # See 'Supported distributions' for available options
-          java-version: '17'
+          distribution: "zulu" # See 'Supported distributions' for available options
+          java-version: "17"
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+
+      - name: Setup Ruby for fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1.6" # Not needed with a `.ruby-version` or `.tool-versions`
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Init android folder
         run: npm run init-android
