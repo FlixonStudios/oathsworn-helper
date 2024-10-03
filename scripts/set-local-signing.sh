@@ -1,4 +1,3 @@
-# script to update versionCode and versionName in build.gradle
 BUILD_GRADLE_PATH="android/app/build.gradle"
 
 # needed to add the ./ in front of the .env 

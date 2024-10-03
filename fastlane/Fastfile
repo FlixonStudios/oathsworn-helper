@@ -16,28 +16,76 @@
 default_platform(:android)
 
 platform :android do
-  desc "Deploy a new version to the Google Play Store"
-  lane :deploy do
-    gradle(task: 'clean')
-    gradle(task: 'bundle', build_type: 'Release')
-    validate_play_store_json_key()
-    upload_to_play_store(track: 'internal')
-  end
-
   desc "Deploy a locally built version to the Google Play Store"
-  lane :upload do
-    version_code = get_version_code_from_build_gradle
+  lane :upload_from_local do
+    version_codes = google_play_track_version_codes(
+      track: 'internal', 
+    )
+    new_version_code = get_latest_version_code(version_codes)
+    gradle(tasks: ["bundleRelease"])
     validate_play_store_json_key()
     upload_to_play_store(
       track: 'internal', 
-      version_code: version_code,   
+      version_code: new_version_code,   
       skip_upload_metadata: true,
       skip_upload_images: true,
       skip_upload_changelogs: true,
       aab: "./app/build/outputs/bundle/release/app-release.aab"
     )
   end
+  
+  desc "Update version and upload via pipeline"
+  lane :upload do
+    # NEED TO SIGN BEFORE THIS
+    version_codes = google_play_track_version_codes(
+      track: 'internal', 
+    )
+    new_version_code = get_latest_version_code(version_codes)
+    set_version(new_version_code)
+    
+    # Note: to use the sh() action which has the weird behaviour: 
+    # https://docs.fastlane.tools/advanced/fastlane/#directory-behavior
+    # ````
+    # Dir.chdir("..") do
+    # sh("./gradlew bundleRelease")
+    # end
+    # ```` 
+     
+    gradle(
+      tasks: ["bundleRelease"],
+      # The following simply does not work:
+      # properties: {
+      # "android.injected.version.code" => new_version_code,
+      # }
+    )
+    
+    validate_play_store_json_key()
+    upload_to_play_store(
+      track: 'internal',
+      aab: "./app/build/outputs/bundle/release/app-release.aab"
+    )
+  end
+end
 
+def get_latest_version_code(version_codes)
+  highest_version_code = version_codes.max || 1 # If no version code is found, start from 1
+  new_version_code = highest_version_code + 1
+  puts "New version code: #{new_version_code}"
+  return new_version_code
+end
+
+def set_version(new_version_code)
+   # Update the version code in build.gradle
+  gradle_path = "../app/build.gradle"
+  
+  # Read the current content of the build.gradle file
+  gradle_content = File.read(gradle_path)
+  
+  # Regex to find the current versionCode and replace it with the new version code
+  updated_gradle_content = gradle_content.gsub(/versionCode\s+\d+/, "versionCode #{new_version_code}")
+
+  File.write(gradle_path, updated_gradle_content)
+  puts "Updated versionCode in build.gradle to #{new_version_code}"
 end
 
 def get_version_code_from_build_gradle
