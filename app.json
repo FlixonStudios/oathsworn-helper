@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "oathsworn-helper",
+    "name": "Game Probability",
     "slug": "oathsworn-helper",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/game-probability-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -20,8 +20,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.oathswornadvisor",
-      "versionCode": 3
+      "package": "com.anonymous.oathswornadvisor"
     },
     "web": {
       "bundler": "metro",
