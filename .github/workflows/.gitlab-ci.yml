@@ -85,6 +85,11 @@ jobs:
       #   run: chmod +x ./android/gradlew
 
       - name: Sign for google release
+        env:
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE }} 
         run: npm run set-remote-signing
 
       - name: Sign for google release
