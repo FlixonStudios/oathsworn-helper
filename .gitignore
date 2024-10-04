@@ -9,9 +9,9 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-.env
-*.keystore
+*.env
 android
+
 
 # macOS
 .DS_Store
@@ -22,4 +22,5 @@ android
 expo-env.d.ts
 # @end expo-cli
 
-google-services.json
+google-services*
+release*.keystore*

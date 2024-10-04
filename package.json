@@ -17,10 +17,12 @@
     "prebuild": "rm -rf android && npx expo prebuild --platform android",
     "init-android": "npm run prebuild && cp -r fastlane android",
     "set-local-signing": "sh ./scripts/set-local-signing.sh",
+    "set-remote-signing": "sh ./scripts/set-remote-signing.sh",
     "set-version": "sh ./scripts/set-version.sh",
     "prep-to-deploy": "npm run init-android && npm run set-local-signing && npm run bundle-aab",
     "bundle-apk": "cd android && ./gradlew assembleRelease && cd ..",
     "bundle-aab": "cd android && ./gradlew bundleRelease && cd ..",
+    "upload": "sh ./scripts/run-upload.sh",
     "lint": "expo lint"
   },
   "jest": {
