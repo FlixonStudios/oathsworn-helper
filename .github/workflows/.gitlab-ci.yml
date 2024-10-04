@@ -81,8 +81,8 @@ jobs:
       - name: Init android folder
         run: npm run init-android
 
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
+      # - name: Change wrapper permissions
+      #   run: chmod +x ./android/gradlew
 
       - name: Sign for google release
         run: npm run set-remote-signing
