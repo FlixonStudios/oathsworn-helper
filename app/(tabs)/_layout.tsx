@@ -10,29 +10,20 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="skill-check"
+        name="main"
         options={{
-          title: "Skill Check",
+          title: "Game",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="check" color={color} />
+            <FontAwesome size={28} name="calculator" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="damage-advice"
+        name="settings"
         options={{
-          title: "Damage",
+          title: "Settings",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="bar-chart" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="decks"
-        options={{
-          title: "Decks",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="database" color={color} />
+            <FontAwesome size={28} name="gear" color={color} />
           ),
         }}
       />

@@ -17,7 +17,7 @@ import {
   SeekButton
 } from "./damage-advice.styles";
 
-export default function MainPage() {
+export default function DamageAdvicePage() {
   const { gameState } = useGame();
 
   const [empowerBonus, setEmpowerBonus] = useState(0);
