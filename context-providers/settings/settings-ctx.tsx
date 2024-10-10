@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
-import { SettingsState, TSettingsAction } from "./types";
+import { Module, SettingsState, TSettingsAction } from "./types";
 
 export const DEFAULT_STATE: SettingsState = {
-  module: "none",
+  module: Module.NONE,
 };
 
 // Context + Reducer -> Provider -> Hook

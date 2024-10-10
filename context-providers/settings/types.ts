@@ -1,4 +1,7 @@
-export type Module = "oathsworn" | "none";
+export enum Module {
+  NONE = "none",
+  OATHSWORN = "oathsworn",
+}
 
 export interface SettingsState {
   module: Module;
