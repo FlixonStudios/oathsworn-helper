@@ -1,7 +1,7 @@
 import { ColoredText } from "@/components/text/text";
 import { StackedRow } from "@/components/view/StackedRow";
 import { colorMap } from "@/constants/styles";
-import { useGame } from "@/context-providers/game/game-hook";
+import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
 import { DamageAdvicePerEmpowerCombiResults, Empower } from "@/models/types";
 import {
   Container,

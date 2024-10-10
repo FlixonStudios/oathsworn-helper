@@ -2,8 +2,14 @@ import { AnimatedPressable } from "@/components/pressable";
 import { ColoredText } from "@/components/text/text";
 import { ValueWithToggle } from "@/components/view";
 import { NUM_OF_CARDS } from "@/constants/model";
-import { BasicScrollView, CenteredView, colorMap, ColumnSection, SpacedAroundSection } from "@/constants/styles";
-import { useGame } from "@/context-providers/game/game-hook";
+import {
+  BasicScrollView,
+  CenteredView,
+  colorMap,
+  ColumnSection,
+  SpacedAroundSection,
+} from "@/constants/styles";
+import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
 import { DeckManager } from "@/models/DecksManager";
 import { MightDeck } from "@/models/MightDeck";
 import { Probability } from "@/models/Probability";
@@ -14,7 +20,7 @@ import { DamageResultRow } from "./components/damage-results-row";
 import {
   CalculateButton,
   DamageAdviceSection,
-  SeekButton
+  SeekButton,
 } from "./damage-advice.styles";
 
 export default function DamageAdvicePage() {

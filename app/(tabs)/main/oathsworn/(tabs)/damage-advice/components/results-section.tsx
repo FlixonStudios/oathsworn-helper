@@ -4,7 +4,6 @@ import { ResultCard } from "@/components/view";
 
 interface Props {
   results: DamageAdvicePerEmpowerCombiResults[];
-  empowerCombi: Empower;
 }
 
 export function ResultsSectionRow({ results }: Props) {

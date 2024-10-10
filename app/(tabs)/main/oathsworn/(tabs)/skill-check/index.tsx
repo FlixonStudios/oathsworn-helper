@@ -3,7 +3,7 @@ import { ColoredText } from "@/components/text/text";
 import { StackedRow, ValueWithToggle } from "@/components/view";
 import { NUM_OF_CARDS } from "@/constants/model";
 import { BasicScrollView, CenteredView, colorMap } from "@/constants/styles";
-import { useGame } from "@/context-providers/game/game-hook";
+import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
 import { DeckManager } from "@/models/DecksManager";
 import { MightDeck } from "@/models/MightDeck";
 import { Optimizer } from "@/models/Optimizer";
@@ -100,7 +100,7 @@ export default function MainPage() {
               {decksToUse.map((i) => {
                 return (
                   <AnimatedPressable
-                  key={i}
+                    key={i}
                     Component={SeekButton}
                     color={colorMap[i]}
                     onPress={() => addMight(i)}

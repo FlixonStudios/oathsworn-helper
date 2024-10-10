@@ -1,4 +1,4 @@
-import { useGame } from "@/context-providers/game/game-hook";
+import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
 import { StyledDeck, DeckPairSection } from "./decks.styles";
 import { CardsAndCountArea } from "./components/card-and-count-section";
 import { Deck } from "@/models/Deck";
