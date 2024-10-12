@@ -4,6 +4,7 @@ import { Module } from "@/context-providers/settings/types";
 import { useMemo } from "react";
 import { Text, View } from "react-native";
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
+import { commonRadioButtonStyles, radioGroupStyles } from "./settings.styles";
 
 export default function SettingsPage() {
   const { settingsState, setModule } = useSettings();
@@ -13,21 +14,17 @@ export default function SettingsPage() {
     setModule(moduleName as Module);
   }
 
-  const modulesRadioButtons: RadioButtonProps[] = useMemo(
-    () => [
-      {
-        id: Module.NONE,
-        label: Module.NONE,
-        value: Module.NONE,
-      },
-      {
-        id: Module.OATHSWORN,
-        label: Module.OATHSWORN,
-        value: Module.OATHSWORN,
-      },
-    ],
-    []
-  );
+  const modulesRadioButtons: RadioButtonProps[] = useMemo(() => {
+    const buttons = Object.values(Module).map((mod) => {
+      return {
+        ...commonRadioButtonStyles,
+        id: mod,
+        label: mod,
+        value: mod,
+      };
+    });
+    return buttons;
+  }, []);
 
   return (
     <BasicScrollView>
@@ -42,6 +39,7 @@ export default function SettingsPage() {
             radioButtons={modulesRadioButtons}
             onPress={onSelectModule}
             selectedId={module}
+            containerStyle={radioGroupStyles}
           />
         </View>
       </CenteredView>
