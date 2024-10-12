@@ -1,5 +1,6 @@
 import { BasicScrollView, CenteredView } from "@/constants/styles";
 import { Text } from "react-native";
+
 export default function MainPage() {
   return (
     <BasicScrollView>
