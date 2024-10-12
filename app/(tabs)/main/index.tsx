@@ -1,16 +1,13 @@
 import { BasicScrollView, CenteredView } from "@/constants/styles";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default function MainPage() {
   return (
     <BasicScrollView>
       <CenteredView>
-        <Text>
-          Welcome!
-          <br />
-          <br />
-          <br />
-        </Text>
+        <View style={{ marginVertical: 32 }}>
+          <Text>Welcome!</Text>
+        </View>
         <Text>Please select a game from Settings to get started</Text>
       </CenteredView>
     </BasicScrollView>

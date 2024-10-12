@@ -29,11 +29,9 @@ export default function SettingsPage() {
   return (
     <BasicScrollView>
       <CenteredView>
-        <Text>
-          Select Module
-          <br />
-          <br />
-        </Text>
+        <View style={{ marginVertical: 32 }}>
+          <Text>Select Module</Text>
+        </View>
         <View>
           <RadioGroup
             radioButtons={modulesRadioButtons}
