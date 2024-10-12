@@ -35,15 +35,7 @@ platform :android do
   end
 
   desc "Just upload local built and signed"
-  lane :just-upload do
-    upload_to_play_store(
-      track: 'internal', 
-      # version_code: <MANUALLY EDIT>   
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_changelogs: true,
-      aab: "./app/build/outputs/bundle/release/app-release.aab"
-    )
+  lane :just_upload do
   end
   
   desc "Update version and upload via pipeline"
@@ -54,7 +46,10 @@ platform :android do
     )
     new_version_code = get_latest_version_code(version_codes)
     set_version(new_version_code)
-    
+    puts "VERSION_CODE: #{new_version_code}"
+
+    version_name = get_version_name_from_build_gradle()
+    puts "VERSION_NAME: #{version_name}"
     # Note: to use the sh() action which has the weird behaviour: 
     # https://docs.fastlane.tools/advanced/fastlane/#directory-behavior
     # ````
@@ -107,4 +102,19 @@ def get_version_code_from_build_gradle
   # Extract the versionCode value
   version_code = version_code_line.split.last.to_i if version_code_line
   version_code
+end
+
+def get_version_name_from_build_gradle
+  gradle_file_path = "../app/build.gradle" # Adjust the path if necessary
+
+  # Read the file and find the line with versionName
+  version_name_line = File.readlines(gradle_file_path).find { |line| line =~ /versionName/ }
+
+  if version_name_line
+    # Extract the versionName value (usually in quotes)
+    version_name = version_name_line.match(/"([^"]+)"/)[1]
+    return version_name
+  end
+
+  nil # Return nil if versionName isn't found
 end
