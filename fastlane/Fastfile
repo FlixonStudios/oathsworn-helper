@@ -33,6 +33,18 @@ platform :android do
       aab: "./app/build/outputs/bundle/release/app-release.aab"
     )
   end
+
+  desc "Just upload local built and signed"
+  lane :just-upload do
+    upload_to_play_store(
+      track: 'internal', 
+      # version_code: <MANUALLY EDIT>   
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_changelogs: true,
+      aab: "./app/build/outputs/bundle/release/app-release.aab"
+    )
+  end
   
   desc "Update version and upload via pipeline"
   lane :upload do
