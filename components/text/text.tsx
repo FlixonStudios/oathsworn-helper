@@ -1,6 +1,9 @@
-import { Text as RNText } from "react-native";
+import { Text as RNText, StyleProp, TextProps, TextStyle } from "react-native";
 
-export function ColoredText(props: { text?: string | number; bgColor: string }) {
+export function ColoredText(props: {
+  text?: string | number;
+  bgColor: string;
+}) {
   const { text, bgColor } = props;
   return (
     <RNText
@@ -9,6 +12,25 @@ export function ColoredText(props: { text?: string | number; bgColor: string }) 
       }}
     >
       {text}
+    </RNText>
+  );
+}
+
+export type TextTemplate = StyleProp<TextStyle>;
+
+export type BaseTextProps = TextProps & { children?: any };
+
+export const Text = {
+  H1: ({ children, ...rest }: BaseTextProps) =>
+    getText({ fontSize: 32, fontWeight: "600" }, { children, ...rest }),
+};
+
+function getText(textTemplate: TextTemplate, others: BaseTextProps) {
+  const { children, ...rest } = others;
+  const styleProps = [textTemplate, rest.style];
+  return (
+    <RNText {...rest} style={styleProps}>
+      {children}
     </RNText>
   );
 }
