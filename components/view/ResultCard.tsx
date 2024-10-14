@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text } from "@/components/text/text";
 import { ResultContainer, ResultValue } from "@/constants/styles";
 
 interface Props {
@@ -16,7 +16,7 @@ export function ResultCard(props: Props) {
   const renderIfPresent = (val: string) => {
     return val ? (
       <ResultValue>
-        <Text>{val}</Text>
+        <Text.Body>{val}</Text.Body>
       </ResultValue>
     ) : (
       <></>
@@ -25,7 +25,7 @@ export function ResultCard(props: Props) {
 
   return (
     <ResultContainer>
-      <Text>{title}</Text>
+      <Text.Body>{title}</Text.Body>
       {renderIfPresent(valToString(description))}
       {renderIfPresent(valToString(subtext))}
     </ResultContainer>

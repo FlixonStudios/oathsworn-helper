@@ -1,5 +1,5 @@
 import { AnimatedPressable } from "@/components/pressable";
-import { ColoredText } from "@/components/text/text";
+import { ColoredText, Text } from "@/components/text/text";
 import { ValueWithToggle } from "@/components/view";
 import { NUM_OF_CARDS } from "@/constants/model";
 import {
@@ -15,7 +15,6 @@ import { MightDeck } from "@/models/MightDeck";
 import { Probability } from "@/models/Probability";
 import { DamageAdvicePerEmpowerCombiResults, Empower } from "@/models/types";
 import { useState } from "react";
-import { Text } from "react-native";
 import { DamageResultRow } from "./components/damage-results-row";
 import {
   CalculateButton,
@@ -81,11 +80,11 @@ export default function DamageAdvicePage() {
       <CenteredView>
         <DamageAdviceSection>
           <CenteredView>
-            <Text>Damage Advice</Text>
+            <Text.Body>Damage Advice</Text.Body>
           </CenteredView>
           <ColumnSection>
             <CenteredView>
-              <Text>Set Base Might</Text>
+              <Text.Body>Set Base Might</Text.Body>
             </CenteredView>
             <SpacedAroundSection>
               {decksToUse.map((i) => {
@@ -102,7 +101,7 @@ export default function DamageAdvicePage() {
               })}
             </SpacedAroundSection>
             <CenteredView>
-              <Text>Set Empower Bonus</Text>
+              <Text.Body>Set Empower Bonus</Text.Body>
             </CenteredView>
             <ValueWithToggle
               decreaseText="<"
@@ -115,7 +114,7 @@ export default function DamageAdvicePage() {
               Component={CalculateButton}
               onPress={() => calculate()}
             >
-              <Text>Calculate</Text>
+              <Text.Body>Calculate</Text.Body>
             </AnimatedPressable>
             {damageAdviceResults?.map((results, i) => {
               return (

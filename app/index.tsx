@@ -1,6 +1,8 @@
+import { Text } from "@/components/text/text";
 import { useRouter } from "expo-router";
 import { useLayoutEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+
 export default function LandingPage() {
   const router = useRouter();
   // to prevent navigating before router is ready
@@ -19,7 +21,7 @@ export default function LandingPage() {
 
   return (
     <View>
-      <Text>Loading...</Text>
+      <Text.Body>Loading...</Text.Body>
     </View>
   );
 }

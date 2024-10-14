@@ -1,13 +1,12 @@
-import { Deck, CardCount } from "@/models/Deck";
-import { Text } from "react-native";
+import { AnimatedPressable } from "@/components/pressable";
+import { Text } from "@/components/text/text";
+import { CardCount, Deck } from "@/models/Deck";
 import {
   CardCountContainer,
   CardName,
   CardsAndCountSection,
-  CountText,
-  SeekButton,
+  SeekButton
 } from "./card-and-count-section.styles";
-import { AnimatedPressable } from "@/components/pressable";
 
 interface Props {
   deck: Deck;
@@ -33,10 +32,12 @@ export function CardsAndCountArea(props: Props) {
               color="#5e5251"
             >
               <CardCountContainer>
-                <CountText>{count[cardName]}</CountText>
+                <Text.Body style={{ color: "#ffffff" }}>
+                  {count[cardName]}
+                </Text.Body>
               </CardCountContainer>
               <CardName>
-                <Text>{cardName}</Text>
+                <Text.Body>{cardName}</Text.Body>
               </CardName>
             </AnimatedPressable>
           );

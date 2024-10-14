@@ -1,5 +1,5 @@
 import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
-import { ColoredText } from "@/components/text/text";
+import { ColoredText, Text } from "@/components/text/text";
 import { StackedRow, ValueWithToggle } from "@/components/view";
 import { NUM_OF_CARDS } from "@/constants/model";
 import { BasicScrollView, CenteredView, colorMap } from "@/constants/styles";
@@ -10,7 +10,6 @@ import { Optimizer } from "@/models/Optimizer";
 import { Probability } from "@/models/Probability";
 import { Empower, SkillCheckResult } from "@/models/types";
 import { useState } from "react";
-import { Text } from "react-native";
 import { ResultsSection } from "./components/results-section";
 import {
   CalculateButton,
@@ -85,9 +84,9 @@ export default function SkillCheckPage() {
   return (
     <BasicScrollView>
       <CenteredView>
-        <Text>Welcome!</Text>
+        <Text.Body>Welcome!</Text.Body>
         <SkillCheckSection>
-          <Text>Skill Check section</Text>
+          <Text.Body>Skill Check section</Text.Body>
           <SkillCheckContent>
             <ValueWithToggle
               decreaseText="<"
@@ -115,7 +114,7 @@ export default function SkillCheckPage() {
               Component={CalculateButton}
               onPress={() => calculate()}
             >
-              <Text>Calculate</Text>
+              <Text.Body>Calculate</Text.Body>
             </AnimatedPressable>
             {skillCheckResults && (
               <StackedRow

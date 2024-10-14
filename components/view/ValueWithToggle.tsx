@@ -1,11 +1,11 @@
+import { Text } from "@/components/text/text";
 import {
   ChangeValueButton,
-  GlobalText,
   MiniSquareView,
   SpacedAroundSection,
 } from "@/constants/styles";
-import { AnimatedPressable } from "../pressable";
 import { GestureResponderEvent } from "react-native";
+import { AnimatedPressable } from "../pressable";
 
 interface Props {
   decreaseText: string;
@@ -20,13 +20,13 @@ export function ValueWithToggle(props: Props) {
   return (
     <SpacedAroundSection>
       <AnimatedPressable Component={ChangeValueButton} onPress={onDecrease}>
-        <GlobalText>{decreaseText}</GlobalText>
+        <Text.Body>{decreaseText}</Text.Body>
       </AnimatedPressable>
       <MiniSquareView>
-        <GlobalText>{value}</GlobalText>
+        <Text.Body>{value}</Text.Body>
       </MiniSquareView>
       <AnimatedPressable Component={ChangeValueButton} onPress={onIncrease}>
-        <GlobalText>{increaseText}</GlobalText>
+        <Text.Body>{increaseText}</Text.Body>
       </AnimatedPressable>
     </SpacedAroundSection>
   );

@@ -1,8 +1,9 @@
+import { Text } from "@/components/text/text";
 import { BasicScrollView, CenteredView } from "@/constants/styles";
 import { useSettings } from "@/context-providers/settings/settings-hook";
 import { Module } from "@/context-providers/settings/types";
 import { useMemo } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
 import { commonRadioButtonStyles, radioGroupStyles } from "./settings.styles";
 
@@ -30,7 +31,7 @@ export default function SettingsPage() {
     <BasicScrollView>
       <CenteredView>
         <View style={{ marginVertical: 32 }}>
-          <Text>Select Module</Text>
+          <Text.Body>Select Module</Text.Body>
         </View>
         <View>
           <RadioGroup

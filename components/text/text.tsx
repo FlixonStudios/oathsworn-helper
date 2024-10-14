@@ -23,6 +23,8 @@ export type BaseTextProps = TextProps & { children?: any };
 export const Text = {
   H1: ({ children, ...rest }: BaseTextProps) =>
     getText({ fontSize: 32, fontWeight: "600" }, { children, ...rest }),
+  Body: ({ children, ...rest }: BaseTextProps) =>
+    getText({ fontSize: 16 }, { children, ...rest }),
 };
 
 function getText(textTemplate: TextTemplate, others: BaseTextProps) {
