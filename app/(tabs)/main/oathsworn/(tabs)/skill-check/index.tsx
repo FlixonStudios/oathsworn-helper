@@ -20,7 +20,7 @@ import {
   SkillCheckSection,
 } from "./skill-check.styles";
 
-export default function MainPage() {
+export default function SkillCheckPage() {
   const { gameState } = useGame();
 
   const [skillCheckTarget, setSkillCheckTarget] = useState(0);
