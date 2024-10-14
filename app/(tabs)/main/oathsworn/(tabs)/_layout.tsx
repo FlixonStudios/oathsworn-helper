@@ -11,6 +11,10 @@ export default function TabLayout() {
         screenOptions={{
           headerShown: true,
           headerTitle: "Unofficial Oathsworn Might Advisor",
+          tabBarStyle: {
+            height: 72,
+            paddingBottom: 8,
+          },
         }}
       >
         <Tabs.Screen
