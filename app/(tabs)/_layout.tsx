@@ -1,3 +1,4 @@
+import { Font } from "@/components/text/text";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -17,6 +18,7 @@ export default function TabLayout() {
         name="main"
         options={{
           title: "Game",
+          tabBarLabelStyle: { fontFamily: Font.Regular },
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="calculator" color={color} />
           ),
@@ -26,6 +28,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: "Settings",
+          tabBarLabelStyle: { fontFamily: Font.Regular },
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="gear" color={color} />
           ),

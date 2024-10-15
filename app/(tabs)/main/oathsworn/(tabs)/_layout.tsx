@@ -1,3 +1,4 @@
+import { Font } from "@/components/text/text";
 import { OathswornProvider } from "@/context-providers/oathsworn/oathsworn-provider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
@@ -11,6 +12,7 @@ export default function TabLayout() {
         screenOptions={{
           headerShown: true,
           headerTitle: "Unofficial Oathsworn Might Advisor",
+          headerTitleStyle: { fontFamily: Font.Bold },
           tabBarStyle: {
             height: 72,
             paddingBottom: 8,
@@ -21,6 +23,7 @@ export default function TabLayout() {
           name="skill-check"
           options={{
             title: "Skill Check",
+            tabBarLabelStyle: { fontFamily: Font.Regular },
             tabBarIcon: ({ color }) => (
               <FontAwesome size={28} name="check" color={color} />
             ),
@@ -30,6 +33,7 @@ export default function TabLayout() {
           name="damage-advice"
           options={{
             title: "Damage",
+            tabBarLabelStyle: { fontFamily: Font.Regular },
             tabBarIcon: ({ color }) => (
               <FontAwesome size={28} name="bar-chart" color={color} />
             ),
@@ -39,6 +43,7 @@ export default function TabLayout() {
           name="decks"
           options={{
             title: "Decks",
+            tabBarLabelStyle: { fontFamily: Font.Regular },
             tabBarIcon: ({ color }) => (
               <FontAwesome size={28} name="database" color={color} />
             ),
