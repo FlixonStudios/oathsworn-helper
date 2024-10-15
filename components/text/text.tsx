@@ -1,5 +1,18 @@
 import { Text as RNText, StyleProp, TextProps, TextStyle } from "react-native";
 
+export enum Font {
+  Regular = "Exo2-Regular",
+  Italic = "Exo2-Italic",
+  Bold = "Exo2-SemiBold",
+}
+
+// You can't use variables in require statements, hence hardcode
+export const FontPaths = {
+  Regular: require(`@/assets/fonts/Exo2-Regular.ttf`),
+  Italic: require(`@/assets/fonts/Exo2-Italic.ttf`),
+  Bold: require(`@/assets/fonts/Exo2-SemiBold.ttf`),
+};
+
 export function ColoredText(props: {
   text?: string | number;
   bgColor: string;
@@ -29,7 +42,9 @@ export const Text = {
 
 function getText(textTemplate: TextTemplate, others: BaseTextProps) {
   const { children, ...rest } = others;
-  const styleProps = [textTemplate, rest.style];
+  const font: TextStyle = { fontFamily: Font.Regular };
+  const styleProps = [font, textTemplate, rest.style];
+
   return (
     <RNText {...rest} style={styleProps}>
       {children}
