@@ -1,15 +1,15 @@
-import { Text } from "@/components/text/text";
-import { BasicScrollView, CenteredView } from "@/constants/styles";
+import { Font, Text } from "@/components/text/text";
+import { BasicScrollView, CenteredView, Color } from "@/constants/styles";
+import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
+import { CalculationSpeed } from "@/context-providers/oathsworn/types";
 import { useMemo } from "react";
-import { View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
 import {
   commonRadioButtonStyles,
   LabelContainer,
   radioGroupStyles,
 } from "./config.styles";
-import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
-import { CalculationSpeed } from "@/context-providers/oathsworn/types";
 
 export default function ConfigPage() {
   const { gameState, setCalculationSpeed } = useGame();
@@ -27,7 +27,9 @@ export default function ConfigPage() {
         id: speed,
         label: (
           <LabelContainer>
-            <Text.Body>{speed}</Text.Body>
+            <Text.Body style={{ color: Color.WHITE, fontFamily: Font.Bold }}>
+              {speed}
+            </Text.Body>
           </LabelContainer>
         ),
         value: speed,
@@ -37,20 +39,28 @@ export default function ConfigPage() {
   }, []);
 
   return (
-    <BasicScrollView>
-      <CenteredView>
-        <View style={{ marginVertical: 32 }}>
-          <Text.Body>Select Calculation Speed</Text.Body>
-        </View>
-        <View>
-          <RadioGroup
-            radioButtons={modulesRadioButtons}
-            onPress={onSelectCalculationSpeed}
-            selectedId={gameState.config.calculationSpeed}
-            containerStyle={radioGroupStyles}
-          />
-        </View>
-      </CenteredView>
+    <BasicScrollView contentContainerStyle={{ display: "flex", flex: 1 }}>
+      <ImageBackground
+        source={require("@/assets/images/oathsworn-bg.png")}
+        imageStyle={{ resizeMode: "cover", height: "100%" }}
+        style={{ flex: 1 }}
+      >
+        <CenteredView style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}>
+          <View style={{ marginVertical: 32 }}>
+            <Text.H3 style={{ color: Color.WHITE }}>
+              Select Calculation Speed
+            </Text.H3>
+          </View>
+          <View>
+            <RadioGroup
+              radioButtons={modulesRadioButtons}
+              onPress={onSelectCalculationSpeed}
+              selectedId={gameState.config.calculationSpeed}
+              containerStyle={radioGroupStyles}
+            />
+          </View>
+        </CenteredView>
+      </ImageBackground>
     </BasicScrollView>
   );
 }
