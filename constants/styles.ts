@@ -8,7 +8,6 @@ export const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];
 
 export const BasicScrollView = styled.ScrollView`
   display: flex;
-  padding: 16px;
 `;
 
 export const RowSection = styled.View`

@@ -32,13 +32,30 @@ export default function MainPage() {
   if (!loaded && !error) {
     return null;
   }
+
   return (
-    <BasicScrollView>
+    <BasicScrollView
+      style={{
+        backgroundColor: "#25292e",
+      }}
+    >
       <CenteredView>
         <View style={{ marginVertical: 32 }}>
-          <Text.H1>Welcome!</Text.H1>
+          <Text.H1 style={{ color: "white", textAlign: "center" }}>
+            Welcome!
+          </Text.H1>
         </View>
-        <Text.Body>Please select a Module from below to get started</Text.Body>
+        <View
+          style={{
+            paddingBottom: 32,
+            borderBottomWidth: 2,
+            borderBottomColor: "white",
+          }}
+        >
+          <Text.Body style={{ color: "white", textAlign: "center" }}>
+            Please select a Module from below to get started
+          </Text.Body>
+        </View>
         <ModulesContainer>
           {Object.values(Module)
             .filter((mod) => mod !== Module.NONE)

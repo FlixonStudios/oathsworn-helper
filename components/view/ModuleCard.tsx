@@ -12,7 +12,7 @@ export function ModuleCard({ title, onPress }: Props) {
   return (
     <CustomPressable onPress={onPress}>
       <Container>
-        <Text.H1>{title}</Text.H1>
+        <Text.H1 style={{ color: "white" }}>{title}</Text.H1>
       </Container>
     </CustomPressable>
   );
@@ -25,6 +25,7 @@ export const CustomPressable = styled(AnimatedPressable)`
 export const Container = styled(BorderedCentered)`
   display: flex;
   border-radius: 8px;
+  border-color: white;
   padding: 32px 16px;
 `;
 
