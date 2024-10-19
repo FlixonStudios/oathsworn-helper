@@ -1,4 +1,5 @@
-import { Font } from "@/components/text/text";
+import { Font, Text } from "@/components/text/text";
+import { Color } from "@/constants/styles";
 import { OathswornProvider } from "@/context-providers/oathsworn/oathsworn-provider";
 import { useSettings } from "@/context-providers/settings/settings-hook";
 import { Module } from "@/context-providers/settings/types";
@@ -19,6 +20,7 @@ export default function TabLayout() {
           tabBarStyle: {
             height: 72,
             paddingBottom: 8,
+            backgroundColor: Color.LESS_DARK_BLUE,
           },
           headerLeft: () => (
             <FontAwesome
@@ -33,10 +35,21 @@ export default function TabLayout() {
         <Tabs.Screen
           name="skill-check"
           options={{
-            title: "Skill Check",
-            tabBarLabelStyle: { fontFamily: Font.Regular },
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name="check" color={color} />
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text.BodySmall
+                  style={{ color: focused ? Color.WHITE : Color.GREY }}
+                >
+                  Skill Check
+                </Text.BodySmall>
+              );
+            },
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome
+                size={28}
+                name="check"
+                color={focused ? "white" : color}
+              />
             ),
           }}
         />
@@ -44,29 +57,63 @@ export default function TabLayout() {
           name="damage-advice"
           options={{
             title: "Damage",
-            tabBarLabelStyle: { fontFamily: Font.Regular },
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name="bar-chart" color={color} />
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text.BodySmall
+                  style={{ color: focused ? Color.WHITE : Color.GREY }}
+                >
+                  Damage
+                </Text.BodySmall>
+              );
+            },
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome
+                size={28}
+                name="bar-chart"
+                color={focused ? "white" : color}
+              />
             ),
           }}
         />
         <Tabs.Screen
           name="decks"
           options={{
-            title: "Decks",
-            tabBarLabelStyle: { fontFamily: Font.Regular },
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name="database" color={color} />
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text.BodySmall
+                  style={{ color: focused ? Color.WHITE : Color.GREY }}
+                >
+                  Decks
+                </Text.BodySmall>
+              );
+            },
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome
+                size={28}
+                name="database"
+                color={focused ? "white" : color}
+              />
             ),
           }}
         />
         <Tabs.Screen
           name="config"
           options={{
-            title: "Config",
-            tabBarLabelStyle: { fontFamily: Font.Regular },
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name="wrench" color={color} />
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text.BodySmall
+                  style={{ color: focused ? Color.WHITE : Color.GREY }}
+                >
+                  Config
+                </Text.BodySmall>
+              );
+            },
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome
+                size={28}
+                name="wrench"
+                color={focused ? "white" : color}
+              />
             ),
           }}
         />

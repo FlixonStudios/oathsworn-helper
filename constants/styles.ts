@@ -5,6 +5,9 @@ export const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];
 export enum Color {
   GREY = "rgba(142, 142, 143, 1)",
   WHITE = "rgba(255,255,255,1)",
+  SALMON = "rgba(255,104,93,1)",
+  DARK_BLUE = "rgba(37,41,46,1)",
+  LESS_DARK_BLUE = "rgba(50,65,84,1)",
 }
 
 // ===========================================================
