@@ -1,3 +1,4 @@
+import React from "react";
 import { Pressable, PressableProps } from "react-native";
 
 interface Props extends PressableProps {
@@ -10,20 +11,28 @@ export function AnimatedPressable<T>(props: Props) {
     children,
     Component = DefaultPressable,
     color,
+    style,
     ...otherProps
   } = props;
+
+  const baseStyles = typeof style !== "function" ? style : {};
+
+  const colorWhenPressed = "rgb(210, 230, 255)";
+
+  const colorWhenNotPressed = color
+    ? color
+    : baseStyles
+    ? (baseStyles as any)["backgroundColor"]
+    : "white";
 
   return (
     <Component
       style={({ pressed }) => [
         pressed ? { transform: [{ scale: 0.95 }] } : null,
         {
-          backgroundColor: pressed
-            ? "rgb(210, 230, 255)"
-            : color
-            ? color
-            : "white",
+          backgroundColor: pressed ? colorWhenPressed : colorWhenNotPressed,
         },
+        baseStyles,
       ]}
       {...otherProps}
     >
