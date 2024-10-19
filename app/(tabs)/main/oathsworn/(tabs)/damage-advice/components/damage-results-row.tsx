@@ -23,9 +23,17 @@ export function DamageResultRow(props: Props) {
       <EmpowerValueContainer>
         {gameState.decks.map((_, i) => {
           const empValue = empowerCombi[i.toString() as keyof Empower];
-          if (!empValue) return <></>;
+          const uid = Object.entries(empowerCombi)
+            .reduce((prev: any[], curr) => prev.concat(curr), [])
+            .map((val) => val.toString())
+            .join("");
+          // cannot return <></> here as React will complain about unique key in list
+          if (!empValue) return null;
           return (
-            <EmpowerValueView style={{ backgroundColor: colorMap[i] }}>
+            <EmpowerValueView
+              key={`${uid}-${i}`}
+              style={{ backgroundColor: colorMap[i] }}
+            >
               <ColoredText text={empValue.toString()} bgColor={colorMap[i]} />
             </EmpowerValueView>
           );
