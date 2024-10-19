@@ -2,6 +2,11 @@ import styled from "styled-components/native";
 
 export const colorMap = ["#ffffff", "#e8eb34", "#eb4334", "#000000"];
 
+export enum Color {
+  GREY = "rgba(142, 142, 143, 1)",
+  WHITE = "rgba(255,255,255,1)",
+}
+
 // ===========================================================
 // View
 // ===========================================================

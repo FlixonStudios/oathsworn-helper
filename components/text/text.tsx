@@ -38,6 +38,8 @@ export const Text = {
     getText({ fontSize: 32, fontWeight: "600" }, { children, ...rest }),
   Body: ({ children, ...rest }: BaseTextProps) =>
     getText({ fontSize: 16 }, { children, ...rest }),
+  BodySmall: ({ children, ...rest }: BaseTextProps) =>
+    getText({ fontSize: 14 }, { children, ...rest }),
 };
 
 function getText(textTemplate: TextTemplate, others: BaseTextProps) {
