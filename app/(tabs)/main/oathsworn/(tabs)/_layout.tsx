@@ -1,10 +1,13 @@
 import { Font } from "@/components/text/text";
 import { OathswornProvider } from "@/context-providers/oathsworn/oathsworn-provider";
+import { useSettings } from "@/context-providers/settings/settings-hook";
+import { Module } from "@/context-providers/settings/types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import React from "react";
 
 export default function TabLayout() {
+  const { setModule } = useSettings();
   return (
     // Provider must wrap Stack or Tabs to give it context
     <OathswornProvider>
@@ -17,6 +20,14 @@ export default function TabLayout() {
             height: 72,
             paddingBottom: 8,
           },
+          headerLeft: () => (
+            <FontAwesome
+              style={{ marginLeft: 16 }}
+              size={28}
+              name="chevron-left"
+              onPress={() => setModule(Module.NONE)}
+            />
+          ),
         }}
       >
         <Tabs.Screen
