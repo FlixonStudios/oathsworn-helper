@@ -11,6 +11,10 @@ import { ModulesContainer } from "./main.styles";
 
 SplashScreen.preventAutoHideAsync();
 
+const ModuleImagePathMap = {
+  [Module.OATHSWORN]: require("@/assets/images/oathsworn-module-bg.png"),
+};
+
 export default function MainPage() {
   const [loaded, error] = useFonts({
     [Font.Bold]: FontPaths.Bold,
@@ -64,6 +68,7 @@ export default function MainPage() {
                 key={i}
                 title={mod}
                 onPress={() => onSelectModule(mod)}
+                imageSrc={ModuleImagePathMap[mod]}
               />
             ))}
         </ModulesContainer>
