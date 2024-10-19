@@ -19,6 +19,7 @@ export default function ConfigPage() {
   }
 
   // TODO: move radio to common component
+  // TODO: fix issue where config is reset on push
   const modulesRadioButtons: RadioButtonProps[] = useMemo(() => {
     const buttons = Object.values(CalculationSpeed).map((speed) => {
       return {
