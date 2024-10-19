@@ -20,8 +20,8 @@ export default function DecksPage() {
     <BasicScrollView contentContainerStyle={{ display: "flex", flex: 1 }}>
       <ImageBackground
         source={require("@/assets/images/oathsworn-bg.png")}
-        imageStyle={{ resizeMode: "cover", height: "100%" }}
-        style={{ flex: 1 }}
+        imageStyle={{ resizeMode: "cover" }}
+        style={{ flex: 1, width: "100%" }}
       >
         {gameState.decks.map((deck, i) => {
           const count = deck.getDeckCardCount();

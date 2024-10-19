@@ -15,6 +15,7 @@ export default function TabLayout() {
           borderTopWidth: 2,
           backgroundColor: "#25292e",
         },
+        tabBarLabelPosition: "below-icon",
       }}
     >
       <Tabs.Screen

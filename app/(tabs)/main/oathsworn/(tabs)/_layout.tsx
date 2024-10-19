@@ -22,6 +22,7 @@ export default function TabLayout() {
             paddingBottom: 8,
             backgroundColor: Color.LESS_DARK_BLUE,
           },
+          tabBarLabelPosition: "below-icon",
           headerLeft: () => (
             <FontAwesome
               style={{ marginLeft: 16 }}
