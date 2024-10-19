@@ -35,7 +35,7 @@
           "fonts": [
             "./assets/fonts/Exo2-Regular.ttf",
             "./assets/fonts/Exo2-Italic.ttf",
-            "./assets/fonts/Exo2-Bold.ttf"
+            "./assets/fonts/Exo2-SemiBold.ttf"
           ]
         }
       ]
