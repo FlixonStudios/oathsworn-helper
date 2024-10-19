@@ -13,6 +13,7 @@ import { Optimizable, Optimizer } from "./Optimizer";
 interface DamageAdviceOptions extends Optimizable {
   numOfExtraEmpower: number;
   baseMight: Empower;
+  iterationArr: number[];
 }
 
 interface SkillCheckOptions extends Optimizable {
@@ -25,6 +26,7 @@ const DEFAULT_DAMAGE_ADVICE_OPTIONS: DamageAdviceOptions = {
   baseMight: {},
   iterations: 100,
   targetedScenarios: NUM_OF_CARDS,
+  iterationArr: [100, 500, 2500],
 };
 
 const DEFAULT_SKILL_CHECK_OPTIONS: SkillCheckOptions = {
@@ -52,8 +54,13 @@ export class Probability {
       ...DEFAULT_DAMAGE_ADVICE_OPTIONS,
       ..._options,
     };
-    const { baseMight, numOfExtraEmpower, iterations, targetedScenarios } =
-      options;
+    const {
+      baseMight,
+      numOfExtraEmpower,
+      iterations,
+      targetedScenarios,
+      iterationArr,
+    } = options;
 
     const empowerCombinations = this.numberHelper.getEmpowerCombinations(
       baseMight,
@@ -70,6 +77,7 @@ export class Probability {
           keyForValue: "averageDamage",
           keyForScenario: "cardsToDraw",
           finalIteration: iterations,
+          iterationArr,
         },
         ({ iterations, targetedScenarios }) =>
           this.damageAdviceForEmpowerCombi({

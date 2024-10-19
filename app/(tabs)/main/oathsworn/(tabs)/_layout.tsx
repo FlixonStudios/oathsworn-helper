@@ -49,6 +49,16 @@ export default function TabLayout() {
             ),
           }}
         />
+        <Tabs.Screen
+          name="config"
+          options={{
+            title: "Config",
+            tabBarLabelStyle: { fontFamily: Font.Regular },
+            tabBarIcon: ({ color }) => (
+              <FontAwesome size={28} name="wrench" color={color} />
+            ),
+          }}
+        />
       </Tabs>
     </OathswornProvider>
   );

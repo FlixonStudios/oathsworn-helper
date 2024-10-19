@@ -52,6 +52,7 @@ export default function SkillCheckPage() {
     });
     const p = new Probability(deckManager);
     const optimizer = new Optimizer();
+    // TODO: add get iteration config here
     const results = optimizer.optimizeResults(
       {
         top: 4,

@@ -1,7 +1,7 @@
 import { AnimatedPressable } from "@/components/pressable";
 import { ColoredText, Text } from "@/components/text/text";
 import { ValueWithToggle } from "@/components/view";
-import { NUM_OF_CARDS } from "@/constants/model";
+import { IterationSet, NUM_OF_CARDS } from "@/constants/model";
 import {
   BasicScrollView,
   CenteredView,
@@ -55,11 +55,13 @@ export default function DamageAdvicePage() {
     });
     const p = new Probability(deckManager);
 
+    const iterationConfig = IterationSet[gameState.config.calculationSpeed];
+
     const results = p.damageAdvice({
       numOfExtraEmpower: empowerBonus,
       baseMight: might,
       initialTargetedScenarios: NUM_OF_CARDS,
-      iterations: 4000,
+      ...iterationConfig,
     });
 
     setDamageAdviceResults([...results]);
