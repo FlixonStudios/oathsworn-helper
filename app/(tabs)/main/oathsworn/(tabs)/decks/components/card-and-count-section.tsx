@@ -5,7 +5,7 @@ import {
   CardCountContainer,
   CardName,
   CardsAndCountSection,
-  SeekButton
+  SeekButton,
 } from "./card-and-count-section.styles";
 
 interface Props {
@@ -32,9 +32,9 @@ export function CardsAndCountArea(props: Props) {
               color="#5e5251"
             >
               <CardCountContainer>
-                <Text.Body style={{ color: "#ffffff" }}>
+                <Text.BodySmall style={{ color: "#ffffff", fontSize: 12 }}>
                   {count[cardName]}
-                </Text.Body>
+                </Text.BodySmall>
               </CardCountContainer>
               <CardName>
                 <Text.Body>{cardName}</Text.Body>
