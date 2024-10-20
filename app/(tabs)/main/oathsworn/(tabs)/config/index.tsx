@@ -33,6 +33,7 @@ export default function ConfigPage() {
           </LabelContainer>
         ),
         value: speed,
+        color: Color.WHITE,
       };
     });
     return buttons;
