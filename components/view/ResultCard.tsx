@@ -1,5 +1,5 @@
 import { Text } from "@/components/text/text";
-import { ResultContainer, ResultValue } from "@/constants/styles";
+import { Color, ResultContainer, ResultValue } from "@/constants/styles";
 
 interface Props {
   title: string;
@@ -16,7 +16,7 @@ export function ResultCard(props: Props) {
   const renderIfPresent = (val: string) => {
     return val ? (
       <ResultValue>
-        <Text.Body>{val}</Text.Body>
+        <Text.Body style={{ color: Color.WHITE }}>{val}</Text.Body>
       </ResultValue>
     ) : (
       <></>
@@ -25,7 +25,7 @@ export function ResultCard(props: Props) {
 
   return (
     <ResultContainer>
-      <Text.Body>{title}</Text.Body>
+      <Text.Body  style={{ color: Color.WHITE }}>{title}</Text.Body>
       {renderIfPresent(valToString(description))}
       {renderIfPresent(valToString(subtext))}
     </ResultContainer>

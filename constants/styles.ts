@@ -45,6 +45,7 @@ export const ResultContainer = styled(BorderedCentered)`
   width: 48px;
   flex-wrap: wrap;
   margin: 2px;
+  border-color: #ffffff;
 `;
 export const ResultValue = styled(CenteredView)`
   width: 48px;
