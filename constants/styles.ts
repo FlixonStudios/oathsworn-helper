@@ -41,6 +41,13 @@ export const BorderedCentered = styled(CenteredView)`
   border-width: 1px;
 `;
 
+export const ModalStyledView = styled(BorderedCentered)`
+  border-radius: 5px;
+`;
+export const ModalStyledSection = styled(CenteredView)`
+  margin-bottom: 16px;
+`;
+
 export const ResultContainer = styled(BorderedCentered)`
   width: 48px;
   flex-wrap: wrap;

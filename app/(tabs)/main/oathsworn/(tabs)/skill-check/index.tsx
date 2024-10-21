@@ -8,7 +8,7 @@ import {
   BasicScrollView,
   CenteredView,
   Color,
-  colorMap,
+  colorMap
 } from "@/constants/styles";
 import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
 import { DeckManager } from "@/models/DecksManager";
@@ -19,6 +19,7 @@ import { Empower, SkillCheckResult } from "@/models/types";
 import { useState } from "react";
 import { ImageBackground, View } from "react-native";
 import { ResultsSection } from "./components/results-section";
+import { SkillCheckTooltipModalContent } from "./components/tooltip-modal-content";
 import {
   CalculateButton,
   MightSection,
@@ -91,16 +92,14 @@ export default function SkillCheckPage() {
     setMight(newMight);
   }
 
-  function renderModalContent() {
-    // TODO: 
-    return <View style={{}}></View>;
-  }
-
   return (
-    <BasicScrollView contentContainerStyle={{ display: "flex", flex: 1 }} scrollEnabled={!showModal}>
+    <BasicScrollView
+      contentContainerStyle={{ display: "flex", flex: 1 }}
+      scrollEnabled={!showModal}
+    >
       {/** TODO: consider moving modal as as overlay for all pages */}
       <Modal show={showModal} setShow={setShowModal}>
-        {renderModalContent()}
+        <SkillCheckTooltipModalContent />
       </Modal>
       <ImageBackground
         source={require("@/assets/images/oathsworn-bg.png")}

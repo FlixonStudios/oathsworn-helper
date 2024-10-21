@@ -5,10 +5,11 @@ interface Props {
   title: string;
   description?: string | number;
   subtext?: string | number;
+  color?: Color;
 }
 
 export function ResultCard(props: Props) {
-  const { title, description, subtext } = props;
+  const { title, description, subtext, color: color } = props;
   const valToString = (val?: number | string) => {
     if (!val && val !== 0) return "";
     return typeof val === "number" ? val.toFixed(2).toString() : val;
@@ -16,7 +17,7 @@ export function ResultCard(props: Props) {
   const renderIfPresent = (val: string) => {
     return val ? (
       <ResultValue>
-        <Text.Body style={{ color: Color.WHITE }}>{val}</Text.Body>
+        <Text.Body style={{ color: color ?? Color.WHITE }}>{val}</Text.Body>
       </ResultValue>
     ) : (
       <></>
@@ -24,8 +25,8 @@ export function ResultCard(props: Props) {
   };
 
   return (
-    <ResultContainer>
-      <Text.Body  style={{ color: Color.WHITE }}>{title}</Text.Body>
+    <ResultContainer style={{ ...(color ? { borderColor: color } : {}) }}>
+      <Text.Body style={{ color: color ?? Color.WHITE }}>{title}</Text.Body>
       {renderIfPresent(valToString(description))}
       {renderIfPresent(valToString(subtext))}
     </ResultContainer>
