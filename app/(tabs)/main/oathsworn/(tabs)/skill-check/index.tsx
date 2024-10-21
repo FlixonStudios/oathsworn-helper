@@ -1,6 +1,8 @@
 import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
+import { TooltipButton } from "@/components/pressable/TooltipButton";
 import { ColoredText, Text } from "@/components/text/text";
 import { StackedRow, ValueWithToggle } from "@/components/view";
+import { Modal } from "@/components/view/Modal";
 import { NUM_OF_CARDS } from "@/constants/model";
 import {
   BasicScrollView,
@@ -15,7 +17,7 @@ import { Optimizer } from "@/models/Optimizer";
 import { Probability } from "@/models/Probability";
 import { Empower, SkillCheckResult } from "@/models/types";
 import { useState } from "react";
-import { ImageBackground } from "react-native";
+import { ImageBackground, View } from "react-native";
 import { ResultsSection } from "./components/results-section";
 import {
   CalculateButton,
@@ -32,6 +34,7 @@ export default function SkillCheckPage() {
   const [might, setMight] = useState<Empower>({});
   const [skillCheckResults, setSkillCheckResults] =
     useState<SkillCheckResult[]>();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const { decks } = gameState;
   const decksToUse: Array<"1" | "2" | "3"> = ["1", "2", "3"];
@@ -88,8 +91,17 @@ export default function SkillCheckPage() {
     setMight(newMight);
   }
 
+  function renderModalContent() {
+    // TODO: 
+    return <View style={{}}></View>;
+  }
+
   return (
-    <BasicScrollView contentContainerStyle={{ display: "flex", flex: 1 }}>
+    <BasicScrollView contentContainerStyle={{ display: "flex", flex: 1 }} scrollEnabled={!showModal}>
+      {/** TODO: consider moving modal as as overlay for all pages */}
+      <Modal show={showModal} setShow={setShowModal}>
+        {renderModalContent()}
+      </Modal>
       <ImageBackground
         source={require("@/assets/images/oathsworn-bg.png")}
         imageStyle={{ resizeMode: "cover" }}
@@ -100,6 +112,9 @@ export default function SkillCheckPage() {
             <Text.H3 style={{ color: Color.WHITE }}>
               Skill Check section
             </Text.H3>
+            <View style={{ marginVertical: 24 }}>
+              <TooltipButton onPress={() => setShowModal(true)} />
+            </View>
             <SkillCheckContent>
               <ValueWithToggle
                 decreaseText="<"
