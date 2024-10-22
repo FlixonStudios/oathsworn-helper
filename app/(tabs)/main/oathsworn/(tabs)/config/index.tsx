@@ -43,13 +43,13 @@ export default function ConfigPage() {
     <BasicScrollView
       contentContainerStyle={{
         display: "flex",
-        flex: 1,
+        flexGrow: 1,
       }}
     >
       <ImageBackground
         source={require("@/assets/images/oathsworn-bg.png")}
         imageStyle={{ resizeMode: "cover" }}
-        style={{ flex: 1, width: "100%" }}
+        style={{ width: "100%", height: "100%" }}
       >
         <CenteredView style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}>
           <View style={{ marginVertical: 32 }}>

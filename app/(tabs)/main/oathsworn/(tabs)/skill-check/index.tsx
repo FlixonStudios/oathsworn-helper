@@ -94,8 +94,7 @@ export default function SkillCheckPage() {
 
   return (
     <BasicScrollView
-      contentContainerStyle={{ display: "flex", flex: 1 }}
-      scrollEnabled={!showModal}
+      contentContainerStyle={{ display: "flex", flexGrow: 1 }}
     >
       {/** TODO: consider moving modal as as overlay for all pages */}
       <Modal show={showModal} setShow={setShowModal}>
@@ -104,7 +103,7 @@ export default function SkillCheckPage() {
       <ImageBackground
         source={require("@/assets/images/oathsworn-bg.png")}
         imageStyle={{ resizeMode: "cover" }}
-        style={{ flex: 1, width: "100%" }}
+        style={{ width: "100%", height: "100%" }}
       >
         <CenteredView style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}>
           <SkillCheckSection>
