@@ -2,10 +2,10 @@ import { BorderedCentered } from "@/constants/styles";
 import styled from "styled-components/native";
 
 export const DeckPairSection = styled.View`
-  display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 16px;
+  width: 100%
 `;
 
 export const StyledDeck = styled(BorderedCentered)`

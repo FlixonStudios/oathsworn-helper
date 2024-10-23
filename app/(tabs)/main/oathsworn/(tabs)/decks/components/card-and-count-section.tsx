@@ -1,12 +1,8 @@
-import { AnimatedPressable } from "@/components/pressable";
-import { Text } from "@/components/text/text";
 import { CardCount, Deck } from "@/models/Deck";
 import {
-  CardCountContainer,
-  CardName,
-  CardsAndCountSection,
-  SeekButton,
+  CardsAndCountSection
 } from "./card-and-count-section.styles";
+import { DecksCard } from "./decks-card";
 
 interface Props {
   deck: Deck;
@@ -25,21 +21,12 @@ export function CardsAndCountArea(props: Props) {
         .filter((cardName) => !!count[cardName])
         .map((cardName, i) => {
           return (
-            <AnimatedPressable
+            <DecksCard
               key={i}
-              onPress={() => onPress(cardName)}
-              Component={SeekButton}
-              color="#5e5251"
-            >
-              <CardCountContainer>
-                <Text.BodySmall style={{ color: "#ffffff", fontSize: 12 }}>
-                  {count[cardName]}
-                </Text.BodySmall>
-              </CardCountContainer>
-              <CardName>
-                <Text.Body>{cardName}</Text.Body>
-              </CardName>
-            </AnimatedPressable>
+              onPress={onPress}
+              count={count}
+              cardName={cardName}
+            />
           );
         })}
     </CardsAndCountSection>
