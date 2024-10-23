@@ -39,16 +39,16 @@ export default function SettingsPage() {
     <BasicScrollView>
       <CenteredView>
         <View style={{ marginVertical: 32 }}>
-          <Text.Body>Select Module</Text.Body>
+          <Text.Body>Screen under construction!</Text.Body>
         </View>
-        <View>
+        {/* <View>
           <RadioGroup
             radioButtons={modulesRadioButtons}
             onPress={onSelectModule}
             selectedId={module}
             containerStyle={radioGroupStyles}
           />
-        </View>
+        </View> */}
       </CenteredView>
     </BasicScrollView>
   );
