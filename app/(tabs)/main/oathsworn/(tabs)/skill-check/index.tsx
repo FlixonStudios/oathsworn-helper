@@ -2,13 +2,13 @@ import { AnimatedPressable } from "@/components/pressable/AnimatedPressable";
 import { TooltipButton } from "@/components/pressable/TooltipButton";
 import { ColoredText, Text } from "@/components/text/text";
 import { StackedRow, ValueWithToggle } from "@/components/view";
-import { Modal } from "@/components/view/Modal";
+import { StyledModal } from "@/components/view/Modal";
 import { NUM_OF_CARDS } from "@/constants/model";
 import {
   BasicScrollView,
   CenteredView,
   Color,
-  colorMap
+  colorMap,
 } from "@/constants/styles";
 import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
 import { DeckManager } from "@/models/DecksManager";
@@ -92,65 +92,66 @@ export default function SkillCheckPage() {
     setMight(newMight);
   }
 
+  function renderSkillCheckContent() {
+    return (
+      <CenteredView style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}>
+        <SkillCheckSection>
+          <Text.H3 style={{ color: Color.WHITE }}>Skill Check section</Text.H3>
+          <View style={{ marginVertical: 24, alignItems: "center" }}>
+            <TooltipButton onPress={() => setShowModal(true)} />
+          </View>
+          <SkillCheckContent>
+            <ValueWithToggle
+              decreaseText="<"
+              onDecrease={() => onPress(-1)}
+              increaseText=">"
+              onIncrease={() => onPress(1)}
+              value={skillCheckTarget}
+            />
+            <MightSection>
+              {decksToUse.map((i) => {
+                return (
+                  <AnimatedPressable
+                    key={i}
+                    Component={SeekButton}
+                    color={colorMap[i]}
+                    onPress={() => addMight(i)}
+                    onLongPress={() => resetSkill(i)}
+                  >
+                    <ColoredText bgColor={colorMap[i]} text={might[i]} />
+                  </AnimatedPressable>
+                );
+              })}
+            </MightSection>
+            <AnimatedPressable
+              Component={CalculateButton}
+              onPress={() => calculate()}
+            >
+              <Text.Body>Calculate</Text.Body>
+            </AnimatedPressable>
+            {skillCheckResults && (
+              <StackedRow
+                values={skillCheckResults}
+                Component={ResultsSection}
+              />
+            )}
+          </SkillCheckContent>
+        </SkillCheckSection>
+      </CenteredView>
+    );
+  }
+
   return (
-    <BasicScrollView
-      contentContainerStyle={{ display: "flex", flexGrow: 1 }}
-    >
-      {/** TODO: consider moving modal as as overlay for all pages */}
-      <Modal show={showModal} setShow={setShowModal}>
-        <SkillCheckTooltipModalContent />
-      </Modal>
+    <BasicScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <ImageBackground
         source={require("@/assets/images/oathsworn-bg.png")}
         imageStyle={{ resizeMode: "cover" }}
         style={{ width: "100%", height: "100%" }}
       >
-        <CenteredView style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}>
-          <SkillCheckSection>
-            <Text.H3 style={{ color: Color.WHITE }}>
-              Skill Check section
-            </Text.H3>
-            <View style={{ marginVertical: 24 }}>
-              <TooltipButton onPress={() => setShowModal(true)} />
-            </View>
-            <SkillCheckContent>
-              <ValueWithToggle
-                decreaseText="<"
-                onDecrease={() => onPress(-1)}
-                increaseText=">"
-                onIncrease={() => onPress(1)}
-                value={skillCheckTarget}
-              />
-              <MightSection>
-                {decksToUse.map((i) => {
-                  return (
-                    <AnimatedPressable
-                      key={i}
-                      Component={SeekButton}
-                      color={colorMap[i]}
-                      onPress={() => addMight(i)}
-                      onLongPress={() => resetSkill(i)}
-                    >
-                      <ColoredText bgColor={colorMap[i]} text={might[i]} />
-                    </AnimatedPressable>
-                  );
-                })}
-              </MightSection>
-              <AnimatedPressable
-                Component={CalculateButton}
-                onPress={() => calculate()}
-              >
-                <Text.Body>Calculate</Text.Body>
-              </AnimatedPressable>
-              {skillCheckResults && (
-                <StackedRow
-                  values={skillCheckResults}
-                  Component={ResultsSection}
-                />
-              )}
-            </SkillCheckContent>
-          </SkillCheckSection>
-        </CenteredView>
+        <StyledModal show={showModal} setShow={setShowModal}>
+          <SkillCheckTooltipModalContent />
+        </StyledModal>
+        {!showModal && renderSkillCheckContent()}
       </ImageBackground>
     </BasicScrollView>
   );

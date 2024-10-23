@@ -44,6 +44,7 @@ export const BorderedCentered = styled(CenteredView)`
 export const ModalStyledView = styled(BorderedCentered)`
   border-radius: 5px;
 `;
+
 export const ModalStyledSection = styled(CenteredView)`
   margin-bottom: 16px;
 `;

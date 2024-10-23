@@ -8,7 +8,17 @@ interface Props {
   children: any;
 }
 
-export function Modal({ show, children, setShow, onBackgroundPress }: Props) {
+/**
+ * Scroll view in Modal or View with position absolute does not work in RN
+ * Consider 'global' Modal in _layout
+ */
+
+export function StyledModal({
+  show,
+  children,
+  setShow,
+  onBackgroundPress,
+}: Props) {
   function handleBackgroundPress() {
     if (onBackgroundPress) {
       onBackgroundPress();
@@ -23,7 +33,7 @@ export function Modal({ show, children, setShow, onBackgroundPress }: Props) {
 
   return (
     show && (
-      <ModalView onPress={handleBackgroundPress} style={{}}>
+      <ModalView onPress={handleBackgroundPress}>
         <ContentView onPress={(e) => onContentPress(e)}>{children}</ContentView>
       </ModalView>
     )
@@ -31,18 +41,12 @@ export function Modal({ show, children, setShow, onBackgroundPress }: Props) {
 }
 
 export const ModalView = styled.Pressable`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 50;
-  padding: 24px;
+  z-index: 10;
+  padding: 32px;
 `;
 
 export const ContentView = styled.Pressable`
-  display: flex;
   border-radius: 5px;
-  justify-content: center;
-  align-items: center;
+  flex-grow: 1;
 `;

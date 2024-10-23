@@ -3,7 +3,6 @@ import { ValueWithToggle } from "@/components/view";
 import {
   ModalStyledView,
   Color,
-  BasicScrollView,
   ModalStyledSection,
   ChangeValueButton,
   colorMap,
@@ -27,7 +26,6 @@ export function SkillCheckTooltipModalContent() {
   };
   return (
     <ModalStyledView style={{ backgroundColor: Color.WHITE, padding: 32 }}>
-      <BasicScrollView>
         <ModalStyledSection>
           <Text.Body>This is the Skill Check Section</Text.Body>
         </ModalStyledSection>
@@ -107,7 +105,6 @@ export function SkillCheckTooltipModalContent() {
             }
           </Text.Body>
         </ModalStyledSection>
-      </BasicScrollView>
     </ModalStyledView>
   );
 }
