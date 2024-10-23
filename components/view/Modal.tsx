@@ -43,7 +43,7 @@ export function StyledModal({
 export const ModalView = styled.Pressable`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 10;
-  padding: 32px;
+  padding: 48px;
 `;
 
 export const ContentView = styled.Pressable`
