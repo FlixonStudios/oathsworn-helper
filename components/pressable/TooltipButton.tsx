@@ -1,7 +1,7 @@
 import { AnimatedPressable } from "@/components/pressable";
 import { Color } from "@/constants/styles";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, View } from "react-native";
 import styled from "styled-components/native";
 
 interface Props {
@@ -15,17 +15,9 @@ export function TooltipButton({ onPress }: Props) {
   }
   return (
     <PressableArea onPress={handleOnPress}>
-      <FontAwesome
-        size={16}
-        name="question"
-        color={Color.WHITE}
-        style={{
-          borderColor: Color.WHITE,
-          borderWidth: 2,
-          borderRadius: 10,
-          paddingHorizontal: 4,
-        }}
-      />
+      <View style={IconContainerStyles}>
+        <FontAwesome size={16} name="question" color={Color.WHITE} />
+      </View>
     </PressableArea>
   );
 }
@@ -34,5 +26,12 @@ export const PressableArea = styled(AnimatedPressable)`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
 `;
+
+export const IconContainerStyles = {
+  borderColor: Color.WHITE,
+  borderWidth: 2,
+  borderRadius: 20,
+  paddingHorizontal: 6,
+  paddingVertical: 3,
+};
