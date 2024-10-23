@@ -1,6 +1,6 @@
 import { ColoredText } from "@/components/text/text";
 import { StackedRow } from "@/components/view/StackedRow";
-import { colorMap } from "@/constants/styles";
+import { Color, colorMap } from "@/constants/styles";
 import { useGame } from "@/context-providers/oathsworn/oathsworn-hook";
 import { DamageAdvicePerEmpowerCombiResults, Empower } from "@/models/types";
 import {
@@ -13,10 +13,11 @@ import { ResultsSectionRow } from "./results-section";
 interface Props {
   results: DamageAdvicePerEmpowerCombiResults[];
   empowerCombi: Empower;
+  color?: Color;
 }
 export function DamageResultRow(props: Props) {
   const { gameState } = useGame();
-  const { results, empowerCombi } = props;
+  const { results, empowerCombi, color } = props;
 
   return (
     <Container>
@@ -42,7 +43,7 @@ export function DamageResultRow(props: Props) {
       <StackedRow
         values={results}
         Component={ResultsSectionRow}
-        otherProps={{ empowerCombi: empowerCombi }}
+        otherProps={{ empowerCombi: empowerCombi, color: color }}
       />
     </Container>
   );
