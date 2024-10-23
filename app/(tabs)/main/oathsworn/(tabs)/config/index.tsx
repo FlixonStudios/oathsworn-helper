@@ -18,6 +18,13 @@ export default function ConfigPage() {
     setCalculationSpeed(speed as CalculationSpeed);
   }
 
+  const calculationDescriptionMap = {
+    [CalculationSpeed.FAST]:
+      "(Recommended) Calculation is faster but probabilities will have larger margin of error",
+    [CalculationSpeed.SLOW]:
+      "Calculation is slower but probabilities will be more accurate.",
+  };
+
   // TODO: move radio to common component
   // TODO: fix issue where config is reset on push
   const modulesRadioButtons: RadioButtonProps[] = useMemo(() => {
@@ -30,6 +37,9 @@ export default function ConfigPage() {
             <Text.Body style={{ color: Color.WHITE, fontFamily: Font.Bold }}>
               {speed}
             </Text.Body>
+            <Text.BodySmall style={{ color: Color.WHITE }}>
+              {calculationDescriptionMap[speed]}
+            </Text.BodySmall>
           </LabelContainer>
         ),
         value: speed,
@@ -46,7 +56,9 @@ export default function ConfigPage() {
         imageStyle={{ resizeMode: "cover" }}
         style={{ width: "100%", height: "100%" }}
       >
-        <CenteredView style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}>
+        <CenteredView
+          style={{ backgroundColor: "rgba(0,0,0, 0.5)", paddingHorizontal: 48 }}
+        >
           <View style={{ marginVertical: 32 }}>
             <Text.H3 style={{ color: Color.WHITE }}>
               Select Calculation Speed

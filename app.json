@@ -2,7 +2,7 @@
   "expo": {
     "name": "Game Probability",
     "slug": "oathsworn-helper",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "orientation": "portrait",
     "icon": "./assets/images/game-probability-icon.png",
     "scheme": "myapp",

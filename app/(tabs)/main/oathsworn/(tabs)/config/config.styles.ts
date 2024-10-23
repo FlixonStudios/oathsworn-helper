@@ -7,12 +7,12 @@ export const commonRadioButtonStyles = {
 };
 
 export const radioGroupStyles: StyleProp<ViewStyle> = {
-  display: "flex",
   alignItems: "flex-start",
 };
 
 export const LabelContainer = styled.View`
   padding: 12px;
+  flex: 1;
 `;
 
 export const Divider = styled.View`
