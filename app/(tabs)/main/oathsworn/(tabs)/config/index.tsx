@@ -37,9 +37,11 @@ export default function ConfigPage() {
             <Text.Body style={{ color: Color.WHITE, fontFamily: Font.Bold }}>
               {speed}
             </Text.Body>
-            <Text.BodySmall style={{ color: Color.WHITE }}>
-              {calculationDescriptionMap[speed]}
-            </Text.BodySmall>
+            <View style={{ flex: 1 }}>
+              <Text.BodySmall style={{ color: Color.WHITE }}>
+                {calculationDescriptionMap[speed]}
+              </Text.BodySmall>
+            </View>
           </LabelContainer>
         ),
         value: speed,
