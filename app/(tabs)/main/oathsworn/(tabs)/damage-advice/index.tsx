@@ -80,7 +80,7 @@ export default function DamageAdvicePage() {
   }
 
   return (
-    <BasicScrollView contentContainerStyle={{ display: "flex", flexGrow: 1 }}>
+    <BasicScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <ImageBackground
         source={require("@/assets/images/oathsworn-bg.png")}
         imageStyle={{ resizeMode: "cover" }}
