@@ -13,16 +13,31 @@ export class Deck {
   constructor(
     public template: Card[] = [],
     public remainingCards: Card[] = [],
-    public drawnCards: Card[] = []
-  ) // public id: string = nanoid(10)
-  {
+    public drawnCards: Card[] = [] // public id: string = nanoid(10)
+  ) {
     this.remainingCards = [...this.template];
   }
+  
   public shuffleAllTogether() {
     this.drawnCards = [];
     const toBeShuffled = [...this.template];
     this.shufflePile(toBeShuffled, this.remainingCards);
     return this;
+  }
+
+  public shuffleAllTogetherWithSomeInDrawn(cardsToNotReshuffle: Card[]) {
+    this.drawnCards = [];
+    const toBeShuffled = [...this.template];
+
+    cardsToNotReshuffle.forEach((card) => {
+      toBeShuffled.splice(
+        this.getCardIndexFromName(card.name, toBeShuffled),
+        1
+      );
+    });
+    this.shufflePile(toBeShuffled, this.remainingCards)
+    this.drawnCards = [...cardsToNotReshuffle];
+    return this
   }
 
   public shuffleRemaining() {
@@ -47,11 +62,16 @@ export class Deck {
     }
   }
 
-  public draw() {
+  public draw(cardsToNotReshuffle?: Card[]) {
     if (this.template.length === 0) {
       return;
     }
-    if (this.remainingCards.length === 0) {
+
+    if (this.remainingCards.length === 0 && cardsToNotReshuffle) {
+      this.shuffleAllTogetherWithSomeInDrawn(cardsToNotReshuffle);
+    }
+
+    if (this.remainingCards.length === 0 && !cardsToNotReshuffle) {
       this.shuffleAllTogether();
     }
 
@@ -59,6 +79,7 @@ export class Deck {
     this.drawnCards.push(card);
     return card;
   }
+
   public getUniqueCardList() {
     const uniqueCardList: string[] = [];
     this.template.forEach((card) => {
@@ -66,20 +87,25 @@ export class Deck {
         uniqueCardList.push(card.name);
       }
     });
+
     return uniqueCardList;
   }
+
   public seek(name: string) {
     return this.transfer(name, this.remainingCards, this.drawnCards);
   }
+
   public revert(name: string) {
     return this.transfer(name, this.drawnCards, this.remainingCards);
   }
+
   public getDeckCardCount(): DeckCardCount {
     return {
       remaining: this.getCountOfCards(this.remainingCards),
       drawn: this.getCountOfCards(this.drawnCards),
     };
   }
+
   private transfer(name: string, startPile: Card[], endPile: Card[]) {
     const index = this.getCardIndexFromName(name, startPile);
     if (index < 0) return;
@@ -87,6 +113,7 @@ export class Deck {
     endPile.push(card);
     return card;
   }
+
   private getCountOfCards(cards: Card[]) {
     const count: CardCount = {};
     for (let i = 0; i < cards.length; i++) {
@@ -99,12 +126,14 @@ export class Deck {
     }
     return count;
   }
+
   private getCardIndexFromName(
     name: string,
     pile: Card[] = this.remainingCards
   ) {
     return pile.findIndex((card) => card.name === name);
   }
+
   private getRandomCardIndex(cards: Card[]) {
     const index = Math.floor(Math.random() * cards.length);
     return index === cards.length ? index - 1 : index;

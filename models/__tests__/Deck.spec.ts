@@ -55,6 +55,64 @@ describe("Deck", () => {
       expect(deck.remainingCards).toStrictEqual(expected);
     });
   });
+
+  describe("shuffleWithoutSomeCards", () => {
+    beforeAll(() => {
+      jest.spyOn(global.Math, "random").mockReturnValue(0);
+    });
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+    it("should shuffle back drawn cards except for cards to not reshuffle", () => {
+      const mockCards = [new Card(1), new Card(2), new Card(3), new Card(4)];
+      const deck = new Deck(mockCards);
+
+      deck.shuffleAllTogetherWithSomeInDrawn([new Card(2)]);
+
+      expect(deck.remainingCards.length).toEqual(3);
+      expect(deck.remainingCards).toEqual([
+        new Card(1),
+        new Card(3),
+        new Card(4),
+      ]);
+      expect(deck.drawnCards).toStrictEqual([new Card(2)]);
+    });
+    it("should have empty drawnCards and full remainingCards if pass empty array", () => {
+      const mockCards = [new Card(1), new Card(2), new Card(3), new Card(4)];
+      const deck = new Deck(mockCards);
+
+      deck.shuffleAllTogetherWithSomeInDrawn([]);
+
+      expect(deck.remainingCards.length).toEqual(4);
+      expect(deck.remainingCards).toEqual([
+        new Card(1),
+        new Card(2),
+        new Card(3),
+        new Card(4),
+      ]);
+      expect(deck.drawnCards).toStrictEqual([]);
+    });
+    it("should work with repeats", () => {
+      const mockCards = [new Card(2), new Card(2), new Card(2)];
+      const deck = new Deck(mockCards);
+
+      deck.shuffleAllTogetherWithSomeInDrawn([new Card(2), new Card(2)]);
+
+      expect(deck.remainingCards.length).toEqual(1);
+      expect(deck.remainingCards).toEqual([new Card(2)]);
+      expect(deck.drawnCards).toStrictEqual([new Card(2), new Card(2)]);
+    });
+    it("should work with empty deck template", () => {
+      const deck = new Deck([]);
+
+      deck.shuffleAllTogetherWithSomeInDrawn([new Card(2)]);
+
+      expect(deck.remainingCards.length).toEqual(0);
+      expect(deck.remainingCards).toEqual([]);
+      expect(deck.drawnCards).toStrictEqual([new Card(2)]);
+    });
+  });
+
   describe("shuffleRemaining", () => {
     it("should only shuffle the remaining cards pile", () => {
       jest.spyOn(global.Math, "random").mockReturnValueOnce(1);
@@ -63,7 +121,7 @@ describe("Deck", () => {
       deck.remainingCards = [new Card(3), new Card(4)];
       deck.drawnCards = [new Card(1), new Card(2)];
       deck.shuffleRemaining();
-      const expected = [new Card(4), new Card(3), ];
+      const expected = [new Card(4), new Card(3)];
       expect(deck.remainingCards).toStrictEqual(expected);
     });
   });

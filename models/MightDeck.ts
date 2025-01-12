@@ -13,7 +13,10 @@ export class MightDeck extends Deck {
     damageValues: [],
   };
   // does not apply crit
-  public draw(isMissable = true): Card | undefined {
+  public draw(
+    cardsToNotReshuffle?: Card[],
+    isMissable = true
+  ): Card | undefined {
     if (this.drawSession.cardsDrawn >= LIMIT_PER_DRAW) {
       return;
     }
@@ -38,7 +41,7 @@ export class MightDeck extends Deck {
       this.draw();
     }
     for (let i = 0; i < this.drawSession.critCount; i++) {
-      this.draw(false);
+      this.draw(undefined, false);
     }
     this.saveDrawSession();
 
