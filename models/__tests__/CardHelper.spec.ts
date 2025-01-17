@@ -32,4 +32,23 @@ describe("CardHelper", () => {
       expect(cardHelper.template).toStrictEqual([]);
     });
   });
+  describe("sliceTillCrit", () => {
+    it.each([
+      [1, ["0", "1*"], ["0"]],
+      [2, ["0", "1*", "2"], ["0", "1*", "2"]],
+      [2, ["0", "1*", "2*"], ["0", "1*", "2*"]],
+      [2, ["0", "0", "2*"], ["0", "0"]],
+      [1, ["1*", "1*", "2*", "0", "1"], ["1*", "1*", "2*", "0"]],
+      [2, ["0"], ["0"]],
+      [0, ["0"], []],
+      [1, [], []],
+    ])(
+      "should when asked to draw %s and given set is %s - should return %s",
+      (targetNoOfCards, mockSet, expected) => {
+        const cardHelper = new CardHelper();
+        const result = cardHelper.sliceTillAfterCrit(targetNoOfCards, mockSet);
+        expect(result).toEqual(expected);
+      }
+    );
+  });
 });

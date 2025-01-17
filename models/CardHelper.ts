@@ -1,5 +1,7 @@
 import { Card } from "./Card";
 
+const CRIT_SYMBOL = "*";
+
 export class CardHelper {
   public template: Card[] = [];
   public addSet(card: Card, count: number) {
@@ -16,5 +18,20 @@ export class CardHelper {
   public reset() {
     this.template = [];
     return this;
+  }
+  public sliceTillAfterCrit(targetNoOfCards: number, set: string[]) {
+    if (set.length === 0) return [];
+
+    let end = targetNoOfCards;
+
+    for (let i = 0; i < end; i++) {
+      if (set[i].endsWith(CRIT_SYMBOL)) {
+        end++;
+      }
+      if (end > set.length - 1) {
+        break;
+      }
+    }
+    return set.slice(0, end);
   }
 }
