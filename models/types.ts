@@ -1,3 +1,4 @@
+import { Card } from "./Card";
 import { Damage } from "./Damage";
 import { Deck } from "./Deck";
 import { MightDeck } from "./MightDeck";
@@ -10,6 +11,7 @@ export interface DrawSession {
   isInfinite: boolean;
   critCount: number;
   damageValues: Damage[];
+  cardsDrawn: Card[];
 }
 
 export interface MightDecks extends Decks<MightDeck> {

@@ -11,6 +11,7 @@ export class DeckManager {
     isInfinite: false,
     critCount: 0,
     damageValues: [],
+    cardsDrawn: [],
   };
   constructor(public decks: MightDecks, public empower?: Empower) {}
 
@@ -69,6 +70,7 @@ export class DeckManager {
         damageValues,
         // isMiss, // we only calculate isMiss at the end
         isInfinite: false, // FIXME: is this required?
+        cardsDrawn: [...session.cardsDrawn, ...currentSession.cardsDrawn],
       };
     });
     this.drawSession = combinedSession;
@@ -120,6 +122,7 @@ export class DeckManager {
       isInfinite: false,
       critCount: 0,
       damageValues: [],
+      cardsDrawn: [],
     };
   }
 }

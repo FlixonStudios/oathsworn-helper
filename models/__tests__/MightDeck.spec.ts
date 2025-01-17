@@ -3,6 +3,7 @@ import { Card } from "../Card";
 import { Damage } from "../Damage";
 import { Deck } from "../Deck";
 import { MightDeck } from "../MightDeck";
+import { DrawSession } from "../types";
 
 describe("MightDeck", () => {
   afterEach(() => {
@@ -141,17 +142,19 @@ describe("MightDeck", () => {
         isInfinite: false,
         critCount: 1,
         damageValues: [new Damage(3)],
-      };
+        cardsDrawn: [],
+      } as DrawSession;
       const results = mightDeck.clone();
       expect(results.remainingCards).toEqual([new Card(1), new Card(2)]);
       expect(results.drawnCards).toEqual([new Card(3, true)]);
       expect(results.template).toEqual([new Card(1), new Card(2), new Card(3)]);
       expect(results.drawSession).toEqual({
-        cardsDrawn: 1,
+        noOfCardsDrawn: 1,
         totalDamage: 3,
         isInfinite: false,
         critCount: 1,
         damageValues: [new Damage(3)],
+        cardsDrawn: [],
       });
     });
 

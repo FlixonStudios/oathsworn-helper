@@ -3,6 +3,7 @@ import { Damage } from "../Damage";
 import { DeckManager } from "../DecksManager";
 import { Iterator } from "../Iterator";
 import { MightDeck } from "../MightDeck";
+import { DrawSession } from "../types";
 
 describe("Iterator", () => {
   afterEach(() => {
@@ -16,13 +17,14 @@ describe("Iterator", () => {
       const iterator = new Iterator(deckManager, {});
       const result = iterator.iterate(3);
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: false,
-        cardsDrawn: 3,
+        noOfCardsDrawn: 3,
         totalDamage: 3,
         isInfinite: false,
         critCount: 0,
         damageValues: [new Damage(1), new Damage(1), new Damage(1)],
+        cardsDrawn: [],
       };
       expect(result).toEqual(expected);
     });
@@ -39,13 +41,14 @@ describe("Iterator", () => {
       const iterator = new Iterator(deckManager, {});
       const results = [iterator.iterate(3), iterator.iterate(3)];
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: false,
-        cardsDrawn: 3,
+        noOfCardsDrawn: 3,
         totalDamage: 3,
         isInfinite: false,
         critCount: 0,
         damageValues: [new Damage(1), new Damage(1), new Damage(1)],
+        cardsDrawn: [],
       };
       expect(results).toEqual([expected, expected]);
     });

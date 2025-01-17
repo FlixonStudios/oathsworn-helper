@@ -2,6 +2,7 @@ import { Card } from "../Card";
 import { Damage } from "../Damage";
 import { DeckManager } from "../DecksManager";
 import { MightDeck } from "../MightDeck";
+import { DrawSession } from "../types";
 
 describe("DeckManager", () => {
   describe("startDraw", () => {
@@ -15,13 +16,14 @@ describe("DeckManager", () => {
 
       const results = decksManager.startDraw(3, { "3": 2 });
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: false,
-        cardsDrawn: 3,
+        noOfCardsDrawn: 3,
         totalDamage: 7,
         isInfinite: false,
         critCount: 0,
         damageValues: [new Damage(3), new Damage(3), new Damage(1)],
+        cardsDrawn: [],
       };
       expect(results).toEqual(expected);
     });
@@ -43,9 +45,9 @@ describe("DeckManager", () => {
 
       const results = decksManager.startDraw(5, { "3": 1, "2": 2, "1": 1 });
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: true,
-        cardsDrawn: 6,
+        noOfCardsDrawn: 6,
         totalDamage: 0,
         isInfinite: false,
         critCount: 1,
@@ -57,6 +59,7 @@ describe("DeckManager", () => {
           new Damage(),
           new Damage(1),
         ],
+        cardsDrawn: [],
       };
       expect(results).toEqual(expected);
     });
@@ -74,13 +77,14 @@ describe("DeckManager", () => {
 
       const results = decksManager.startDraw(1, { "2": 1, "1": 1 });
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: false,
-        cardsDrawn: 1,
+        noOfCardsDrawn: 1,
         totalDamage: 0,
         isInfinite: false,
         critCount: 0,
         damageValues: [new Damage()],
+        cardsDrawn: [],
       };
       expect(results).toEqual(expected);
     });
@@ -94,9 +98,9 @@ describe("DeckManager", () => {
 
       const results = decksManager.startDraw(4);
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: false,
-        cardsDrawn: 4,
+        noOfCardsDrawn: 4,
         totalDamage: 4,
         isInfinite: false,
         critCount: 0,
@@ -106,6 +110,7 @@ describe("DeckManager", () => {
           new Damage(1),
           new Damage(1),
         ],
+        cardsDrawn: [],
       };
       expect(results).toEqual(expected);
     });
@@ -119,9 +124,9 @@ describe("DeckManager", () => {
 
       const results = decksManager.startDraw(4, { "3": 2 });
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: true,
-        cardsDrawn: 4,
+        noOfCardsDrawn: 4,
         totalDamage: 0,
         isInfinite: false,
         critCount: 0,
@@ -131,6 +136,7 @@ describe("DeckManager", () => {
           new Damage(1),
           new Damage(),
         ],
+        cardsDrawn: [],
       };
       expect(results).toEqual(expected);
     });
@@ -148,9 +154,9 @@ describe("DeckManager", () => {
 
       const results = decksManager.startDraw(3, { "3": 1 });
 
-      const expected = {
+      const expected: DrawSession = {
         isMiss: false,
-        cardsDrawn: 5,
+        noOfCardsDrawn: 5,
         totalDamage: 9,
         isInfinite: false,
         critCount: 2,
@@ -161,6 +167,7 @@ describe("DeckManager", () => {
           new Damage(1),
           new Damage(),
         ],
+        cardsDrawn: [],
       };
       expect(results).toEqual(expected);
     });

@@ -11,6 +11,7 @@ export class MightDeck extends Deck {
     isInfinite: false,
     critCount: 0,
     damageValues: [],
+    cardsDrawn: [],
   };
   // does not apply crit
   public draw(isMissable = true): Card | undefined {
@@ -75,6 +76,7 @@ export class MightDeck extends Deck {
       isInfinite: this.drawSession.noOfCardsDrawn >= LIMIT_PER_DRAW,
       critCount: this.drawSession.critCount,
       damageValues: this.drawSession.damageValues,
+      cardsDrawn: this.drawSession.cardsDrawn,
     };
   }
   private resetDrawSession() {
@@ -85,6 +87,7 @@ export class MightDeck extends Deck {
       isInfinite: false,
       critCount: 0,
       damageValues: [],
+      cardsDrawn: [],
     };
   }
 }
