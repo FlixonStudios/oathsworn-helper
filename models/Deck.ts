@@ -17,7 +17,7 @@ export class Deck {
   ) {
     this.remainingCards = [...this.template];
   }
-  
+
   public shuffleAllTogether() {
     this.drawnCards = [];
     const toBeShuffled = [...this.template];
@@ -35,9 +35,9 @@ export class Deck {
         1
       );
     });
-    this.shufflePile(toBeShuffled, this.remainingCards)
+    this.shufflePile(toBeShuffled, this.remainingCards);
     this.drawnCards = [...cardsToNotReshuffle];
-    return this
+    return this;
   }
 
   public shuffleRemaining() {
@@ -62,7 +62,7 @@ export class Deck {
     }
   }
 
-  public draw(cardsToNotReshuffle?: Card[]) {
+  public _draw(cardsToNotReshuffle?: Card[]) {
     if (this.template.length === 0) {
       return;
     }

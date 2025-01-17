@@ -129,7 +129,7 @@ describe("Deck", () => {
     it("should return the first element of remaingCards", () => {
       const mockCards = [new Card(4), new Card(2), new Card(3), new Card(1)];
       const deck = new Deck(mockCards);
-      const result = deck.draw();
+      const result = deck._draw();
 
       expect(result).toStrictEqual(new Card(4));
     });
@@ -138,8 +138,8 @@ describe("Deck", () => {
       const deck = new Deck(mockCards);
       const shuffleSpy = jest.spyOn(deck, "shuffleAllTogether");
 
-      deck.draw();
-      const result = deck.draw();
+      deck._draw();
+      const result = deck._draw();
 
       expect(shuffleSpy).toHaveBeenCalledTimes(1);
       expect(result).toStrictEqual(new Card(4));
@@ -148,7 +148,7 @@ describe("Deck", () => {
       const deck = new Deck();
       const shuffleSpy = jest.spyOn(deck, "shuffleAllTogether");
 
-      const result = deck.draw();
+      const result = deck._draw();
 
       expect(shuffleSpy).not.toHaveBeenCalled();
       expect(result).toBeUndefined();
