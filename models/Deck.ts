@@ -50,7 +50,7 @@ export class Deck {
    * @param toBeShuffledPile must be a copied array
    * @param receivingPile will be mutated
    */
-  private shufflePile(toBeShuffledPile: Card[], receivingPile: Card[]) {
+  public shufflePile(toBeShuffledPile: Card[], receivingPile: Card[]) {
     //TODO: see how to remove elements without removing array
     do {
       receivingPile.pop();

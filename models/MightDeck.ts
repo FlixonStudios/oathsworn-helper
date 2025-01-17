@@ -19,7 +19,7 @@ export class MightDeck extends Deck {
       return;
     }
 
-    const drawn = super._draw();
+    const drawn = super._draw(this.drawSession.cardsDrawn);
 
     if (!drawn) return; // no cards in deck
     this.drawSession.noOfCardsDrawn++;
