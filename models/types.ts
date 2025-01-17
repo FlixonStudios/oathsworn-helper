@@ -5,7 +5,7 @@ import { Optimizable } from "./Optimizer";
 
 export interface DrawSession {
   totalDamage: number;
-  cardsDrawn: number;
+  noOfCardsDrawn: number;
   isMiss?: boolean;
   isInfinite: boolean;
   critCount: number;

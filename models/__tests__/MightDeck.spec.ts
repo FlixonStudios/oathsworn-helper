@@ -26,7 +26,7 @@ describe("MightDeck", () => {
       for (let i = 0; i < noOfDraws; i++) {
         deck.draw();
       }
-      expect(deck.drawSession.cardsDrawn).toEqual(expected);
+      expect(deck.drawSession.noOfCardsDrawn).toEqual(expected);
     });
     it("should perform a shuffle if no more cards in remaining", () => {
       const mockCards = [new Card(2, true), new Card(1)];
@@ -75,7 +75,7 @@ describe("MightDeck", () => {
 
       expect(drawSpy).toHaveBeenCalledTimes(LIMIT_PER_DRAW + 1); // +1 as the last draw will be called but no card will be drawn
       expect(deck.remainingCards.length).toEqual(0);
-      expect(result.cardsDrawn).toEqual(LIMIT_PER_DRAW);
+      expect(result.noOfCardsDrawn).toEqual(LIMIT_PER_DRAW);
     });
     it.each([
       [3, 3, [new Card(1), new Card(1), new Card(1)]],
@@ -136,7 +136,7 @@ describe("MightDeck", () => {
       mightDeck.remainingCards = [new Card(1), new Card(2)];
       mightDeck.drawnCards = [new Card(3, true)];
       mightDeck.drawSession = {
-        cardsDrawn: 1,
+        noOfCardsDrawn: 1,
         totalDamage: 3,
         isInfinite: false,
         critCount: 1,

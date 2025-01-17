@@ -6,7 +6,7 @@ import { DrawSession } from "./types";
 
 export class MightDeck extends Deck {
   public drawSession: DrawSession = {
-    cardsDrawn: 0,
+    noOfCardsDrawn: 0,
     totalDamage: 0,
     isInfinite: false,
     critCount: 0,
@@ -14,14 +14,14 @@ export class MightDeck extends Deck {
   };
   // does not apply crit
   public draw(isMissable = true): Card | undefined {
-    if (this.drawSession.cardsDrawn >= LIMIT_PER_DRAW) {
+    if (this.drawSession.noOfCardsDrawn >= LIMIT_PER_DRAW) {
       return;
     }
 
     const drawn = super._draw();
 
     if (!drawn) return; // no cards in deck
-    this.drawSession.cardsDrawn++;
+    this.drawSession.noOfCardsDrawn++;
 
     const damage = new Damage(drawn?.damage.value, isMissable);
     this.drawSession.damageValues.push(damage);
@@ -70,9 +70,9 @@ export class MightDeck extends Deck {
   //FIXME: do we need this?
   private saveDrawSession() {
     this.drawSession = {
-      cardsDrawn: this.drawSession.cardsDrawn,
+      noOfCardsDrawn: this.drawSession.noOfCardsDrawn,
       totalDamage: this.calculateDamage(),
-      isInfinite: this.drawSession.cardsDrawn >= LIMIT_PER_DRAW,
+      isInfinite: this.drawSession.noOfCardsDrawn >= LIMIT_PER_DRAW,
       critCount: this.drawSession.critCount,
       damageValues: this.drawSession.damageValues,
     };
@@ -80,7 +80,7 @@ export class MightDeck extends Deck {
   private resetDrawSession() {
     this.drawSession = {
       isMiss: false,
-      cardsDrawn: 0,
+      noOfCardsDrawn: 0,
       totalDamage: 0,
       isInfinite: false,
       critCount: 0,

@@ -3,7 +3,7 @@ import { DrawSession } from "@/models/types";
 
 export const DEFAULT_DRAW_SESSION: DrawSession = {
   isMiss: false,
-  cardsDrawn: 0,
+  noOfCardsDrawn: 0,
   totalDamage: 0,
   isInfinite: false,
   critCount: 0,

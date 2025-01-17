@@ -6,7 +6,7 @@ import { Decks, DrawSession, Empower, MightDecks } from "./types";
 export class DeckManager {
   public drawSession: DrawSession = {
     isMiss: false,
-    cardsDrawn: 0,
+    noOfCardsDrawn: 0,
     totalDamage: 0,
     isInfinite: false,
     critCount: 0,
@@ -63,7 +63,7 @@ export class DeckManager {
       );
 
       return {
-        cardsDrawn: currentSession.cardsDrawn + session.cardsDrawn,
+        noOfCardsDrawn: currentSession.noOfCardsDrawn + session.noOfCardsDrawn,
         totalDamage: currentSession.totalDamage + session.totalDamage,
         critCount: currentSession.critCount + session.critCount,
         damageValues,
@@ -115,7 +115,7 @@ export class DeckManager {
   private resetDrawSession() {
     this.drawSession = {
       isMiss: false,
-      cardsDrawn: 0,
+      noOfCardsDrawn: 0,
       totalDamage: 0,
       isInfinite: false,
       critCount: 0,
