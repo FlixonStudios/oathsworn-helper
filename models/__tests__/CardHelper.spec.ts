@@ -39,6 +39,7 @@ describe("CardHelper", () => {
       [2, ["0", "1*", "2*"], ["0", "1*", "2*"]],
       [2, ["0", "0", "2*"], ["0", "0"]],
       [1, ["1*", "1*", "2*", "0", "1"], ["1*", "1*", "2*", "0"]],
+      [2, ["1*", "1*", "0", "0", "1"], ["1*", "1*", "0", "0"]],
       [2, ["0"], ["0"]],
       [0, ["0"], []],
       [1, [], []],
@@ -48,6 +49,36 @@ describe("CardHelper", () => {
         const cardHelper = new CardHelper();
         const result = cardHelper.sliceTillAfterCrit(targetNoOfCards, mockSet);
         expect(result).toEqual(expected);
+      }
+    );
+  });
+  describe("getCurrentCardSet", () => {
+    it.each([
+      [["0", "1*"], ["2", "2"], 1, [], ["0", "1*"]],
+      [["0", "1*"], ["2", "2"], 2, ["0", "1*"], ["2", "2"]],
+      [["0", "1", "2"], ["3", "3"], 2, [], ["0", "1", "2"]],
+      [["0", "1", "2"], ["3", "3"], 4, ["0", "1", "2"], ["3", "3"]],
+      [["0*", "1*"], ["2*", "3*"], 2, ["0*", "1*"], ["2*", "3*"]], // should it be permutated if its confirmed even after reshuffle?
+      [["0*"], ["1", "2"], 0, [], ["0*"]],
+    ])(
+      "it should decide the set to permutate",
+      (
+        mockRemaining,
+        mockDrawn,
+        toDraw,
+        expectedConfirmed,
+        expectedToPermutate
+      ) => {
+        const cardHelper = new CardHelper();
+
+        const result = cardHelper.getCurrentCardSet(
+          toDraw,
+          mockDrawn,
+          mockRemaining
+        );
+
+        expect(result.confirmed).toEqual(expectedConfirmed);
+        expect(result.toPermutate).toEqual(expectedToPermutate);
       }
     );
   });
