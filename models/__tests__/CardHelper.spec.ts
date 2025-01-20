@@ -58,7 +58,7 @@ describe("CardHelper", () => {
       [["0", "1*"], ["2", "2"], 2, ["0", "1*"], ["2", "2"]],
       [["0", "1", "2"], ["3", "3"], 2, [], ["0", "1", "2"]],
       [["0", "1", "2"], ["3", "3"], 4, ["0", "1", "2"], ["3", "3"]],
-      [["0*", "1*"], ["2*", "3*"], 2, ["0*", "1*"], ["2*", "3*"]], // should it be permutated if its confirmed even after reshuffle?
+      [["0*", "1*"], ["2*", "3*"], 2, ["0*", "1*", "2*", "3*"], []], 
       [["0*"], ["1", "2"], 0, [], ["0*"]],
     ])(
       "it should decide the set to permutate",
@@ -79,6 +79,56 @@ describe("CardHelper", () => {
 
         expect(result.confirmed).toEqual(expectedConfirmed);
         expect(result.toPermutate).toEqual(expectedToPermutate);
+      }
+    );
+  });
+  describe("getConfirmedCardSet", () => {
+    it.each([
+      [2, [], ["0", "1"], ["0", "1"]],
+      [1, [], ["0", "1"], []],
+      [3, [], ["0", "1", "2*"], ["0", "1", "2*"]],
+      [2, [], ["0", "1", "2*"], []],
+      [4, [], ["0"], ["0"]], // can't draw what is already being drawn
+      [4, ["0", "0"], ["1", "2"], ["1", "2", "0", "0"]],
+      [5, ["0", "0"], ["1", "2"], ["1", "2", "0", "0"]],
+      [4, ["0", "1", "2"], [], ["0", "1", "2"]],
+      [2, ["0", "0", "0"], ["2*", "2*"], ["2*", "2*"]],
+      [2, ["2*", "0"], ["1*"], ["1*", "2*", "0"]],
+      [3, ["2*", "2*", "0"], ["1*"], ["1*", "2*", "2*", "0"]],
+      [3, ["2*", "2*", "0", "0"], ["1*"], ["1*", "2*", "2*", "0", "0"]],
+    ])(
+      "if drawing %s from %s should return %s",
+      (target, drawn, remaining, expected) => {
+        const cardHelper = new CardHelper();
+
+        const result = cardHelper.getConfirmedCardSet(target, drawn, remaining);
+
+        expect(result).toEqual(expected);
+      }
+    );
+  });
+  describe("getToPermutateCardSet", () => {
+    it.each([
+      [2, [], ["0", "1"], []],
+      [1, [], ["0", "1"], ["0", "1"]],
+      [3, [], ["0", "1", "2*"], []],
+      [2, [], ["0", "1", "2*"], ["0", "1", "2*"]],
+      [4, [], ["0"], []],
+      [4, ["0", "0"], ["1", "2"], []],
+      [5, ["0", "0"], ["1", "2"], []],
+      [4, ["0", "1", "2"], [], []],
+      [2, ["0", "0", "0"], ["2*", "2*"], ["0", "0", "0"]],
+      [2, ["2*", "0"], ["1*"], []],
+      [3, ["2*", "2*", "0"], ["1*"], []],
+      [3, ["2*", "2*", "0", "0"], ["1*"], []],
+    ])(
+      "if drawing %s, with %s drawn, from %s should return %s",
+      (target, drawn, remaining, expected) => {
+        const cardHelper = new CardHelper();
+
+        const result = cardHelper.getToPermutateCardSet(target, drawn, remaining);
+
+        expect(result).toEqual(expected);
       }
     );
   });

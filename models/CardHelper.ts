@@ -1,4 +1,6 @@
+import { MISS_CONDITION } from "@/constants/model";
 import { Card } from "./Card";
+import { MightDeck } from "./MightDeck";
 
 const CRIT_SYMBOL = "*";
 
@@ -30,35 +32,76 @@ export class CardHelper {
     drawnSet: string[],
     remainingSet: string[]
   ) {
-    const shouldAppendReshuffled = this.shouldAppendReshuffled(
-      remainingSet,
-      targetNoOfCards
-    );
     return {
-      confirmed: shouldAppendReshuffled ? remainingSet : [],
-      toPermutate: shouldAppendReshuffled ? drawnSet : remainingSet,
+      confirmed: this.getConfirmedCardSet(
+        targetNoOfCards,
+        drawnSet,
+        remainingSet
+      ),
+      toPermutate: this.getToPermutateCardSet(
+        targetNoOfCards,
+        drawnSet,
+        remainingSet
+      ),
     };
   }
 
-  public shouldAppendReshuffled(
-    remainingCards: string[],
-    targetNoOfCards: number
+  public getConfirmedCardSet(
+    targetNoOfCards: number,
+    drawnSet: string[],
+    remainingSet: string[]
   ) {
-    // not everything in drawn should be added
-    // Case 1: remainingCards (set) >= maxPossible -> no need append
-    // Case 2: remainingCards (set) < maxPossible -> need to append but only generate perm for appended
-    const maxPossible =
-      targetNoOfCards === 0
-        ? 0
-        : targetNoOfCards + this.getNoOfCritsInCards(remainingCards);
-    return remainingCards.length < maxPossible;
+    let leftToDraw = targetNoOfCards;
+
+    leftToDraw = leftToDraw - remainingSet.length;
+
+    if (leftToDraw < 0) {
+      return [];
+    }
+
+    leftToDraw += this.getNoOfCritsInSet(remainingSet);
+
+    if (
+      leftToDraw >= drawnSet.length ||
+      leftToDraw > drawnSet.length - this.getNoOfCritsInSet(drawnSet)
+    ) {
+      return [...remainingSet, ...drawnSet]
+    }
+
+    return [...remainingSet];
+  }
+
+  public getToPermutateCardSet(
+    targetNoOfCards: number,
+    drawnSet: string[],
+    remainingSet: string[]
+  ) {
+    const toPermutate: string[] = [...remainingSet];
+    let leftToDraw = targetNoOfCards;
+
+    leftToDraw = leftToDraw - remainingSet.length;
+
+    if (leftToDraw < 0) {
+      return toPermutate;
+    }
+
+    leftToDraw += this.getNoOfCritsInSet(remainingSet);
+
+    if (
+      leftToDraw >= drawnSet.length ||
+      leftToDraw > drawnSet.length - this.getNoOfCritsInSet(drawnSet)
+    ) {
+      return []; // nothing to generate permutatations for
+    }
+
+    return [...drawnSet];
   }
 
   private getCardNameSetFromDeck(cards: Card[]) {
     return cards.map((card) => card.name);
   }
 
-  private getNoOfCritsInCards(cardNames: string[]) {
+  private getNoOfCritsInSet(cardNames: string[]) {
     return cardNames.filter((name) => name.endsWith(CRIT_SYMBOL)).length;
   }
 
