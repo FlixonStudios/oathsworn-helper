@@ -60,3 +60,21 @@ export interface DeckAndToDraw {
 }
 
 export type SkillCheckScenario = DeckAndToDraw[];
+
+export const CRIT_SYMBOL = "*";
+
+export type EmpowerKeys = "0" | "1" | "2" | "3";
+
+export interface CardSetForPermutation {
+  confirmed: string[];
+  toPermutate: string[];
+}
+
+export interface AmountToDrawAndCardSets {
+  cardSets: CardSetForPermutation;
+  numToDraw: number;
+}
+
+export interface Permutator {
+  getAllPermutations: () => string[][];
+}
