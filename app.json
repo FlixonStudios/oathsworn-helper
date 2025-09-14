@@ -2,7 +2,7 @@
   "expo": {
     "name": "Game Probability",
     "slug": "oathsworn-helper",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "orientation": "portrait",
     "icon": "./assets/images/game-probability-icon.png",
     "scheme": "myapp",
@@ -37,6 +37,14 @@
             "./assets/fonts/Exo2-Italic.ttf",
             "./assets/fonts/Exo2-SemiBold.ttf"
           ]
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "targetSdkVersion": 35
+          }
         }
       ]
     ],
