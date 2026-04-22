@@ -219,3 +219,17 @@ You need this is the project route (the expected default path that fastlane)
 You need 'check' the checkbox beside the email lists of testers, otherwise they will see 404.
 As the tester, you need to enable Internal app sharing in Google Play settings
 
+### Chores
+
+Every 7 months Google will threaten to deactivate your Google Play Console account. To prevent this, you just need to upload a new release to Internal Testing.
+
+Option 1: Manually build, sign and upload
+
+```
+npm run prep-to-deploy
+npm run upload
+```
+
+Option 2: Commit, Push and let pipeline handle upload
+
+Just push some changes to `main` branch and run the `build-android-job`

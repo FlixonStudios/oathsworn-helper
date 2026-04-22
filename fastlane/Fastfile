@@ -18,24 +18,31 @@ default_platform(:android)
 platform :android do
   desc "Deploy a locally built version to the Google Play Store"
   lane :upload_from_local do
+    # NEED TO SIGN BEFORE THIS, same as upload lane
     version_codes = google_play_track_version_codes(
       track: 'internal', 
     )
     new_version_code = get_latest_version_code(version_codes)
+    set_version(new_version_code)
+    puts "VERSION_CODE: #{new_version_code}"
+
     gradle(tasks: ["bundleRelease"])
     validate_play_store_json_key()
     upload_to_play_store(
-      track: 'internal', 
-      version_code: new_version_code,   
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_changelogs: true,
+      track: 'internal',
       aab: "./app/build/outputs/bundle/release/app-release.aab"
     )
   end
 
   desc "Just upload local built and signed"
   lane :just_upload do
+    # Note: the version in android/app/build.gradle should already be updated
+    # with the incremented version code, and the aab should be built and signed before running this lane
+    validate_play_store_json_key()
+    upload_to_play_store(
+      track: 'internal',
+      aab: "./app/build/outputs/bundle/release/app-release.aab"
+    )
   end
   
   desc "Update version and upload via pipeline"

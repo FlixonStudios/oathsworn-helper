@@ -19,7 +19,7 @@
     "set-local-signing": "sh ./scripts/set-local-signing.sh",
     "set-remote-signing": "sh ./scripts/set-remote-signing.sh",
     "set-version": "sh ./scripts/set-version.sh",
-    "prep-to-deploy": "npm run init-android && npm run set-local-signing && npm run bundle-aab",
+    "prep-to-deploy": "npm run init-android && npm run set-local-signing",
     "bundle-apk": "cd android && ./gradlew assembleRelease && cd ..",
     "bundle-aab": "cd android && ./gradlew bundleRelease && cd ..",
     "upload": "sh ./scripts/run-upload.sh",
